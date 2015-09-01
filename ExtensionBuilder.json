@@ -1,0 +1,58 @@
+{
+    "modules": [],
+    "properties": {
+        "backendModules": [
+            {
+                "actions": {
+                    "controllerActionCombinations": ""
+                },
+                "description": "",
+                "key": "m1",
+                "mainModule": "tools",
+                "name": "Properties",
+                "tabLabel": "Properties"
+            }
+        ],
+        "description": "This extension provides functionality for managing properties in TYPO3",
+        "emConf": {
+            "category": "plugin",
+            "custom_category": "",
+            "dependsOn": "typo3 => 6.2\n",
+            "disableLocalization": false,
+            "disableVersioning": false,
+            "sourceLanguage": "en",
+            "state": "alpha",
+            "targetVersion": "6.2",
+            "version": ""
+        },
+        "extensionKey": "properties",
+        "name": "Arek van Schaijk",
+        "originalExtensionKey": "",
+        "persons": [
+            {
+                "company": "Ucreation",
+                "email": "info@ucreation.nl",
+                "name": "Arek van Schaijk",
+                "role": "Developer"
+            }
+        ],
+        "plugins": [
+            {
+                "actions": {
+                    "controllerActionCombinations": "",
+                    "noncacheableActions": "",
+                    "switchableActions": ""
+                },
+                "key": "pi1",
+                "name": "Properties"
+            }
+        ],
+        "vendorName": "Ucreation"
+    },
+    "wires": [],
+    "log": {
+        "last_modified": "2015-09-01 02:42",
+        "extension_builder_version": "6.2.0",
+        "be_user": "Arek van Schaijk (44)"
+    }
+}

@@ -1,0 +1,30 @@
+
+plugin.tx_properties {
+	view {
+		# cat=plugin.tx_properties/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:properties/Resources/Private/Templates/
+		# cat=plugin.tx_properties/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:properties/Resources/Private/Partials/
+		# cat=plugin.tx_properties/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:properties/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_properties//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}
+
+module.tx_properties {
+	view {
+		# cat=module.tx_properties/file; type=string; label=Path to template root (BE)
+		templateRootPath = EXT:properties/Resources/Private/Backend/Templates/
+		# cat=module.tx_properties/file; type=string; label=Path to template partials (BE)
+		partialRootPath = EXT:properties/Resources/Private/Backend/Partials/
+		# cat=module.tx_properties/file; type=string; label=Path to template layouts (BE)
+		layoutRootPath = EXT:properties/Resources/Private/Backend/Layouts/
+	}
+	persistence {
+		# cat=module.tx_properties//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}
