@@ -9,7 +9,7 @@
 ---
 conf.py:
   copyright: 2015
-  project: Arek van Schaijk
+  project: Properties
   version: 
   release: 
   intersphinx_mapping:
@@ -19,7 +19,7 @@ conf.py:
   latex_documents:
   - - Index
     - properties.tex
-    - Arek van Schaijk
+    - Properties
     - Arek van Schaijk
     - manual
   latex_elements:

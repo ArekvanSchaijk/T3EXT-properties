@@ -11,7 +11,7 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'Arek van Schaijk',
+	'title' => 'Properties',
 	'description' => 'This extension provides functionality for managing properties in TYPO3',
 	'category' => 'plugin',
 	'author' => 'Arek van Schaijk',
