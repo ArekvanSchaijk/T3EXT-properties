@@ -7,10 +7,12 @@ if (!defined('TYPO3_MODE')) {
 	'Ucreation.' . $_EXTKEY,
 	'Pi1',
 	array(
+		'Object' => 'list, show',
 		
 	),
 	// non-cacheable actions
 	array(
+		'Object' => '',
 		
 	)
 );
