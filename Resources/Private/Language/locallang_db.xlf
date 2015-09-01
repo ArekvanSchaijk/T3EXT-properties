@@ -18,6 +18,18 @@
 			<trans-unit id="tx_properties_domain_model_object.offer">
 				<source>Offer</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.offer.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.offer.1">
+				<source>For Sale</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.offer.2">
+				<source>For Rent</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.offer.3">
+				<source>For Sale or For Rent (both)</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.images">
 				<source>Images</source>
 			</trans-unit>

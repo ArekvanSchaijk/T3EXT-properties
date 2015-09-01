@@ -37,6 +37,13 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
  * @author Arek van Schaijk <info@ucreation.nl>
  */
 class Object extends AbstractEntity {
+	
+	/**
+	 * @const integer
+	 */
+	const	OFFER_SALE = 1,
+			OFFER_RENT = 2,
+			OFFER_BOTH = 3;
 
 	/**
 	 * @var string

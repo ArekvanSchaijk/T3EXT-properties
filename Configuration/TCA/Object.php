@@ -45,7 +45,6 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 				'type' => 'passthrough',
 			),
 		),
-
 		't3ver_label' => array(
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
 			'config' => array(
@@ -54,7 +53,6 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 				'max' => 255,
 			)
 		),
-	
 		'hidden' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
@@ -125,9 +123,22 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.offer',
 			'config' => array(
-				'type' => 'input',
-				'size' => 4,
-				'eval' => 'int'
+				'type' => 'select',
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.offer.0', 0),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.offer.1',
+						\Ucreation\Properties\Domain\Model\Object::OFFER_SALE,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.offer.2',
+						\Ucreation\Properties\Domain\Model\Object::OFFER_RENT
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.offer.3',
+						\Ucreation\Properties\Domain\Model\Object::OFFER_BOTH
+					),
+				)
 			)
 		),
 		'images' => array(
