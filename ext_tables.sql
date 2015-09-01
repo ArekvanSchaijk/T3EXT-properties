@@ -59,7 +59,7 @@ CREATE TABLE tx_properties_domain_model_object (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
- KEY language (l10n_parent,sys_language_uid)
+	KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -98,7 +98,7 @@ CREATE TABLE tx_properties_domain_model_presence (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
- KEY language (l10n_parent,sys_language_uid)
+	KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -137,7 +137,7 @@ CREATE TABLE tx_properties_domain_model_category (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
- KEY language (l10n_parent,sys_language_uid)
+	KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -176,7 +176,7 @@ CREATE TABLE tx_properties_domain_model_town (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
- KEY language (l10n_parent,sys_language_uid)
+	KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -215,7 +215,7 @@ CREATE TABLE tx_properties_domain_model_position (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
- KEY language (l10n_parent,sys_language_uid)
+	KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -252,7 +252,7 @@ CREATE TABLE tx_properties_domain_model_constructiontype (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
- KEY language (l10n_parent,sys_language_uid)
+	KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -294,7 +294,7 @@ CREATE TABLE tx_properties_domain_model_filteroption (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
- KEY language (l10n_parent,sys_language_uid)
+	KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -302,6 +302,7 @@ CREATE TABLE tx_properties_domain_model_filteroption (
 # Table structure for table 'tx_properties_object_presence_mm'
 #
 CREATE TABLE tx_properties_object_presence_mm (
+
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
 	sorting int(11) unsigned DEFAULT '0' NOT NULL,
@@ -309,4 +310,5 @@ CREATE TABLE tx_properties_object_presence_mm (
 
 	KEY uid_local (uid_local),
 	KEY uid_foreign (uid_foreign)
+	
 );
