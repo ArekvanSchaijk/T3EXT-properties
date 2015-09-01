@@ -9,13 +9,11 @@ $GLOBALS['TCA']['tx_properties_domain_model_filteroption'] = array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, filter_for, name, filter_from, filter_to',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, filter_for, name, filter_from, filter_to, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, filter_for, name, filter_from, filter_to, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
-		'1' => array('showitem' => ''),
 	),
 	'columns' => array(
-	
 		'sys_language_uid' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
@@ -47,7 +45,6 @@ $GLOBALS['TCA']['tx_properties_domain_model_filteroption'] = array(
 				'type' => 'passthrough',
 			),
 		),
-
 		't3ver_label' => array(
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
 			'config' => array(
@@ -56,7 +53,6 @@ $GLOBALS['TCA']['tx_properties_domain_model_filteroption'] = array(
 				'max' => 255,
 			)
 		),
-	
 		'hidden' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
@@ -96,7 +92,6 @@ $GLOBALS['TCA']['tx_properties_domain_model_filteroption'] = array(
 				),
 			),
 		),
-
 		'filter_for' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_filteroption.filter_for',
@@ -133,6 +128,5 @@ $GLOBALS['TCA']['tx_properties_domain_model_filteroption'] = array(
 				'eval' => 'int'
 			)
 		),
-		
 	),
 );
