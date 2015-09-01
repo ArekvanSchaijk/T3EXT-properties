@@ -1,7 +1,6 @@
 <?php
 namespace Ucreation\Properties\Controller;
 
-
 /***************************************************************
  *
  *  Copyright notice
@@ -28,7 +27,10 @@ namespace Ucreation\Properties\Controller;
  ***************************************************************/
 
 /**
- * ObjectController
+ * Class ObjectController
+ *
+ * @package Ucreation\Properties
+ * @author Arek van Schaijk <info@ucreation.nl>
  */
 class ObjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 

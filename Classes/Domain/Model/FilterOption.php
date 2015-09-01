@@ -1,7 +1,6 @@
 <?php
 namespace Ucreation\Properties\Domain\Model;
 
-
 /***************************************************************
  *
  *  Copyright notice
@@ -28,49 +27,44 @@ namespace Ucreation\Properties\Domain\Model;
  ***************************************************************/
 
 /**
- * FilterOption
+ * Class FilterOption
+ *
+ * @package Ucreation\Properties
+ * @author Arek van Schaijk <info@ucreation.nl>
  */
 class FilterOption extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
-	 * filterFor
-	 * 
 	 * @var integer
 	 */
 	protected $filterFor = 0;
 
 	/**
-	 * name
-	 * 
 	 * @var string
 	 */
 	protected $name = '';
 
 	/**
-	 * filterFrom
-	 * 
 	 * @var integer
 	 */
 	protected $filterFrom = 0;
 
 	/**
-	 * filterTo
-	 * 
 	 * @var integer
 	 */
 	protected $filterTo = 0;
 
 	/**
-	 * Returns the filterFor
+	 * Get Filter For
 	 * 
-	 * @return integer $filterFor
+	 * @return integer
 	 */
 	public function getFilterFor() {
 		return $this->filterFor;
 	}
 
 	/**
-	 * Sets the filterFor
+	 * Set Filter For
 	 * 
 	 * @param integer $filterFor
 	 * @return void
@@ -80,16 +74,16 @@ class FilterOption extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the name
+	 * Get Name
 	 * 
-	 * @return string $name
+	 * @return string
 	 */
 	public function getName() {
 		return $this->name;
 	}
 
 	/**
-	 * Sets the name
+	 * Set Name
 	 * 
 	 * @param string $name
 	 * @return void
@@ -99,16 +93,16 @@ class FilterOption extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the filterFrom
+	 * Get Filter From
 	 * 
-	 * @return integer $filterFrom
+	 * @return integer
 	 */
 	public function getFilterFrom() {
 		return $this->filterFrom;
 	}
 
 	/**
-	 * Sets the filterFrom
+	 * Set Filter From
 	 * 
 	 * @param integer $filterFrom
 	 * @return void
@@ -118,16 +112,16 @@ class FilterOption extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the filterTo
+	 * Get Filter To
 	 * 
-	 * @return integer $filterTo
+	 * @return integer
 	 */
 	public function getFilterTo() {
 		return $this->filterTo;
 	}
 
 	/**
-	 * Sets the filterTo
+	 * Set Filter To
 	 * 
 	 * @param integer $filterTo
 	 * @return void

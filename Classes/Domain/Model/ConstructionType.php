@@ -1,7 +1,6 @@
 <?php
 namespace Ucreation\Properties\Domain\Model;
 
-
 /***************************************************************
  *
  *  Copyright notice
@@ -28,7 +27,10 @@ namespace Ucreation\Properties\Domain\Model;
  ***************************************************************/
 
 /**
- * ConstructionType
+ * Class ConstructionType
+ *
+ * @package Ucreation\Properties
+ * @author Arek van Schaijk <info@ucreation.nl>
  */
 class ConstructionType extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 

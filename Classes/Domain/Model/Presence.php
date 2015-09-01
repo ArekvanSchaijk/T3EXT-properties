@@ -1,7 +1,6 @@
 <?php
 namespace Ucreation\Properties\Domain\Model;
 
-
 /***************************************************************
  *
  *  Copyright notice
@@ -28,28 +27,29 @@ namespace Ucreation\Properties\Domain\Model;
  ***************************************************************/
 
 /**
- * Presence
+ * Class Presence
+ *
+ * @package Ucreation\Properties
+ * @author Arek van Schaijk <info@ucreation.nl>
  */
 class Presence extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
-	 * name
-	 * 
 	 * @var string
 	 */
 	protected $name = '';
 
 	/**
-	 * Returns the name
+	 * Get Name
 	 * 
-	 * @return string $name
+	 * @return string
 	 */
 	public function getName() {
 		return $this->name;
 	}
 
 	/**
-	 * Sets the name
+	 * Set Name
 	 * 
 	 * @param string $name
 	 * @return void

@@ -1,7 +1,6 @@
 <?php
 namespace Ucreation\Properties\Domain\Model;
 
-
 /***************************************************************
  *
  *  Copyright notice
@@ -28,213 +27,158 @@ namespace Ucreation\Properties\Domain\Model;
  ***************************************************************/
 
 /**
- * Object
+ * Class Object
+ *
+ * @package Ucreation\Properties
+ * @author Arek van Schaijk <info@ucreation.nl>
  */
 class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
-	 * name
-	 * 
 	 * @var string
 	 */
 	protected $name = '';
 
 	/**
-	 * type
-	 * 
 	 * @var integer
 	 */
 	protected $type = 0;
 
 	/**
-	 * sort
-	 * 
 	 * @var integer
 	 */
 	protected $sort = 0;
 
 	/**
-	 * offer
-	 * 
 	 * @var integer
 	 */
 	protected $offer = 0;
 
 	/**
-	 * images
-	 * 
 	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
 	 */
 	protected $images = NULL;
 
 	/**
-	 * year
-	 * 
 	 * @var integer
 	 */
 	protected $year = 0;
 
 	/**
-	 * environmentalClass
-	 * 
 	 * @var string
 	 */
 	protected $environmentalClass = '';
 
 	/**
-	 * description
-	 * 
 	 * @var string
 	 */
 	protected $description = '';
 
 	/**
-	 * street
-	 * 
 	 * @var string
 	 */
 	protected $street = '';
 
 	/**
-	 * zipCode
-	 * 
 	 * @var string
 	 */
 	protected $zipCode = '';
 
 	/**
-	 * contact
-	 * 
 	 * @var string
 	 */
 	protected $contact = '';
 
 	/**
-	 * price
-	 * 
 	 * @var float
 	 */
 	protected $price = 0.0;
 
 	/**
-	 * rentPrice
-	 * 
 	 * @var float
 	 */
 	protected $rentPrice = 0.0;
 
 	/**
-	 * rentPriceType
-	 * 
 	 * @var string
 	 */
 	protected $rentPriceType = '';
 
 	/**
-	 * pricePerSquareMetre
-	 * 
 	 * @var float
 	 */
 	protected $pricePerSquareMetre = 0.0;
 
 	/**
-	 * lotSize
-	 * 
 	 * @var string
 	 */
 	protected $lotSize = '';
 
-	/**
-	 * livingArea
-	 * 
+	/** 
 	 * @var string
 	 */
 	protected $livingArea = '';
 
 	/**
-	 * gardenArea
-	 * 
 	 * @var string
 	 */
 	protected $gardenArea = '';
 
 	/**
-	 * numberOfRooms
-	 * 
 	 * @var integer
 	 */
 	protected $numberOfRooms = 0;
 
 	/**
-	 * latitude
-	 * 
 	 * @var string
 	 */
 	protected $latitude = '';
 
 	/**
-	 * longitude
-	 * 
 	 * @var string
 	 */
 	protected $longitude = '';
 
 	/**
-	 * latitudeLongitudeMd5
-	 * 
 	 * @var string
 	 */
 	protected $latitudeLongitudeMd5 = '';
 
 	/**
-	 * category
-	 * 
 	 * @var \Ucreation\Properties\Domain\Model\Category
 	 */
 	protected $category = NULL;
 
 	/**
-	 * presences
-	 * 
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ucreation\Properties\Domain\Model\Presence>
 	 */
 	protected $presences = NULL;
 
 	/**
-	 * town
-	 * 
 	 * @var \Ucreation\Properties\Domain\Model\Town
 	 */
 	protected $town = NULL;
 
 	/**
-	 * position
-	 * 
 	 * @var \Ucreation\Properties\Domain\Model\Position
 	 */
 	protected $position = NULL;
 
-	/**
-	 * constructionType
-	 * 
+	/** 
 	 * @var \Ucreation\Properties\Domain\Model\ConstructionType
 	 */
 	protected $constructionType = NULL;
 
 	/**
-	 * __construct
+	 * Constructor
 	 */
 	public function __construct() {
-		//Do not remove the next line: It would break the functionality
 		$this->initStorageObjects();
 	}
 
 	/**
-	 * Initializes all ObjectStorage properties
-	 * Do not modify this method!
-	 * It will be rewritten on each save in the extension builder
-	 * You may modify the constructor of this class instead
-	 * 
+	 * Init Storage Objects
+	 *
 	 * @return void
 	 */
 	protected function initStorageObjects() {
@@ -242,16 +186,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the name
+	 * Get Name
 	 * 
-	 * @return string $name
+	 * @return string
 	 */
 	public function getName() {
 		return $this->name;
 	}
 
 	/**
-	 * Sets the name
+	 * Set Name
 	 * 
 	 * @param string $name
 	 * @return void
@@ -261,16 +205,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the type
+	 * Get Type
 	 * 
-	 * @return integer $type
+	 * @return integer
 	 */
 	public function getType() {
 		return $this->type;
 	}
 
 	/**
-	 * Sets the type
+	 * Set Type
 	 * 
 	 * @param integer $type
 	 * @return void
@@ -280,16 +224,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the sort
+	 * Get Sort
 	 * 
-	 * @return integer $sort
+	 * @return integer
 	 */
 	public function getSort() {
 		return $this->sort;
 	}
 
 	/**
-	 * Sets the sort
+	 * Set Sort
 	 * 
 	 * @param integer $sort
 	 * @return void
@@ -299,16 +243,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the offer
+	 * Get Offer
 	 * 
-	 * @return integer $offer
+	 * @return integer
 	 */
 	public function getOffer() {
 		return $this->offer;
 	}
 
 	/**
-	 * Sets the offer
+	 * Set Offer
 	 * 
 	 * @param integer $offer
 	 * @return void
@@ -318,16 +262,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the images
+	 * Get Images
 	 * 
-	 * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference $images
+	 * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
 	 */
 	public function getImages() {
 		return $this->images;
 	}
 
 	/**
-	 * Sets the images
+	 * Set Images
 	 * 
 	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $images
 	 * @return void
@@ -337,16 +281,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the year
+	 * Get Year
 	 * 
-	 * @return integer $year
+	 * @return integer
 	 */
 	public function getYear() {
 		return $this->year;
 	}
 
 	/**
-	 * Sets the year
+	 * Set Year
 	 * 
 	 * @param integer $year
 	 * @return void
@@ -356,16 +300,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the environmentalClass
+	 * Get Environmental Class
 	 * 
-	 * @return string $environmentalClass
+	 * @return string
 	 */
 	public function getEnvironmentalClass() {
 		return $this->environmentalClass;
 	}
 
 	/**
-	 * Sets the environmentalClass
+	 * Set Environmental Class
 	 * 
 	 * @param string $environmentalClass
 	 * @return void
@@ -375,16 +319,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the description
+	 * Get Description
 	 * 
-	 * @return string $description
+	 * @return string
 	 */
 	public function getDescription() {
 		return $this->description;
 	}
 
 	/**
-	 * Sets the description
+	 * Set Description
 	 * 
 	 * @param string $description
 	 * @return void
@@ -394,16 +338,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the street
+	 * Get Street
 	 * 
-	 * @return string $street
+	 * @return string
 	 */
 	public function getStreet() {
 		return $this->street;
 	}
 
 	/**
-	 * Sets the street
+	 * Set Street
 	 * 
 	 * @param string $street
 	 * @return void
@@ -413,16 +357,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the zipCode
+	 * Get Zip Code
 	 * 
-	 * @return string $zipCode
+	 * @return string
 	 */
 	public function getZipCode() {
 		return $this->zipCode;
 	}
 
 	/**
-	 * Sets the zipCode
+	 * Set Zip Code
 	 * 
 	 * @param string $zipCode
 	 * @return void
@@ -432,16 +376,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the contact
+	 * Get Contact
 	 * 
-	 * @return string $contact
+	 * @return string
 	 */
 	public function getContact() {
 		return $this->contact;
 	}
 
 	/**
-	 * Sets the contact
+	 * Set Contact
 	 * 
 	 * @param string $contact
 	 * @return void
@@ -451,16 +395,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the price
+	 * Get Price
 	 * 
-	 * @return float $price
+	 * @return float
 	 */
 	public function getPrice() {
 		return $this->price;
 	}
 
 	/**
-	 * Sets the price
+	 * Set Price
 	 * 
 	 * @param float $price
 	 * @return void
@@ -470,16 +414,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the rentPrice
+	 * Get Rent Price
 	 * 
-	 * @return float $rentPrice
+	 * @return float
 	 */
 	public function getRentPrice() {
 		return $this->rentPrice;
 	}
 
 	/**
-	 * Sets the rentPrice
+	 * Set Rent Price
 	 * 
 	 * @param float $rentPrice
 	 * @return void
@@ -489,16 +433,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the rentPriceType
+	 * Get Rent Price Type
 	 * 
-	 * @return string $rentPriceType
+	 * @return string
 	 */
 	public function getRentPriceType() {
 		return $this->rentPriceType;
 	}
 
 	/**
-	 * Sets the rentPriceType
+	 * Set Rent Price Type
 	 * 
 	 * @param string $rentPriceType
 	 * @return void
@@ -508,16 +452,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the pricePerSquareMetre
+	 * Get Price Per Square Metre
 	 * 
-	 * @return float $pricePerSquareMetre
+	 * @return float
 	 */
 	public function getPricePerSquareMetre() {
 		return $this->pricePerSquareMetre;
 	}
 
 	/**
-	 * Sets the pricePerSquareMetre
+	 * Set Price Per Square Metre
 	 * 
 	 * @param float $pricePerSquareMetre
 	 * @return void
@@ -527,16 +471,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the lotSize
+	 * Get Lot Size
 	 * 
-	 * @return string $lotSize
+	 * @return string
 	 */
 	public function getLotSize() {
 		return $this->lotSize;
 	}
 
 	/**
-	 * Sets the lotSize
+	 * Set Lot Size
 	 * 
 	 * @param string $lotSize
 	 * @return void
@@ -546,16 +490,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the livingArea
+	 * Get Living Area
 	 * 
-	 * @return string $livingArea
+	 * @return string
 	 */
 	public function getLivingArea() {
 		return $this->livingArea;
 	}
 
 	/**
-	 * Sets the livingArea
+	 * Set Living Area
 	 * 
 	 * @param string $livingArea
 	 * @return void
@@ -565,16 +509,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the gardenArea
+	 * Get Garden Area
 	 * 
-	 * @return string $gardenArea
+	 * @return string
 	 */
 	public function getGardenArea() {
 		return $this->gardenArea;
 	}
 
 	/**
-	 * Sets the gardenArea
+	 * Set Garden Area
 	 * 
 	 * @param string $gardenArea
 	 * @return void
@@ -584,16 +528,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the numberOfRooms
+	 * Get Number Of Rooms
 	 * 
-	 * @return integer $numberOfRooms
+	 * @return integer
 	 */
 	public function getNumberOfRooms() {
 		return $this->numberOfRooms;
 	}
 
 	/**
-	 * Sets the numberOfRooms
+	 * Set Number Of Rooms
 	 * 
 	 * @param integer $numberOfRooms
 	 * @return void
@@ -603,18 +547,18 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the latitude
+	 * Get Latitude
 	 * 
-	 * @return string $latitude
+	 * @return string
 	 */
 	public function getLatitude() {
 		return $this->latitude;
 	}
 
 	/**
-	 * Sets the latitude
+	 * Set Latitude
 	 * 
-	 * @param string $latitude
+	 * @param string
 	 * @return void
 	 */
 	public function setLatitude($latitude) {
@@ -622,16 +566,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the longitude
+	 * Get Longitude
 	 * 
-	 * @return string $longitude
+	 * @return string
 	 */
 	public function getLongitude() {
 		return $this->longitude;
 	}
 
 	/**
-	 * Sets the longitude
+	 * Set Longitude
 	 * 
 	 * @param string $longitude
 	 * @return void
@@ -641,16 +585,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the latitudeLongitudeMd5
+	 * Get Latitude Longitude Md5
 	 * 
-	 * @return string $latitudeLongitudeMd5
+	 * @return string
 	 */
 	public function getLatitudeLongitudeMd5() {
 		return $this->latitudeLongitudeMd5;
 	}
 
 	/**
-	 * Sets the latitudeLongitudeMd5
+	 * Set Latitude Longitude Md5
 	 * 
 	 * @param string $latitudeLongitudeMd5
 	 * @return void
@@ -660,16 +604,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the category
+	 * Get Category
 	 * 
-	 * @return \Ucreation\Properties\Domain\Model\Category $category
+	 * @return \Ucreation\Properties\Domain\Model\Category
 	 */
 	public function getCategory() {
 		return $this->category;
 	}
 
 	/**
-	 * Sets the category
+	 * Set Category
 	 * 
 	 * @param \Ucreation\Properties\Domain\Model\Category $category
 	 * @return void
@@ -679,7 +623,7 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Adds a Presence
+	 * Add Presence
 	 * 
 	 * @param \Ucreation\Properties\Domain\Model\Presence $presence
 	 * @return void
@@ -689,7 +633,7 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Removes a Presence
+	 * Remove Presence
 	 * 
 	 * @param \Ucreation\Properties\Domain\Model\Presence $presenceToRemove The Presence to be removed
 	 * @return void
@@ -699,16 +643,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the presences
+	 * Get Presences
 	 * 
-	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ucreation\Properties\Domain\Model\Presence> $presences
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ucreation\Properties\Domain\Model\Presence>
 	 */
 	public function getPresences() {
 		return $this->presences;
 	}
 
 	/**
-	 * Sets the presences
+	 * Set Presences
 	 * 
 	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ucreation\Properties\Domain\Model\Presence> $presences
 	 * @return void
@@ -718,16 +662,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the town
+	 * Get Town
 	 * 
-	 * @return \Ucreation\Properties\Domain\Model\Town $town
+	 * @return \Ucreation\Properties\Domain\Model\Town
 	 */
 	public function getTown() {
 		return $this->town;
 	}
 
 	/**
-	 * Sets the town
+	 * Set Town
 	 * 
 	 * @param \Ucreation\Properties\Domain\Model\Town $town
 	 * @return void
@@ -737,16 +681,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the position
+	 * Get Position
 	 * 
-	 * @return \Ucreation\Properties\Domain\Model\Position $position
+	 * @return \Ucreation\Properties\Domain\Model\Position
 	 */
 	public function getPosition() {
 		return $this->position;
 	}
 
 	/**
-	 * Sets the position
+	 * Set Position
 	 * 
 	 * @param \Ucreation\Properties\Domain\Model\Position $position
 	 * @return void
@@ -756,16 +700,16 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the constructionType
+	 * Get ConstructionType
 	 * 
-	 * @return \Ucreation\Properties\Domain\Model\ConstructionType $constructionType
+	 * @return \Ucreation\Properties\Domain\Model\ConstructionType
 	 */
 	public function getConstructionType() {
 		return $this->constructionType;
 	}
 
 	/**
-	 * Sets the constructionType
+	 * Set ConstructionType
 	 * 
 	 * @param \Ucreation\Properties\Domain\Model\ConstructionType $constructionType
 	 * @return void

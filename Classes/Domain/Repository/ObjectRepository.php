@@ -1,7 +1,6 @@
 <?php
 namespace Ucreation\Properties\Domain\Repository;
 
-
 /***************************************************************
  *
  *  Copyright notice
@@ -28,7 +27,10 @@ namespace Ucreation\Properties\Domain\Repository;
  ***************************************************************/
 
 /**
- * The repository for Objects
+ * Class ObjectRepository
+ *
+ * @package Ucreation\Properties
+ * @author Arek van Schaijk <info@ucreation.nl>
  */
 class ObjectRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
