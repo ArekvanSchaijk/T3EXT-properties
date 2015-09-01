@@ -3,12 +3,14 @@ if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
+// Registers the Frontend Plugin
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
 	$_EXTKEY,
 	'Pi1',
 	'Properties'
 );
 
+// Registers the Backend Module
 if (TYPO3_MODE === 'BE') {
 
 	/**
@@ -31,9 +33,10 @@ if (TYPO3_MODE === 'BE') {
 
 }
 
+// Ads a static file entry
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Properties');
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_properties_domain_model_object', 'EXT:properties/Resources/Private/Language/locallang_csh_tx_properties_domain_model_object.xlf');
+// TCA configuration of table 'tx_properties_domain_model_object'
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_properties_domain_model_object');
 $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 	'ctrl' => array(
@@ -43,10 +46,8 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
-
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
@@ -62,7 +63,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 	),
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_properties_domain_model_presence', 'EXT:properties/Resources/Private/Language/locallang_csh_tx_properties_domain_model_presence.xlf');
+// TCA configuration of table 'tx_properties_domain_model_presence'
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_properties_domain_model_presence');
 $GLOBALS['TCA']['tx_properties_domain_model_presence'] = array(
 	'ctrl' => array(
@@ -72,10 +73,8 @@ $GLOBALS['TCA']['tx_properties_domain_model_presence'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
-
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
@@ -91,7 +90,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_presence'] = array(
 	),
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_properties_domain_model_category', 'EXT:properties/Resources/Private/Language/locallang_csh_tx_properties_domain_model_category.xlf');
+// TCA configuration of table 'tx_properties_domain_model_category'
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_properties_domain_model_category');
 $GLOBALS['TCA']['tx_properties_domain_model_category'] = array(
 	'ctrl' => array(
@@ -101,10 +100,8 @@ $GLOBALS['TCA']['tx_properties_domain_model_category'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
-
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
@@ -120,7 +117,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_category'] = array(
 	),
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_properties_domain_model_town', 'EXT:properties/Resources/Private/Language/locallang_csh_tx_properties_domain_model_town.xlf');
+// TCA configuration of table 'tx_properties_domain_model_town'
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_properties_domain_model_town');
 $GLOBALS['TCA']['tx_properties_domain_model_town'] = array(
 	'ctrl' => array(
@@ -130,10 +127,8 @@ $GLOBALS['TCA']['tx_properties_domain_model_town'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
-
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
@@ -149,7 +144,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_town'] = array(
 	),
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_properties_domain_model_position', 'EXT:properties/Resources/Private/Language/locallang_csh_tx_properties_domain_model_position.xlf');
+// TCA configuration of table 'tx_properties_domain_model_position'
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_properties_domain_model_position');
 $GLOBALS['TCA']['tx_properties_domain_model_position'] = array(
 	'ctrl' => array(
@@ -159,10 +154,8 @@ $GLOBALS['TCA']['tx_properties_domain_model_position'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
-
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
@@ -178,7 +171,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_position'] = array(
 	),
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_properties_domain_model_constructiontype', 'EXT:properties/Resources/Private/Language/locallang_csh_tx_properties_domain_model_constructiontype.xlf');
+// TCA configuration of table 'tx_properties_domain_model_constructiontype'
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_properties_domain_model_constructiontype');
 $GLOBALS['TCA']['tx_properties_domain_model_constructiontype'] = array(
 	'ctrl' => array(
@@ -188,10 +181,8 @@ $GLOBALS['TCA']['tx_properties_domain_model_constructiontype'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
-
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
@@ -207,7 +198,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_constructiontype'] = array(
 	),
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_properties_domain_model_filteroption', 'EXT:properties/Resources/Private/Language/locallang_csh_tx_properties_domain_model_filteroption.xlf');
+// TCA configuration of table 'tx_properties_domain_model_filteroption'
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_properties_domain_model_filteroption');
 $GLOBALS['TCA']['tx_properties_domain_model_filteroption'] = array(
 	'ctrl' => array(
@@ -217,10 +208,8 @@ $GLOBALS['TCA']['tx_properties_domain_model_filteroption'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
-
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
