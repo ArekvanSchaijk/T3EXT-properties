@@ -26,13 +26,15 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * Class Town
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class Town extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class Town extends AbstractEntity {
 
 	/**
 	 * @var string

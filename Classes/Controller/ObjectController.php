@@ -26,17 +26,17 @@ namespace Ucreation\Properties\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Domain\Model\Object;
+
 /**
  * Class ObjectController
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class ObjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+class ObjectController extends BaseController {
 
 	/**
-	 * objectRepository
-	 * 
 	 * @var \Ucreation\Properties\Domain\Repository\ObjectRepository
 	 * @inject
 	 */
@@ -58,7 +58,7 @@ class ObjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @param \Ucreation\Properties\Domain\Model\Object $object
 	 * @return void
 	 */
-	public function showAction(\Ucreation\Properties\Domain\Model\Object $object) {
+	public function showAction(Object $object = NULL) {
 		$this->view->assign('object', $object);
 	}
 

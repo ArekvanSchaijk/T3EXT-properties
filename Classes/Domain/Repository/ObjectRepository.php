@@ -26,13 +26,14 @@ namespace Ucreation\Properties\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Persistence\Repository;
+
 /**
  * Class ObjectRepository
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class ObjectRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
-
+class ObjectRepository extends Repository {
 	
 }

@@ -26,13 +26,17 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+
 /**
  * Class Object
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class Object extends AbstractEntity {
 
 	/**
 	 * @var string
@@ -182,7 +186,7 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @return void
 	 */
 	protected function initStorageObjects() {
-		$this->presences = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$this->presences = new ObjectStorage();
 	}
 
 	/**
@@ -276,7 +280,7 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $images
 	 * @return void
 	 */
-	public function setImages(\TYPO3\CMS\Extbase\Domain\Model\FileReference $images) {
+	public function setImages(FileReference $images) {
 		$this->images = $images;
 	}
 
@@ -618,7 +622,7 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @param \Ucreation\Properties\Domain\Model\Category $category
 	 * @return void
 	 */
-	public function setCategory(\Ucreation\Properties\Domain\Model\Category $category) {
+	public function setCategory(Category $category) {
 		$this->category = $category;
 	}
 
@@ -628,7 +632,7 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @param \Ucreation\Properties\Domain\Model\Presence $presence
 	 * @return void
 	 */
-	public function addPresence(\Ucreation\Properties\Domain\Model\Presence $presence) {
+	public function addPresence(Presence $presence) {
 		$this->presences->attach($presence);
 	}
 
@@ -638,7 +642,7 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @param \Ucreation\Properties\Domain\Model\Presence $presenceToRemove The Presence to be removed
 	 * @return void
 	 */
-	public function removePresence(\Ucreation\Properties\Domain\Model\Presence $presenceToRemove) {
+	public function removePresence(Presence $presenceToRemove) {
 		$this->presences->detach($presenceToRemove);
 	}
 
@@ -657,7 +661,7 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ucreation\Properties\Domain\Model\Presence> $presences
 	 * @return void
 	 */
-	public function setPresences(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $presences) {
+	public function setPresences(ObjectStorage $presences) {
 		$this->presences = $presences;
 	}
 
@@ -676,7 +680,7 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @param \Ucreation\Properties\Domain\Model\Town $town
 	 * @return void
 	 */
-	public function setTown(\Ucreation\Properties\Domain\Model\Town $town) {
+	public function setTown(Town $town) {
 		$this->town = $town;
 	}
 
@@ -695,7 +699,7 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @param \Ucreation\Properties\Domain\Model\Position $position
 	 * @return void
 	 */
-	public function setPosition(\Ucreation\Properties\Domain\Model\Position $position) {
+	public function setPosition(Position $position) {
 		$this->position = $position;
 	}
 
@@ -714,7 +718,7 @@ class Object extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @param \Ucreation\Properties\Domain\Model\ConstructionType $constructionType
 	 * @return void
 	 */
-	public function setConstructionType(\Ucreation\Properties\Domain\Model\ConstructionType $constructionType) {
+	public function setConstructionType(ConstructionType $constructionType) {
 		$this->constructionType = $constructionType;
 	}
 
