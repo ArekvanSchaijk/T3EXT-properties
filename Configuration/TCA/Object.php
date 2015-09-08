@@ -400,10 +400,23 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.accessibility',
 			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
-				'type' => 'input',
-				'size' => 30,
-				'eval' => 'trim'
-			),
+				'type' => 'select',
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.accessibility.0', 0),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.accessibility.1',
+						\Ucreation\Properties\Domain\Model\Object::ACCESSIBILITY_CUSTOM,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.accessibility.2',
+						\Ucreation\Properties\Domain\Model\Object::ACCESSIBILITY_DISABILITY
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.accessibility.3',
+						\Ucreation\Properties\Domain\Model\Object::ACCESSIBILITY_SENIORS
+					),
+				)
+			)
 		),
 		'price_per_square_metre' => array(
 			'exclude' => 1,

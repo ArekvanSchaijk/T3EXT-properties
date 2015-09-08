@@ -147,6 +147,18 @@
 			<trans-unit id="tx_properties_domain_model_object.accessibility">
 				<source>Accessibility</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.accessibility.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.accessibility.1">
+				<source>Custom Home</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.accessibility.2">
+				<source>Disability Home</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.accessibility.3">
+				<source>Seniors Home</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.price_per_square_metre">
 				<source>Price Per Square Metre</source>
 			</trans-unit>
