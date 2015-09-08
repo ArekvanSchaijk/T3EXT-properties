@@ -41,21 +41,15 @@ class Object extends AbstractEntity {
 	/**
 	 * @const integer
 	 */
-	const	OFFER_SALE = 1,
-			OFFER_RENT = 2,
-			OFFER_BOTH = 3;
+	const	TYPE_BUILDING			= 1,
+			TYPE_LOT				= 2,
 			
-	/**
-	 * @const integer
-	 */
-	const	TYPE_BUILDING	= 1,
-			TYPE_LOT		= 2;
+			TYPE_BUILDING_NEW		= 1,
+			TYPE_BUILDING_EXISTING	= 2,
 			
-	/**
-	 * @const integer
-	 */		
-	const	TYPE_BUILDING_NEW		= 1,
-			TYPE_BUILDING_EXISTING	= 2;
+			OFFER_SALE				= 1,
+			OFFER_RENT				= 2,
+			OFFER_BOTH				= 3;
 
 	/**
 	 * @var string
@@ -131,6 +125,36 @@ class Object extends AbstractEntity {
 	 * @var string
 	 */
 	protected $rentPriceType = '';
+
+	/**
+	 * @var integer
+	 */
+	protected $rentAvailability = 0;
+
+	/**
+	 * @var integer
+	 */
+	protected $rentWait = 0;
+
+	/**
+	 * @var integer
+	 */
+	protected $rentAvailableDate = 0;
+	
+	/**
+	 * @var integer
+	 */
+	protected $rentalAgreement = 0;
+	
+	/**
+	 * @var integer
+	 */
+	protected $leaseConditions = 0;
+	
+	/**
+	 * @var integer
+	 */
+	protected $accessibility = 0;
 
 	/**
 	 * @var float
@@ -496,6 +520,120 @@ class Object extends AbstractEntity {
 	 */
 	public function setRentPriceType($rentPriceType) {
 		$this->rentPriceType = $rentPriceType;
+	}
+	
+	/**
+	 * Get Rent Availability
+	 *
+	 * @return integer
+	 */
+	public function getRentAvailability() {
+		return $this->rentAvailability;
+	}
+	
+	/**
+	 * Set Rent Availability
+	 *
+	 * @param integer $rentAvailability
+	 * @return void
+	 */
+	public function setRentAvailability($rentAvailability) {
+		$this->rentAvailability = $rentAvailability;
+	}
+	
+	/**
+	 * Get Rent Wait
+	 *
+	 * @return integer
+	 */
+	public function getRentWait() {
+		return $this->rentWait;	
+	}
+	
+	/**
+	 * Set Rent Wait
+	 *
+	 * @param integer $rentWait
+	 * @return void
+	 */
+	public function setRentWait($rentWait) {
+		$this->rentWait = $rentWait;	
+	}
+	
+	/**
+	 * Get Rent Available Date
+	 *
+	 * @return integer
+	 */
+	public function getRentAvailableDate() {
+		return $this->rentAvailableDate;	
+	}
+	
+	/**
+	 * Set Rent Available Date
+	 *
+	 * @param integer $rentAvailableDate
+	 * @return void
+	 */
+	public function setRentAvailableDate($rentAvailableDate) {
+		$this->rentAvailableDate = $rentAvailableDate;	
+	}
+	
+	/**
+	 * Get Rental Agreement
+	 *
+	 * @return integer
+	 */
+	public function getRentalAgreement() {
+		return $this->rentalAgreement;	
+	}
+	
+	/**
+	 * Set Rental Agreement
+	 *
+	 * @param integer $rentalAgreement
+	 * @return void
+	 */
+	public function setRentalAgreement($rentalAgreement) {
+		$this->rentalAgreement = $rentalAgreement;	
+	}
+	
+	/**
+	 * Get Lease Conditions
+	 *
+	 * @return integer
+	 */
+	public function getLeaseConditions() {
+		return $this->leaseConditions;	
+	}
+	
+	/**
+	 * Set Lease Conditions
+	 *
+	 * @param integer $leaseConditions
+	 * @return void
+	 */
+	public function setLeaseConditions($leaseConditions) {
+		$this->leaseConditions = $leaseConditions;	
+	}
+	
+	/**
+	 * Get Accessibility
+	 *
+	 * @return integer
+	 */
+	public function getAccessibility() {
+		return $this->accessibility;	
+	}
+	
+	/**
+	 * Set Accessibility
+	 *
+	 * @param integer $accessibility
+	 * @return void
+	 */
+	public function setAccessibility($accessibility) {
+		$this->accessibility = $accessibility;	
 	}
 
 	/**

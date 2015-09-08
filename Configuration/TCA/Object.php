@@ -8,10 +8,10 @@ $GLOBALS['TCA']['tx_properties_domain_model_object']['ctrl']['requestUpdate'] = 
 $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 	'ctrl' => $GLOBALS['TCA']['tx_properties_domain_model_object']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, type, type_building, offer, sort, images, year, environmental_class, description, street, zip_code, contact, price, rent_price, rent_price_type, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, latitude, longitude, latitude_longitude_md5, category, presences, town, position, construction_type',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, type, type_building, offer, sort, images, year, environmental_class, description, street, zip_code, contact, price, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, latitude, longitude, latitude_longitude_md5, category, presences, town, position, construction_type',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, name, type, type_building, offer, sort, images, year, environmental_class, description;;;richtext:rte_transform[mode=ts_links], street, zip_code, contact, price, rent_price, rent_price_type, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, latitude, longitude, latitude_longitude_md5, category, presences, town, position, construction_type, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, name, type, type_building, offer, sort, images, year, environmental_class, description;;;richtext:rte_transform[mode=ts_links], street, zip_code, contact, price, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, latitude, longitude, latitude_longitude_md5, category, presences, town, position, construction_type, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 	),
@@ -280,6 +280,66 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'rent_price_type' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_type',
+			'displayCond' => 'FIELD:type:>:0',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			),
+		),
+		'rent_availability' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_availability',
+			'displayCond' => 'FIELD:type:>:0',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			),
+		),
+		'rent_wait' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_wait',
+			'displayCond' => 'FIELD:type:>:0',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			),
+		),
+		'rent_available_date' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_available_date',
+			'displayCond' => 'FIELD:type:>:0',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			),
+		),
+		'rental_agreement' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rental_agreement',
+			'displayCond' => 'FIELD:type:>:0',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			),
+		),
+		'lease_conditions' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.lease_conditions',
+			'displayCond' => 'FIELD:type:>:0',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			),
+		),
+		'accessibility' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.accessibility',
 			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
