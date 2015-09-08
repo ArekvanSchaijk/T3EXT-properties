@@ -12,6 +12,15 @@
 			<trans-unit id="tx_properties_domain_model_object.type">
 				<source>Type</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type.1">
+				<source>Building</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type.2">
+				<source>Lot</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.sort">
 				<source>Sort</source>
 			</trans-unit>

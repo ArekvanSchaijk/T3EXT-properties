@@ -3,6 +3,9 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
+
+$GLOBALS['TCA']['tx_properties_domain_model_object']['ctrl']['requestUpdate'] = 'type';
+
 $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 	'ctrl' => $GLOBALS['TCA']['tx_properties_domain_model_object']['ctrl'],
 	'interface' => array(
@@ -98,21 +101,31 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
-				'eval' => 'trim'
+				'eval' => 'trim,required'
 			),
 		),
 		'type' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.type',
 			'config' => array(
-				'type' => 'input',
-				'size' => 4,
-				'eval' => 'int'
+				'type' => 'select',
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.type.0', 0),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.type.1',
+						\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.type.2',
+						\Ucreation\Properties\Domain\Model\Object::TYPE_LOT,
+					),
+				)
 			)
 		),
 		'sort' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.sort',
+			'displayCond' => 'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
 			'config' => array(
 				'type' => 'input',
 				'size' => 4,
@@ -122,6 +135,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'offer' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.offer',
+			'displayCond' => 'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
 			'config' => array(
 				'type' => 'select',
 				'items' => array(
@@ -144,15 +158,19 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'images' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.images',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
 				'images',
-				array('maxitems' => 1),
+				array(
+					'maxitems' => 20
+				),
 				$GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
 			),
 		),
 		'year' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.year',
+			'displayCond' => 'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
 			'config' => array(
 				'type' => 'input',
 				'size' => 4,
@@ -162,6 +180,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'environmental_class' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.environmental_class',
+			'displayCond' => 'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -171,6 +190,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'description' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.description',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'text',
 				'cols' => 40,
@@ -191,6 +211,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'street' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.street',
+			'displayCond' => 'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -200,6 +221,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'zip_code' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.zip_code',
+			'displayCond' => 'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -209,6 +231,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'contact' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.contact',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'text',
 				'cols' => 40,
@@ -219,6 +242,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'price' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.price',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -228,6 +252,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'rent_price' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -237,6 +262,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'rent_price_type' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_type',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -246,6 +272,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'price_per_square_metre' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.price_per_square_metre',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -255,6 +282,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'lot_size' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.lot_size',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -264,6 +292,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'living_area' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.living_area',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -273,6 +302,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'garden_area' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.garden_area',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -282,6 +312,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'number_of_rooms' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.number_of_rooms',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
 				'size' => 4,
@@ -291,6 +322,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'latitude' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.latitude',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -300,6 +332,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'longitude' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.longitude',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -309,6 +342,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'latitude_longitude_md5' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.latitude_longitude_md5',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -318,6 +352,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'category' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.category',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_properties_domain_model_category',
@@ -328,6 +363,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'presences' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.presences',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_properties_domain_model_presence',
@@ -347,7 +383,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 						'popup_onlyOpenIfSelected' => 1,
 						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
 						),
-					'add' => Array(
+					'add' => array(
 						'type' => 'script',
 						'title' => 'Create new',
 						'icon' => 'add.gif',
@@ -364,6 +400,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'town' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.town',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_properties_domain_model_town',
@@ -374,6 +411,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'position' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.position',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_properties_domain_model_position',
@@ -391,6 +429,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 		'construction_type' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.construction_type',
+			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_properties_domain_model_constructiontype',

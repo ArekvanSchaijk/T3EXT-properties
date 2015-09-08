@@ -44,6 +44,12 @@ class Object extends AbstractEntity {
 	const	OFFER_SALE = 1,
 			OFFER_RENT = 2,
 			OFFER_BOTH = 3;
+			
+	/**
+	 * @const integer
+	 */
+	const	TYPE_BUILDING	= 1,
+			TYPE_LOT		= 2;
 
 	/**
 	 * @var string
