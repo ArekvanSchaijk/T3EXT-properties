@@ -292,20 +292,54 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_availability',
 			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
-				'type' => 'input',
-				'size' => 30,
-				'eval' => 'trim'
-			),
+				'type' => 'select',
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_availability.0', 0),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_availability.1',
+						\Ucreation\Properties\Domain\Model\Object::RENT_AVAILABILITY_IMMEDIATELY,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_availability.2',
+						\Ucreation\Properties\Domain\Model\Object::RENT_AVAILABILITY_WAIT
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_availability.3',
+						\Ucreation\Properties\Domain\Model\Object::RENT_AVAILABILITY_BYDATE
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_availability.4',
+						\Ucreation\Properties\Domain\Model\Object::RENT_AVAILABILITY_INCONSULTATION
+					),
+				)
+			)
 		),
 		'rent_wait' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_wait',
 			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
-				'type' => 'input',
-				'size' => 30,
-				'eval' => 'trim'
-			),
+				'type' => 'select',
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_wait.0', 0),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_wait.1',
+						1,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_wait.2',
+						2,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_wait.3',
+						3,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_wait.4',
+						6,
+					),
+				)
+			)
 		),
 		'rent_available_date' => array(
 			'exclude' => 1,
@@ -313,8 +347,14 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
 				'type' => 'input',
-				'size' => 30,
-				'eval' => 'trim'
+				'size' => 13,
+				'max' => 20,
+				'eval' => 'date',
+				'checkbox' => 0,
+				'default' => 0,
+				'range' => array(
+					'lower' => time()
+				),
 			),
 		),
 		'rental_agreement' => array(
@@ -322,10 +362,19 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rental_agreement',
 			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
-				'type' => 'input',
-				'size' => 30,
-				'eval' => 'trim'
-			),
+				'type' => 'select',
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rental_agreement.0', 0),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rental_agreement.1',
+						\Ucreation\Properties\Domain\Model\Object::RENTAL_AGREEMENT_UNDETERMEDTIME,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rental_agreement.2',
+						\Ucreation\Properties\Domain\Model\Object::RENTAL_AGREEMENT_TEMPORARYTIME
+					),
+				)
+			)
 		),
 		'lease_conditions' => array(
 			'exclude' => 1,

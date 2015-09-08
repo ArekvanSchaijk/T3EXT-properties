@@ -41,16 +41,49 @@ class Object extends AbstractEntity {
 	/**
 	 * @const integer
 	 */
-	const	TYPE_BUILDING			= 1,
-			TYPE_LOT				= 2,
-			
-			TYPE_BUILDING_NEW		= 1,
-			TYPE_BUILDING_EXISTING	= 2,
-			
-			OFFER_SALE				= 1,
-			OFFER_RENT				= 2,
-			OFFER_BOTH				= 3;
+	const	TYPE_BUILDING = 1,
+			TYPE_LOT = 2;
+	
+	/**
+	 * @const integer
+	 */		
+	const	TYPE_BUILDING_NEW = 1,
+			TYPE_BUILDING_EXISTING = 2;
 
+	/**
+	 * @const integer
+	 */	
+	const	OFFER_SALE = 1,
+			OFFER_RENT = 2,
+			OFFER_BOTH = 3;
+			
+	/**
+	 * @const integer
+	 */
+	const	RENT_AVAILABILITY_IMMEDIATELY = 1,
+			RENT_AVAILABILITY_WAIT = 2,
+			RENT_AVAILABILITY_BYDATE = 3,
+			RENT_AVAILABILITY_INCONSULTATION = 4;
+			
+	/**
+	 * @const integer
+	 */
+	const	RENTAL_AGREEMENT_UNDETERMEDTIME = 1,
+			RENTAL_AGREEMENT_TEMPORARYTIME = 2;
+		
+	/**
+	 * @const integer
+	 */	
+	const	LEASE_CONDITION_PADDED = 1,
+			LEASE_CONDITION_FURNISHED = 2;
+			
+	/**
+	 * @const integer
+	 */
+	const	ACCESSIBILITY_CUSTOM = 1,
+			ACCESSIBILITY_DISABILITY = 2,
+			ACCESSIBILITY_SENIORS = 3;
+			
 	/**
 	 * @var string
 	 */

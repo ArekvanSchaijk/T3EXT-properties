@@ -84,14 +84,53 @@
 			<trans-unit id="tx_properties_domain_model_object.rent_availability">
 				<source>Availability</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_availability.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_availability.1">
+				<source>Immediately Available</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_availability.2">
+				<source>Wait</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_availability.3">
+				<source>By date</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_availability.4">
+				<source>In Consultation</source>
+			</trans-unit>			
 			<trans-unit id="tx_properties_domain_model_object.rent_wait">
 				<source>Wait</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_wait.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_wait.1">
+				<source>Up to 1 month</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_wait.2">
+				<source>Up to 2 months</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_wait.3">
+				<source>Up to 3 months</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_wait.4">
+				<source>Up to 6 months</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rent_available_date">
 				<source>Available date</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rental_agreement">
 				<source>Rental Agreement</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rental_agreement.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rental_agreement.1">
+				<source>Undetermined Time</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rental_agreement.2">
+				<source>Temporary Rent</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.lease_conditions">
 				<source>Lease Conditions</source>
