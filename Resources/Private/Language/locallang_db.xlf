@@ -96,17 +96,29 @@
 			<trans-unit id="tx_properties_domain_model_object.category">
 				<source>Category</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.category.0">
+				<source>-- select --</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.presences">
 				<source>Presences</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.town">
 				<source>Town</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.town.0">
+				<source>-- select --</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.position">
 				<source>Position</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.position.0">
+				<source>-- select --</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.construction_type">
 				<source>Construction Type</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.construction_type.0">
+				<source>-- select --</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_presence">
 				<source>Presence</source>

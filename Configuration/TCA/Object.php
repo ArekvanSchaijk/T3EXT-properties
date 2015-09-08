@@ -3,9 +3,8 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-
+// Request Update fields
 $GLOBALS['TCA']['tx_properties_domain_model_object']['ctrl']['requestUpdate'] = 'type';
-
 $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 	'ctrl' => $GLOBALS['TCA']['tx_properties_domain_model_object']['ctrl'],
 	'interface' => array(
@@ -358,6 +357,9 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 				'foreign_table' => 'tx_properties_domain_model_category',
 				'minitems' => 0,
 				'maxitems' => 1,
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.category.0' ,0),
+				),
 			),
 		),
 		'presences' => array(
@@ -404,8 +406,11 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_properties_domain_model_town',
-				'minitems' => 0,
+				'minitems' => 1,
 				'maxitems' => 1,
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.town.0' ,0),
+				),
 			),
 		),
 		'position' => array(
@@ -413,16 +418,12 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.position',
 			'displayCond' => 'FIELD:type:>:0',
 			'config' => array(
-				'type' => 'inline',
+				'type' => 'select',
 				'foreign_table' => 'tx_properties_domain_model_position',
 				'minitems' => 0,
 				'maxitems' => 1,
-				'appearance' => array(
-					'collapseAll' => 0,
-					'levelLinksPosition' => 'top',
-					'showSynchronizationLink' => 1,
-					'showPossibleLocalizationRecords' => 1,
-					'showAllLocalizationLink' => 1
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.construction_type.0' ,0),
 				),
 			),
 		),
@@ -435,6 +436,9 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 				'foreign_table' => 'tx_properties_domain_model_constructiontype',
 				'minitems' => 0,
 				'maxitems' => 1,
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.construction_type.0' ,0),
+				),
 			),
 		),
 	),
