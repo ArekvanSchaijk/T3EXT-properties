@@ -21,6 +21,18 @@
 			<trans-unit id="tx_properties_domain_model_object.type.2">
 				<source>Lot</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type_building">
+				<source>Type Building</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type_building.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type_building.1">
+				<source>New</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type_building.2">
+				<source>Existing</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.sort">
 				<source>Sort</source>
 			</trans-unit>

@@ -8,7 +8,7 @@ plugin.tx_properties {
 		storagePid = {$plugin.tx_properties.persistence.storagePid}
 	}
 	settings {
-	
+		
 	}
 }
 

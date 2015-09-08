@@ -8,10 +8,10 @@ $GLOBALS['TCA']['tx_properties_domain_model_object']['ctrl']['requestUpdate'] = 
 $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 	'ctrl' => $GLOBALS['TCA']['tx_properties_domain_model_object']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, type, offer, sort, images, year, environmental_class, description, street, zip_code, contact, price, rent_price, rent_price_type, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, latitude, longitude, latitude_longitude_md5, category, presences, town, position, construction_type',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, type, type_building, offer, sort, images, year, environmental_class, description, street, zip_code, contact, price, rent_price, rent_price_type, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, latitude, longitude, latitude_longitude_md5, category, presences, town, position, construction_type',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, name, type, offer, sort, images, year, environmental_class, description;;;richtext:rte_transform[mode=ts_links], street, zip_code, contact, price, rent_price, rent_price_type, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, latitude, longitude, latitude_longitude_md5, category, presences, town, position, construction_type, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, name, type, type_building, offer, sort, images, year, environmental_class, description;;;richtext:rte_transform[mode=ts_links], street, zip_code, contact, price, rent_price, rent_price_type, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, latitude, longitude, latitude_longitude_md5, category, presences, town, position, construction_type, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 	),
@@ -117,6 +117,25 @@ $GLOBALS['TCA']['tx_properties_domain_model_object'] = array(
 					array(
 						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.type.2',
 						\Ucreation\Properties\Domain\Model\Object::TYPE_LOT,
+					),
+				)
+			)
+		),
+		'type_building' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.type_building',
+			'displayCond' => 'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
+			'config' => array(
+				'type' => 'select',
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.type_building.0', 0),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.type_building.1',
+						\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING_NEW,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.type_building.2',
+						\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING_NEW,
 					),
 				)
 			)

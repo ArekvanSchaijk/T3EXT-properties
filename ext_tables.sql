@@ -8,6 +8,7 @@ CREATE TABLE tx_properties_domain_model_object (
 
 	name varchar(100) DEFAULT '' NOT NULL,
 	type tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	type_building tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	sort tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	offer tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	images int(11) unsigned NOT NULL default '0',
@@ -226,6 +227,8 @@ CREATE TABLE tx_properties_domain_model_constructiontype (
 
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
+	
+	name varchar(100) DEFAULT '' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

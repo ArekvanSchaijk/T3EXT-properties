@@ -50,6 +50,12 @@ class Object extends AbstractEntity {
 	 */
 	const	TYPE_BUILDING	= 1,
 			TYPE_LOT		= 2;
+			
+	/**
+	 * @const integer
+	 */		
+	const	TYPE_BUILDING_NEW		= 1,
+			TYPE_BUILDING_EXISTING	= 2;
 
 	/**
 	 * @var string
@@ -60,6 +66,11 @@ class Object extends AbstractEntity {
 	 * @var integer
 	 */
 	protected $type = 0;
+	
+	/**
+	 * @var integer
+	 */
+	protected $typeBuilding = 0;
 
 	/**
 	 * @var integer
@@ -238,6 +249,25 @@ class Object extends AbstractEntity {
 	 */
 	public function setType($type) {
 		$this->type = $type;
+	}
+	
+	/**
+	 * Get Type Building
+	 * 
+	 * @return integer
+	 */
+	public function getTypeBuilding() {
+		return $this->typeBuilding;
+	}
+
+	/**
+	 * Set Type Building
+	 * 
+	 * @param integer $typeBuilding
+	 * @return void
+	 */
+	public function setTypeBuilding($typeBuilding) {
+		$this->typeBuilding = $typeBuilding;
 	}
 
 	/**

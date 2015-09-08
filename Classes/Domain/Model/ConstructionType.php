@@ -36,4 +36,28 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class ConstructionType extends AbstractEntity {
 	
+	/**
+	 * @var string
+	 */
+	protected $name = '';
+
+	/**
+	 * Get Name
+	 * 
+	 * @return string
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * Set Name
+	 * 
+	 * @param string $name
+	 * @return void
+	 */
+	public function setName($name) {
+		$this->name = $name;
+	}
+	
 }
