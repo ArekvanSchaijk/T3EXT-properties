@@ -135,6 +135,15 @@
 			<trans-unit id="tx_properties_domain_model_object.lease_conditions">
 				<source>Lease Conditions</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.lease_conditions.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.lease_conditions.1">
+				<source>Padded</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.lease_conditions.2">
+				<source>Furnished</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.accessibility">
 				<source>Accessibility</source>
 			</trans-unit>
