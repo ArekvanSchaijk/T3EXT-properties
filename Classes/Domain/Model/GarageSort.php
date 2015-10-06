@@ -1,5 +1,5 @@
 <?php
-namespace Ucreation\Properties\Domain\Repository;
+namespace Ucreation\Properties\Domain\Model;
 
 /***************************************************************
  *
@@ -26,29 +26,38 @@ namespace Ucreation\Properties\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Persistence\Repository;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * Class ObjectRepository
+ * Class GarageSort
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class ObjectRepository extends Repository {
+class GarageSort extends AbstractEntity {
 	
 	/**
-	 * @var \Ucreation\Properties\Domain\Repository\CategoryRepository
-	 * @inject
+	 * @var string
 	 */
-	protected $categoryRepository = NULL;
-	
+	protected $name = '';
+
 	/**
-	 * Get Categories
-	 *
-	 * @return 
+	 * Get Name
+	 * 
+	 * @return string
 	 */
-	public function getCategories() {
-		
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * Set Name
+	 * 
+	 * @param string $name
+	 * @return void
+	 */
+	public function setName($name) {
+		$this->name = $name;
 	}
 	
 }

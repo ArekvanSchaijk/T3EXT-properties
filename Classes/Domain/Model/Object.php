@@ -41,35 +41,43 @@ class Object extends AbstractEntity {
 	/**
 	 * @const integer
 	 */
-	const	TYPE_BUILDING = 1,
+	const	TYPE_NONE = 0,	
+			TYPE_BUILDING = 1,
 			TYPE_LOT = 2;
 	
 	/**
 	 * @const integer
 	 */		
-	const	TYPE_BUILDING_NEW = 1,
+	const	TYPE_BUILDING_NONE = 0,
+			TYPE_BUILDING_NEW = 1,
 			TYPE_BUILDING_EXISTING = 2;
 
 	/**
 	 * @const integer
 	 */	
-	const	OFFER_SALE = 1,
-			OFFER_RENT = 2,
-			OFFER_BOTH = 3;
+	const	OFFER_SALE = 0,
+			OFFER_RENT = 1,
+			OFFER_BOTH = 2;
+			
+	/**
+	 * @const integer
+	 */		
+	const	RENT_PRICE_TYPE_BASIC = 0,
+			RENT_PRICE_TYPE_ALLINCLUSIVE = 1;
 			
 	/**
 	 * @const integer
 	 */
-	const	RENT_AVAILABILITY_IMMEDIATELY = 1,
-			RENT_AVAILABILITY_WAIT = 2,
-			RENT_AVAILABILITY_BYDATE = 3,
-			RENT_AVAILABILITY_INCONSULTATION = 4;
+	const	RENT_AVAILABILITY_IMMEDIATELY = 0,
+			RENT_AVAILABILITY_WAIT = 1,
+			RENT_AVAILABILITY_BYDATE = 2,
+			RENT_AVAILABILITY_INCONSULTATION = 3;
 			
 	/**
 	 * @const integer
 	 */
-	const	RENTAL_AGREEMENT_UNDETERMEDTIME = 1,
-			RENTAL_AGREEMENT_TEMPORARYTIME = 2;
+	const	RENTAL_AGREEMENT_UNDETERMEDTIME = 0,
+			RENTAL_AGREEMENT_TEMPORARYTIME = 1;
 		
 	/**
 	 * @const integer
@@ -80,10 +88,32 @@ class Object extends AbstractEntity {
 	/**
 	 * @const integer
 	 */
-	const	ACCESSIBILITY_CUSTOM = 1,
+	const	ACCESSIBILITY_NONE = 0,
+			ACCESSIBILITY_CUSTOM = 1,
 			ACCESSIBILITY_DISABILITY = 2,
 			ACCESSIBILITY_SENIORS = 3;
-			
+	
+	/**
+	 * @const integer
+	 */
+	const	ENVIRONMENTAL_CLASS_NONE = 0,
+			ENVIRONMENTAL_CLASS_A = 10,
+			ENVIRONMENTAL_CLASS_B = 20,
+			ENVIRONMENTAL_CLASS_C = 30,
+			ENVIRONMENTAL_CLASS_D = 40,
+			ENVIRONMENTAL_CLASS_E = 50,
+			ENVIRONMENTAL_CLASS_F = 60,
+			ENVIRONMENTAL_CLASS_G = 70;
+		
+	/**
+	 * @const integer
+	 */	
+	const	GARDEN_POSITION_NONE = 0,
+			GARDEN_POSITION_NORTH = 1,
+			GARDEN_POSITION_WEST = 2,
+			GARDEN_POSITION_SOUTH = 3,
+			GARDEN_POSITION_EAST = 4;
+	
 	/**
 	 * @var string
 	 */
@@ -92,12 +122,12 @@ class Object extends AbstractEntity {
 	/**
 	 * @var integer
 	 */
-	protected $type = 0;
+	protected $type = self::TYPE_NONE;
 	
 	/**
 	 * @var integer
 	 */
-	protected $typeBuilding = 0;
+	protected $typeBuilding = self::TYPE_BUILDING_NONE;
 
 	/**
 	 * @var integer
@@ -107,7 +137,7 @@ class Object extends AbstractEntity {
 	/**
 	 * @var integer
 	 */
-	protected $offer = 0;
+	protected $offer = self::OFFER_SALE;
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
@@ -120,9 +150,9 @@ class Object extends AbstractEntity {
 	protected $year = 0;
 
 	/**
-	 * @var string
+	 * @var integer
 	 */
-	protected $environmentalClass = '';
+	protected $environmentalClass = self::ENVIRONMENTAL_CLASS_NONE;
 
 	/**
 	 * @var string
@@ -133,6 +163,11 @@ class Object extends AbstractEntity {
 	 * @var string
 	 */
 	protected $street = '';
+	
+	/**
+	 * @var string
+	 */
+	protected $streetNumber = '';
 
 	/**
 	 * @var string
@@ -157,12 +192,12 @@ class Object extends AbstractEntity {
 	/**
 	 * @var string
 	 */
-	protected $rentPriceType = '';
+	protected $rentPriceType = self::RENT_PRICE_TYPE_BASIC;
 
 	/**
 	 * @var integer
 	 */
-	protected $rentAvailability = 0;
+	protected $rentAvailability = self::RENT_AVAILABILITY_IMMEDIATELY;
 
 	/**
 	 * @var integer
@@ -177,7 +212,7 @@ class Object extends AbstractEntity {
 	/**
 	 * @var integer
 	 */
-	protected $rentalAgreement = 0;
+	protected $rentalAgreement = self::RENTAL_AGREEMENT_UNDETERMEDTIME;
 	
 	/**
 	 * @var integer
@@ -187,7 +222,7 @@ class Object extends AbstractEntity {
 	/**
 	 * @var integer
 	 */
-	protected $accessibility = 0;
+	protected $accessibility = self::ACCESSIBILITY_NONE;
 
 	/**
 	 * @var float
@@ -213,6 +248,11 @@ class Object extends AbstractEntity {
 	 * @var integer
 	 */
 	protected $numberOfRooms = 0;
+	
+	/**
+	 * @var integer
+	 */
+	protected $numberOfBedooms = 0;
 
 	/**
 	 * @var string
@@ -248,11 +288,31 @@ class Object extends AbstractEntity {
 	 * @var \Ucreation\Properties\Domain\Model\Position
 	 */
 	protected $position = NULL;
+	
+	/**
+	 * @var integer
+	 */
+	protected $gardenPosition = self::GARDEN_POSITION_NONE;
 
 	/** 
 	 * @var \Ucreation\Properties\Domain\Model\ConstructionType
 	 */
 	protected $constructionType = NULL;
+	
+	/** 
+	 * @var boolean
+	 */
+	protected $garage = FALSE;
+	
+	/**
+	 * @var integer
+	 */
+	protected $garageCapacity = 0;
+	
+	/** 
+	 * @var \Ucreation\Properties\Domain\Model\GarageSort
+	 */
+	protected $garageSort = NULL;
 
 	/**
 	 * Constructor
@@ -268,6 +328,30 @@ class Object extends AbstractEntity {
 	 */
 	protected function initStorageObjects() {
 		$this->presences = new ObjectStorage();
+	}
+	
+	/**
+	 * Is Sale
+	 *
+	 * @return boolean
+	 */
+	public function isSale() {
+		if ($this->offer == self::OFFER_SALE || self:: $this->offer == self::OFFER_BOTH) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	
+	/**
+	 * Is Rent
+	 *
+	 * @return boolean
+	 */
+	public function isRent() {
+		if ($this->offer == self::OFFER_RENT || self:: $this->offer == self::OFFER_BOTH) {
+			return TRUE;
+		}
+		return FALSE;
 	}
 
 	/**
@@ -406,7 +490,7 @@ class Object extends AbstractEntity {
 	/**
 	 * Get Environmental Class
 	 * 
-	 * @return string
+	 * @return integer
 	 */
 	public function getEnvironmentalClass() {
 		return $this->environmentalClass;
@@ -415,7 +499,7 @@ class Object extends AbstractEntity {
 	/**
 	 * Set Environmental Class
 	 * 
-	 * @param string $environmentalClass
+	 * @param integer $environmentalClass
 	 * @return void
 	 */
 	public function setEnvironmentalClass($environmentalClass) {
@@ -458,6 +542,25 @@ class Object extends AbstractEntity {
 	 */
 	public function setStreet($street) {
 		$this->street = $street;
+	}
+	
+	/**
+	 * Get Street Number
+	 * 
+	 * @return string
+	 */
+	public function getStreetNumber() {
+		return $this->street;
+	}
+
+	/**
+	 * Set Street Number
+	 * 
+	 * @param string $streetNumber
+	 * @return void
+	 */
+	public function setStreetNumber($streetNumber) {
+		$this->streetNumber = $streetNumber;
 	}
 
 	/**
@@ -763,6 +866,25 @@ class Object extends AbstractEntity {
 	public function setNumberOfRooms($numberOfRooms) {
 		$this->numberOfRooms = $numberOfRooms;
 	}
+	
+	/**
+	 * Get Number Of Bedrooms
+	 * 
+	 * @return integer
+	 */
+	public function getNumberOfBedrooms() {
+		return $this->numberOfBedrooms;
+	}
+
+	/**
+	 * Set Number Of Bedrooms
+	 * 
+	 * @param integer $numberOfBedrooms
+	 * @return void
+	 */
+	public function setNumberOfBedrooms($numberOfBedrooms) {
+		$this->numberOfBedrooms = $numberOfBedrooms;
+	}
 
 	/**
 	 * Get Latitude
@@ -918,7 +1040,26 @@ class Object extends AbstractEntity {
 	}
 
 	/**
-	 * Get ConstructionType
+	 * Get Garden Position
+	 * 
+	 * @return integer
+	 */
+	public function getGardenPosition() {
+		return $this->gardenPosition;
+	}
+
+	/**
+	 * Set Garden Position
+	 * 
+	 * @param integer $gardenPosition
+	 * @return void
+	 */
+	public function setGardenPosition($gardenPosition) {
+		$this->gardenPosition = $gardenPosition;
+	}
+
+	/**
+	 * Get Construction Type
 	 * 
 	 * @return \Ucreation\Properties\Domain\Model\ConstructionType
 	 */
@@ -927,13 +1068,70 @@ class Object extends AbstractEntity {
 	}
 
 	/**
-	 * Set ConstructionType
+	 * Set Construction Type
 	 * 
 	 * @param \Ucreation\Properties\Domain\Model\ConstructionType $constructionType
 	 * @return void
 	 */
 	public function setConstructionType(ConstructionType $constructionType) {
 		$this->constructionType = $constructionType;
+	}
+	
+	/**
+	 * Get Garage
+	 * 
+	 * @return boolean
+	 */
+	public function getGarage() {
+		return $this->garage;
+	}
+
+	/**
+	 * Set Garage
+	 * 
+	 * @param boolean $garage
+	 * @return void
+	 */
+	public function setGarage($garage) {
+		$this->garage = $garage;
+	}
+	
+	/**
+	 * Get Garage Capacity
+	 * 
+	 * @return boolean
+	 */
+	public function getGarageCapacity() {
+		return $this->garageCapacity;
+	}
+
+	/**
+	 * Set Garage Capacity
+	 * 
+	 * @param boolean $garageCapacity
+	 * @return void
+	 */
+	public function setGarageCapacity($garageCapacity) {
+		$this->garageCapacity = $garageCapacity;
+	}
+
+	/**
+	 * Get Garage Sort
+	 * 
+	 * @return \Ucreation\Properties\Domain\Model\GarageSort
+	 */
+	public function getGarageSort() {
+		return $this->garageSort;
+	}
+
+	/**
+	 * Set Garage Sort
+	 * 
+	 * @param \Ucreation\Properties\Domain\Model\GarageSort $garageSort
+	 * @return void
+	 */
+	public function setGarageSort(GarageSort $garageSort) {
+		$this->garageSort = $garageSort;
 	}
 
 }

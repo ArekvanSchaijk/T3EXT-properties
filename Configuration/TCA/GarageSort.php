@@ -3,8 +3,8 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$GLOBALS['TCA']['tx_properties_domain_model_constructiontype'] = array(
-	'ctrl' => $GLOBALS['TCA']['tx_properties_domain_model_constructiontype']['ctrl'],
+$GLOBALS['TCA']['tx_properties_domain_model_garagesort'] = array(
+	'ctrl' => $GLOBALS['TCA']['tx_properties_domain_model_garagesort']['ctrl'],
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name',
 	),
@@ -36,8 +36,8 @@ $GLOBALS['TCA']['tx_properties_domain_model_constructiontype'] = array(
 				'items' => array(
 					array('', 0),
 				),
-				'foreign_table' => 'tx_properties_domain_model_constructiontype',
-				'foreign_table_where' => 'AND tx_properties_domain_model_constructiontype.pid=###CURRENT_PID### AND tx_properties_domain_model_constructiontype.sys_language_uid IN (-1,0)',
+				'foreign_table' => 'tx_properties_domain_model_garagesort',
+				'foreign_table_where' => 'AND tx_properties_domain_model_garagesort.pid=###CURRENT_PID### AND tx_properties_domain_model_garagesort.sys_language_uid IN (-1,0)',
 			),
 		),
 		'l10n_diffsource' => array(
@@ -94,7 +94,7 @@ $GLOBALS['TCA']['tx_properties_domain_model_constructiontype'] = array(
 		),
 		'name' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_constructiontype.name',
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_garagesort.name',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,

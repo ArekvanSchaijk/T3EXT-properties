@@ -12,6 +12,6 @@ if (!defined('TYPO3_MODE')) {
 		
 	),
 	array(
-		'Object' => '',	
+		'Object' => 'list, show',	
 	)
 );

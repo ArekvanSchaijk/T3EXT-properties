@@ -29,26 +29,11 @@ namespace Ucreation\Properties\Domain\Repository;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- * Class ObjectRepository
+ * Class CategoryRepository
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class ObjectRepository extends Repository {
-	
-	/**
-	 * @var \Ucreation\Properties\Domain\Repository\CategoryRepository
-	 * @inject
-	 */
-	protected $categoryRepository = NULL;
-	
-	/**
-	 * Get Categories
-	 *
-	 * @return 
-	 */
-	public function getCategories() {
-		
-	}
+class CategoryRepository extends Repository {
 	
 }

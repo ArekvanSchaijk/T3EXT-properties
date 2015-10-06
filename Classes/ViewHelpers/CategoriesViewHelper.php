@@ -1,12 +1,11 @@
 <?php
-namespace Ucreation\Properties\Domain\Repository;
+namespace Ucreation\Properties\ViewHelpers;
 
 /***************************************************************
- *
  *  Copyright notice
  *
  *  (c) 2015 Arek van Schaijk <info@ucreation.nl>, Ucreation
- *
+ *  
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,30 +24,22 @@ namespace Ucreation\Properties\Domain\Repository;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
-use TYPO3\CMS\Extbase\Persistence\Repository;
-
+ 
 /**
- * Class ObjectRepository
+ * Class CategoriesViewHelper
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class ObjectRepository extends Repository {
+class CategoriesViewHelper extends ObjectViewHelper {
 	
 	/**
-	 * @var \Ucreation\Properties\Domain\Repository\CategoryRepository
-	 * @inject
-	 */
-	protected $categoryRepository = NULL;
-	
-	/**
-	 * Get Categories
+	 * Render
 	 *
-	 * @return 
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
 	 */
-	public function getCategories() {
-		
+	public function render() {
+		return $this->objectService->getCategories();
 	}
 	
 }

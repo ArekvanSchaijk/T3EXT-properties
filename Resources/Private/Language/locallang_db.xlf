@@ -3,6 +3,42 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2015-09-01T15:22:45Z" product-name="properties">
 		<header/>
 		<body>
+			<trans-unit id="tab.location">
+				<source>Location</source>
+			</trans-unit>
+			<trans-unit id="tab.object">
+				<source>Object Details</source>
+			</trans-unit>
+			<trans-unit id="tab.offer">
+				<source>Offer Details</source>
+			</trans-unit>
+			<trans-unit id="tab.media">
+				<source>Media</source>
+			</trans-unit>
+			<trans-unit id="tab.contact">
+				<source>Contact</source>
+			</trans-unit>
+			<trans-unit id="palettes.location.address">
+				<source>Address</source>
+			</trans-unit>
+			<trans-unit id="palettes.location.geodata">
+				<source>Geo Data</source>
+			</trans-unit>
+			<trans-unit id="palettes.object.surfaces">
+				<source>Surfaces (in square meters)</source>
+			</trans-unit>
+			<trans-unit id="palettes.object.property_details">
+				<source>Property Details</source>
+			</trans-unit>
+			<trans-unit id="palettes.object.garage_details">
+				<source>Garage Details</source>
+			</trans-unit>
+			<trans-unit id="palettes.offer.sale_details">
+				<source>Sale Details</source>
+			</trans-unit>
+			<trans-unit id="palettes.offer.rent_details">
+				<source>Rent Details</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object">
 				<source>Object</source>
 			</trans-unit>
@@ -37,18 +73,15 @@
 				<source>Sort</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.offer">
-				<source>Offer</source>
+				<source>Type of offer</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.offer.0">
-				<source>-- select --</source>
-			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_object.offer.1">
 				<source>For Sale</source>
 			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_object.offer.2">
+			<trans-unit id="tx_properties_domain_model_object.offer.1">
 				<source>For Rent</source>
 			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_object.offer.3">
+			<trans-unit id="tx_properties_domain_model_object.offer.2">
 				<source>For Sale or For Rent (both)</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.images">
@@ -60,14 +93,44 @@
 			<trans-unit id="tx_properties_domain_model_object.environmental_class">
 				<source>Environmental Class</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.1">
+				<source>A-label</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.2">
+				<source>B-label</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.3">
+				<source>C-label</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.4">
+				<source>D-label</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.5">
+				<source>E-label</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.6">
+				<source>F-label</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.7">
+				<source>G-label</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.description">
 				<source>Description</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.street">
 				<source>Street</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.street_number">
+				<source>Number</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.zip_code">
 				<source>Zip Code</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.country">
+				<source>Country</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.contact">
 				<source>Contact</source>
@@ -81,22 +144,25 @@
 			<trans-unit id="tx_properties_domain_model_object.rent_price_type">
 				<source>Rent Price Type</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_type.0">
+				<source>Basic</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_type.1">
+				<source>All inclusive</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rent_availability">
-				<source>Availability</source>
+				<source>Rent Availability</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rent_availability.0">
-				<source>-- select --</source>
-			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_object.rent_availability.1">
 				<source>Immediately Available</source>
 			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_object.rent_availability.2">
+			<trans-unit id="tx_properties_domain_model_object.rent_availability.1">
 				<source>Wait</source>
 			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_object.rent_availability.3">
+			<trans-unit id="tx_properties_domain_model_object.rent_availability.2">
 				<source>By date</source>
 			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_object.rent_availability.4">
+			<trans-unit id="tx_properties_domain_model_object.rent_availability.3">
 				<source>In Consultation</source>
 			</trans-unit>			
 			<trans-unit id="tx_properties_domain_model_object.rent_wait">
@@ -118,18 +184,15 @@
 				<source>Up to 6 months</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rent_available_date">
-				<source>Available date</source>
+				<source>Rent Available Date</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rental_agreement">
 				<source>Rental Agreement</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rental_agreement.0">
-				<source>-- select --</source>
-			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_object.rental_agreement.1">
 				<source>Undetermined Time</source>
 			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_object.rental_agreement.2">
+			<trans-unit id="tx_properties_domain_model_object.rental_agreement.1">
 				<source>Temporary Rent</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.lease_conditions">
@@ -174,6 +237,9 @@
 			<trans-unit id="tx_properties_domain_model_object.number_of_rooms">
 				<source>Number Of Rooms</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.number_of_bedrooms">
+				<source>Number Of Bedrooms</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.latitude">
 				<source>Latitude</source>
 			</trans-unit>
@@ -204,10 +270,43 @@
 			<trans-unit id="tx_properties_domain_model_object.position.0">
 				<source>-- select --</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_position">
+				<source>Garden Position</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_position.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_position.1">
+				<source>North</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_position.2">
+				<source>West</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_position.3">
+				<source>South</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_position.4">
+				<source>East</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.construction_type">
 				<source>Construction Type</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.construction_type.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garage">
+				<source>Garage</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garage.0">
+				<source>Check if this object has a garage</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garage_capacity">
+				<source>Garage Capacity</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garage_sort">
+				<source>Sort Garage</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garage_sort.0">
 				<source>-- select --</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_presence">
@@ -236,6 +335,15 @@
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_constructiontype">
 				<source>Construction Type</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_constructiontype.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_garagesort">
+				<source>Garage Sort</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_garagesort.name">
+				<source>Name</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_filteroption">
 				<source>Filter Option</source>

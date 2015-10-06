@@ -1,17 +1,22 @@
 plugin.tx_properties {
 	view {
-		# cat=plugin.tx_properties/file; type=string; label=Path to template root (FE)
+		# cat=plugin.tx_properties/010/a; type=string; label=Path to template root (FE)
 		templateRootPath = EXT:properties/Resources/Private/Templates/
-		# cat=plugin.tx_properties/file; type=string; label=Path to template partials (FE)
+		# cat=plugin.tx_properties/020/a; type=string; label=Path to template partials (FE)
 		partialRootPath = EXT:properties/Resources/Private/Partials/
-		# cat=plugin.tx_properties/file; type=string; label=Path to template layouts (FE)
+		# cat=plugin.tx_properties/030/a; type=string; label=Path to template layouts (FE)
 		layoutRootPath = EXT:properties/Resources/Private/Layouts/
 	}
 	persistence {
-		# cat=plugin.tx_properties//a; type=string; label=Default storage PID
-		storagePid =
+		# cat=plugin.tx_properties/040/a; type=string; label=Default storage PID
+		storagePid = 2694
 	}
 	settings {
-	
+		linkArguments {
+			# cat=plugin.tx_properties_linkarguments/010/a; type=string; label=Register:Comma seperated list of custom registred paramters
+			register = 
+			# cat=plugin.tx_properties_linkarguments/020/a; type=string; label=Ignore:Comma seperated list of parameter names that are ignored
+			ignore = 
+		}
 	}
 }

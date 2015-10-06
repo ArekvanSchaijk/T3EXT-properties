@@ -29,7 +29,7 @@ namespace Ucreation\Properties\Controller;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
- * Class ObjectController
+ * Class BaseController
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
@@ -37,35 +37,15 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class BaseController extends ActionController {
 	
 	/**
-	 * @var array
-	 */
-	protected $params = array();
-	
-	/**
 	 * Initialize Action
 	 *
 	 * @return void
 	 */
 	public function initializeAction() {
-		$this->params = $this->request->getArguments();
-	}
-	
-    /**
-     * Get TypoScript Frontend Controller
-     *
-     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-     */
-    protected function getTypoScriptFrontendController() {
-        return $GLOBALS['TSFE'];
-    }
-	
-	/**
-	 * Get Database Connection
-	 *
-	 * @return \TYPO3\CMS\Core\Database\DatabaseConnection
-	 */
-	protected function getDatabaseConnection() {
-		return $GLOBALS['TYPO3_DB'];	
+		// Checks if the extending class has a 'initialize' method and calls it
+		if (method_exists($this, 'initialize')) {
+			$this->initialize();	
+		}
 	}
 	
 }

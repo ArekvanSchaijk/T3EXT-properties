@@ -1,12 +1,11 @@
 <?php
-namespace Ucreation\Properties\Domain\Repository;
+namespace Ucreation\Properties\ViewHelpers;
 
 /***************************************************************
- *
  *  Copyright notice
  *
  *  (c) 2015 Arek van Schaijk <info@ucreation.nl>, Ucreation
- *
+ *  
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,30 +24,26 @@ namespace Ucreation\Properties\Domain\Repository;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
-use TYPO3\CMS\Extbase\Persistence\Repository;
-
+ 
 /**
- * Class ObjectRepository
+ * Class LinkArgumentViewHelper
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class ObjectRepository extends Repository {
+class LinkArgumentViewHelper extends ObjectViewHelper {
 	
 	/**
-	 * @var \Ucreation\Properties\Domain\Repository\CategoryRepository
-	 * @inject
-	 */
-	protected $categoryRepository = NULL;
-	
-	/**
-	 * Get Categories
+	 * Render
 	 *
-	 * @return 
+	 * @param string $parameterName
+	 * @return mixed
 	 */
-	public function getCategories() {
-		
+	public function render($parameterName = '') {
+		if ($parameterName) {
+			return $this->objectService->getLinkArgument($parameterName);
+		}
+		return NULL;
 	}
 	
 }

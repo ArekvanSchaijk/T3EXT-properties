@@ -1,0 +1,11 @@
+{namespace ppt=Ucreation\Properties\ViewHelpers}
+<h1>{ppt:linkArgument(parameterName:'category')}</h1>
+<f:if condition="{ppt:categories()}">
+  <ul>
+    <f:for each="{ppt:categories()}" as="category">
+      <li class="{f:if(condition: '{0:ppt:linkArgument(parameterName:'category')} == {0:category.uid}', then: 'active')}">
+        <f:link.action arguments="{category : category.uid}">{category.name}</f:link.action>
+      </li>
+    </f:for>
+  </ul>
+</f:if>

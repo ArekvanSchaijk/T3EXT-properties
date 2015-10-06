@@ -26,7 +26,9 @@ namespace Ucreation\Properties\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Ucreation\Properties\Domain\Model\Object;
+use Ucreation\Domain\Model\Object;
+use Ucreation\Properties\Utility\LinkUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class ObjectController
@@ -37,29 +39,81 @@ use Ucreation\Properties\Domain\Model\Object;
 class ObjectController extends BaseController {
 
 	/**
+	 * @var \Ucreation\Properties\Service\ObjectService
+	 * @inject
+	 */
+	protected $objectService = NULL;
+	
+	/**
 	 * @var \Ucreation\Properties\Domain\Repository\ObjectRepository
 	 * @inject
 	 */
 	protected $objectRepository = NULL;
+	
+	/**
+	 * Initialize
+	 *
+	 * @return void
+	 */
+	protected function initialize() {
+		// Prepares the object service if it's not prepared yet
+		if (!$this->objectService->isPrepared()) {
+			$this->prepareObjectService();
+		}
+	}
 
 	/**
-	 * action list
+	 * List Action
 	 * 
 	 * @return void
 	 */
 	public function listAction() {
-		$objects = $this->objectRepository->findAll();
-		$this->view->assign('objects', $objects);
+		$this->view->assign('categories', $categories);
 	}
-
+	
 	/**
-	 * action show
+	 * Show Action
 	 * 
 	 * @param \Ucreation\Properties\Domain\Model\Object $object
 	 * @return void
 	 */
 	public function showAction(Object $object = NULL) {
-		$this->view->assign('object', $object);
+		
 	}
-
+	
+	/**
+	 * Set Link Arguments
+	 *
+	 * @return void
+	 */
+	protected function setLinkArguments() {
+		$linkArguments = array();
+		// Gets the available parameter names
+		$availableParameterNames = LinkUtility::getAvailableParameterNames(
+			GeneralUtility::trimExplode(',', $this->settings['linkArguments']['ignore']),
+			GeneralUtility::trimExplode(',', $this->settings['linkArguments']['register'])
+		);
+		// Foreach trough all available parameters
+		foreach ($availableParameterNames as $parameterName) {
+			// If the request contains a argument with $parameterName then we store it back in the $linkArguments array
+			if ($this->request->hasArgument($parameterName)) {
+				$linkArguments[$parameterName] = $this->request->getArgument($parameterName);	
+			}
+		}
+		// Saves the calculated $linkArguments in the ObjectService so other instances can use it as well without calculating it them self
+		$this->objectService->setLinkArguments($linkArguments);	
+	}
+	
+	/**
+	 * Prepare Object Service
+	 *
+	 * @return void
+	 */
+	protected function prepareObjectService() {
+		// Sets the link arguments
+		$this->setLinkArguments();
+		// Lets the object service know we're done with preparing it ;)
+		$this->objectService->setPrepared(TRUE);
+	}
+	
 }
