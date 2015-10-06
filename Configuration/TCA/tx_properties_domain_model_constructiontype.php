@@ -1,15 +1,31 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-	die ('Access denied.');
-}
-
-$GLOBALS['TCA']['tx_properties_domain_model_filteroption'] = array(
-	'ctrl' => $GLOBALS['TCA']['tx_properties_domain_model_filteroption']['ctrl'],
+return array(
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_constructiontype',
+		'label' => 'name',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+		),
+		'searchFields' => '',
+		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_constructiontype.gif'
+	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, filter_for, name, filter_from, filter_to',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, filter_for, name, filter_from, filter_to, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, name, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 	),
@@ -36,8 +52,8 @@ $GLOBALS['TCA']['tx_properties_domain_model_filteroption'] = array(
 				'items' => array(
 					array('', 0),
 				),
-				'foreign_table' => 'tx_properties_domain_model_filteroption',
-				'foreign_table_where' => 'AND tx_properties_domain_model_filteroption.pid=###CURRENT_PID### AND tx_properties_domain_model_filteroption.sys_language_uid IN (-1,0)',
+				'foreign_table' => 'tx_properties_domain_model_constructiontype',
+				'foreign_table_where' => 'AND tx_properties_domain_model_constructiontype.pid=###CURRENT_PID### AND tx_properties_domain_model_constructiontype.sys_language_uid IN (-1,0)',
 			),
 		),
 		'l10n_diffsource' => array(
@@ -92,41 +108,14 @@ $GLOBALS['TCA']['tx_properties_domain_model_filteroption'] = array(
 				),
 			),
 		),
-		'filter_for' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_filteroption.filter_for',
-			'config' => array(
-				'type' => 'input',
-				'size' => 4,
-				'eval' => 'int'
-			)
-		),
 		'name' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_filteroption.name',
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_constructiontype.name',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim'
 			),
-		),
-		'filter_from' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_filteroption.filter_from',
-			'config' => array(
-				'type' => 'input',
-				'size' => 4,
-				'eval' => 'int'
-			)
-		),
-		'filter_to' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_filteroption.filter_to',
-			'config' => array(
-				'type' => 'input',
-				'size' => 4,
-				'eval' => 'int'
-			)
 		),
 	),
 );

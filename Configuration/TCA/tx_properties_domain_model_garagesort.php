@@ -1,10 +1,26 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-	die ('Access denied.');
-}
-
-$GLOBALS['TCA']['tx_properties_domain_model_presence'] = array(
-	'ctrl' => $GLOBALS['TCA']['tx_properties_domain_model_presence']['ctrl'],
+return array(
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_garagesort',
+		'label' => 'name',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+		),
+		'searchFields' => '',
+		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_garagesort.gif'
+	),
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name',
 	),
@@ -36,8 +52,8 @@ $GLOBALS['TCA']['tx_properties_domain_model_presence'] = array(
 				'items' => array(
 					array('', 0),
 				),
-				'foreign_table' => 'tx_properties_domain_model_presence',
-				'foreign_table_where' => 'AND tx_properties_domain_model_presence.pid=###CURRENT_PID### AND tx_properties_domain_model_presence.sys_language_uid IN (-1,0)',
+				'foreign_table' => 'tx_properties_domain_model_garagesort',
+				'foreign_table_where' => 'AND tx_properties_domain_model_garagesort.pid=###CURRENT_PID### AND tx_properties_domain_model_garagesort.sys_language_uid IN (-1,0)',
 			),
 		),
 		'l10n_diffsource' => array(
@@ -94,13 +110,12 @@ $GLOBALS['TCA']['tx_properties_domain_model_presence'] = array(
 		),
 		'name' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_presence.name',
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_garagesort.name',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim'
 			),
 		),
-		
 	),
 );
