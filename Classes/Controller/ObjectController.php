@@ -2,7 +2,6 @@
 namespace Ucreation\Properties\Controller;
 
 /***************************************************************
- *
  *  Copyright notice
  *
  *  (c) 2015 Arek van Schaijk <info@ucreation.nl>, Ucreation
@@ -26,7 +25,7 @@ namespace Ucreation\Properties\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Ucreation\Domain\Model\Object;
+use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -68,7 +67,8 @@ class ObjectController extends BaseController {
 	 * @return void
 	 */
 	public function listAction() {
-		$this->view->assign('categories', $categories);
+		$objects = $this->objectRepository->findAll();
+		$this->view->assign('objects', $objects);
 	}
 	
 	/**

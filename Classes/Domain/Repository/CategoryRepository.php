@@ -2,7 +2,6 @@
 namespace Ucreation\Properties\Domain\Repository;
 
 /***************************************************************
- *
  *  Copyright notice
  *
  *  (c) 2015 Arek van Schaijk <info@ucreation.nl>, Ucreation

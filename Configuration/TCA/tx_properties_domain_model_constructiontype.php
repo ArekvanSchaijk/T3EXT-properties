@@ -31,7 +31,7 @@ return array(
 	),
 	'columns' => array(
 		'sys_language_uid' => array(
-			'exclude' => 1,
+			'exclude' => FALSE,
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
 			'config' => array(
 				'type' => 'select',
@@ -45,7 +45,7 @@ return array(
 		),
 		'l10n_parent' => array(
 			'displayCond' => 'FIELD:sys_language_uid:>:0',
-			'exclude' => 1,
+			'exclude' => FALSE,
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
 			'config' => array(
 				'type' => 'select',
@@ -70,14 +70,14 @@ return array(
 			)
 		),
 		'hidden' => array(
-			'exclude' => 1,
+			'exclude' => FALSE,
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
 			'config' => array(
 				'type' => 'check',
 			),
 		),
 		'starttime' => array(
-			'exclude' => 1,
+			'exclude' => FALSE,
 			'l10n_mode' => 'mergeIfNotBlank',
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
 			'config' => array(
@@ -93,7 +93,7 @@ return array(
 			),
 		),
 		'endtime' => array(
-			'exclude' => 1,
+			'exclude' => FALSE,
 			'l10n_mode' => 'mergeIfNotBlank',
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
 			'config' => array(
@@ -109,7 +109,7 @@ return array(
 			),
 		),
 		'name' => array(
-			'exclude' => 1,
+			'exclude' => FALSE,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_constructiontype.name',
 			'config' => array(
 				'type' => 'input',

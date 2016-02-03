@@ -2,7 +2,6 @@
 namespace Ucreation\Properties\Service;
 
 /***************************************************************
- *
  *  Copyright notice
  *
  *  (c) 2015 Arek van Schaijk <info@ucreation.nl>, Ucreation
@@ -56,6 +55,12 @@ class ObjectService implements SingletonInterface {
 	 * @inject
 	 */
 	protected $categoryRepository = NULL;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @inject
+     */
+    protected $objectManager = NULL;
 	
 	/**
 	 * Is Prepared
