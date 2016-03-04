@@ -9,14 +9,16 @@ plugin.tx_properties {
 	}
 	persistence {
 		# cat=plugin.tx_properties/040/a; type=string; label=Default storage PID
-		storagePid = 2694
+		storagePid =
 	}
 	settings {
+        categories {
+            autoActivateFirstCategory = 1
+        }
 		linkArguments {
-			# cat=plugin.tx_properties_linkarguments/010/a; type=string; label=Register:Comma seperated list of custom registred paramters
-			register = 
-			# cat=plugin.tx_properties_linkarguments/020/a; type=string; label=Ignore:Comma seperated list of parameter names that are ignored
-			ignore = 
+		    ignore =
+		    register =
+		    remove =
 		}
 	}
 }

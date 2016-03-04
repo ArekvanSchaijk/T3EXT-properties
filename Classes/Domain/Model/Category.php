@@ -41,6 +41,16 @@ class Category extends AbstractEntity {
 	protected $name = '';
 
 	/**
+	 * @var bool
+	 */
+	protected $isActive = FALSE;
+
+	/**
+	 * @var array
+	 */
+	protected $linkArguments = array();
+
+	/**
 	 * Get Name
 	 * 
 	 * @return string
@@ -57,6 +67,44 @@ class Category extends AbstractEntity {
 	 */
 	public function setName($name) {
 		$this->name = $name;
+	}
+
+	/**
+	 * Get Is Active
+	 *
+	 * @return bool
+	 */
+	public function getIsActive() {
+		return $this->isActive;
+	}
+
+	/**
+	 * Set Is Active
+	 *
+	 * @param bool $isActive
+	 * @return void
+	 */
+	public function setIsActive($isActive) {
+		$this->isActive = $isActive;
+	}
+
+	/**
+	 * Get Link Arguments
+	 *
+	 * @return array
+	 */
+	public function getLinkArguments() {
+		return $this->linkArguments;
+	}
+
+	/**
+	 * Set Link Arguments
+	 *
+	 * @param array $linkArguments
+	 * @return void
+	 */
+	public function setLinkArguments(array $linkArguments) {
+		$this->linkArguments = $linkArguments;
 	}
 
 }

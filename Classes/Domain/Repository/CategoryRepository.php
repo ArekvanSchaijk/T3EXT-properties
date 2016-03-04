@@ -34,5 +34,12 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * @author Arek van Schaijk <info@ucreation.nl>
  */
 class CategoryRepository extends Repository {
-	
+
+    /**
+     * @var array
+     */
+    protected $defaultOrderings = array(
+        'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+    );
+
 }

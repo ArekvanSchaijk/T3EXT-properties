@@ -8,15 +8,32 @@ plugin.tx_properties {
 		storagePid = {$plugin.tx_properties.persistence.storagePid}
 	}
 	settings {
+		categories {
+            autoActivateFirstCategory = {$plugin.tx_properties.settings.categories.autoActivateFirstCategory}
+		}
 		linkArguments {
-			register = {$plugin.tx_properties.settings.linkArguments.register}
-			ignore = {$plugin.tx_properties.settings.linkArguments.ignore}
+		    ignore = {$plugin.tx_properties.settings.linkArguments.ignore}
+		    register = {$plugin.tx_properties.settings.linkArguments.register}
+		    remove = {$plugin.tx_properties.settings.linkArguments.remove}
 		}
 	}
 }
 
-module.tx_properties <.plugin.tx_properties
+# Actions that can be called by TypoScript
+lib.properties.listCategoriesAction = USER
+lib.properties.listCategoriesAction {
+	userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+	pluginName = Pi1
+	extensionName = Properties
+	vendorName = Ucreation
+	controller = Category
+	switchableControllerActions {
+		Category {
+			1 = listCategories
+		}
+	}
+	view =< plugin.tx_properties.view
+	settings =< plugin.tx_properties.settings
+}
 
-
-page.includeCSS.properties = EXT:properties/Resources/Public/Styles/Default.css
-page.includeJSFooter.properties = EXT:properties/Resources/Public/Scripts/Default.js
+# module.tx_properties <.plugin.tx_properties

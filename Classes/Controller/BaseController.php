@@ -34,6 +34,12 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  * @author Arek van Schaijk <info@ucreation.nl>
  */
 class BaseController extends ActionController {
+
+	/**
+	 * @var \Ucreation\Properties\Service\ObjectService
+	 * @inject
+	 */
+	protected $objectService = NULL;
 	
 	/**
 	 * Initialize Action
@@ -44,6 +50,10 @@ class BaseController extends ActionController {
 		// Checks if the extending class has a 'initialize' method and calls it
 		if (method_exists($this, 'initialize')) {
 			$this->initialize();	
+		}
+		// Prepares the object service
+		if (!$this->objectService->isPrepared()) {
+			$this->objectService->prepare($this->request, $this->settings);
 		}
 	}
 	

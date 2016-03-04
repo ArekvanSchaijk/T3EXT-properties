@@ -24,8 +24,11 @@ namespace Ucreation\Properties\Service;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
- 
+
+use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Web\Request;
 
 /**
  * Class ObjectService
@@ -41,88 +44,105 @@ class ObjectService implements SingletonInterface {
 	protected $prepared = FALSE;
 	
 	/**
+	 * @var \TYPO3\CMS\Extbase\Mvc\Web\Request
+	 */
+	protected $request = NULL;
+
+	/**
 	 * @var array
 	 */
-	protected $linkArguments = array();
-	
-	/**
-	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
-	 */
-	protected $categories = NULL;
-	
-	/**
-	 * @var \Ucreation\Properties\Domain\Repository\CategoryRepository
-	 * @inject
-	 */
-	protected $categoryRepository = NULL;
+	protected $settings = array();
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-     * @inject
-     */
-    protected $objectManager = NULL;
-	
+	/**
+	 * @var bool|array
+	 */
+	protected $linkArguments = FALSE;
+
 	/**
 	 * Is Prepared
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isPrepared() {
 		return $this->prepared;
 	}
-	
+
 	/**
-	 * Set Prepared
+	 * Prepare
 	 *
-	 * @param boolean $prepared
+	 * @param \TYPO3\CMS\Extbase\Mvc\Web\Request $request
+	 * @param array $settings
 	 * @return void
 	 */
-	public function setPrepared($prepared) {
-		$this->prepared = $prepared;
+	public function prepare(Request $request, array $settings = NULL) {
+		if (!$this->prepared) {
+			// Stores the request
+			$this->request = $request;
+			// Stores the settings
+			if ($settings) {
+				$this->settings = $settings;
+			}
+			$this->prepared = TRUE;
+		}
 	}
-	
+
+	/**
+	 * Get Active Category
+	 *
+	 * @return int
+	 */
+	public function getActiveCategoryId() {
+		if ($this->request->hasArgument(LinkUtility::CATEGORY)) {
+			if (($categoryId = $this->request->getArgument(LinkUtility::CATEGORY))) {
+				if (ctype_digit($categoryId)) {
+					return $categoryId;
+				}
+			}
+		}
+		return FALSE;
+	}
+
 	/**
 	 * Set Link Arguments
 	 *
 	 * @param array $linkArguments
-	 * @return void
-	 */
-	public function setLinkArguments(array $linkArguments) {
-		$this->linkArguments = $linkArguments;
-	}
-	
-	/**
-	 * Get Link Arguments
-	 *
 	 * @return array
 	 */
-	public function getLinkArguments() {
-		return $this->linkArguments;
-	}
-	
-	/**
-	 * Get Link Argument
-	 *
-	 * @param string $parameterName
-	 * @return mixed
-	 */
-	public function getLinkArgument($parameterName) {
-		if (isset($this->linkArguments[$parameterName])) {
-			return $this->linkArguments[$parameterName];
+	public function getLinkArguments(array $linkArguments = NULL) {
+		if ($this->linkArguments === FALSE) {
+			$this->linkArguments = array();
+			// Gets the available parameter names
+			$allowedParameters = LinkUtility::getAvailableParameterNames(
+				GeneralUtility::trimExplode(',', $this->settings['linkArguments']['ignore']),
+				GeneralUtility::trimExplode(',', $this->settings['linkArguments']['register'])
+			);
+			// Foreach trough all arguments
+			foreach ($allowedParameters as $parameterName) {
+				// If the request contains a argument with $parameterName then we store it back in the $linkArguments array
+				if ($this->request->hasArgument($parameterName)) {
+					$this->linkArguments[$parameterName] = $this->request->getArgument($parameterName);
+				}
+			}
 		}
-		return NULL;
-	}
-	
-	/**
-	 * Get Categories
-	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
-	 */
-	public function getCategories() {
-		if (is_null($this->categories)) {
-			$this->categories = $this->categoryRepository->findAll();
+		if ($linkArguments) {
+			return $this->processLinkArguments(array_merge($this->linkArguments, $linkArguments));
 		}
-		return $this->categories;
+		return $this->processLinkArguments($this->linkArguments);
 	}
-	
+
+	/**
+	 * Process Link Arguments
+	 *
+	 * @param array $linkArguments
+	 * @return array
+	 */
+	protected function processLinkArguments(array $linkArguments) {
+		if (($removeParameters = GeneralUtility::trimExplode(',', $this->settings['linkArguments']['remove']))) {
+			foreach ($removeParameters as $parameterName) {
+				unset($linkArguments[$parameterName]);
+			}
+		}
+		return $linkArguments;
+	}
+
 }

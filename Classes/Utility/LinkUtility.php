@@ -24,8 +24,6 @@ namespace Ucreation\Properties\Utility;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
- 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class LinkUtility

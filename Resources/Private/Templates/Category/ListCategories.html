@@ -1,0 +1,10 @@
+<f:if condition="{categories}">
+    <div class="tx_properties_categories">
+        <ul>
+            <f:for each="{categories}" as="category">
+                <li class="{f:if(condition: category.isActive, then: 'active', else: 'not-active')}"><f:link.action arguments="{category.linkArguments}">{category.name}</f:link.action></li>
+            </f:for>
+        </ul>
+        <div class="clearboth"> </div>
+    </div>
+</f:if>

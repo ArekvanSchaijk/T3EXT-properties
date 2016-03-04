@@ -1,36 +1,36 @@
 {namespace ppt=Ucreation\Properties\ViewHelpers}
+
 <div class="tx_properties">
 
-	<div class="tx_properties_sidebar">
-        <f:if condition="{ppt:categories()}">
-          <ul>
-            <f:for each="{ppt:categories()}" as="category">
-              <li class="{f:if(condition: '{0:ppt:linkArgument(parameterName:'category')} == {0:category.uid}', then: 'active')}">
-                <f:link.action arguments="{category : category.uid}">{category.name}</f:link.action>
-              </li>
-            </f:for>
-          </ul>
-        </f:if>
-	</div>
-    
-    <div class="tx_properties_content">
-        <f:if condition="{objects}">
-        
-        	<div class="objects">
-
-                    <f:for each="{objects}" as="object">
-                    	<div class="object">
-                        	<h2>{object.name}</h2>
-                        </div>
-                    </f:for>
-                    
-			</div>
-            
-            
-        </f:if>
+    <div class="tx_properties_wallpaper">
+        <h1>Marktbalie</h1>
+        {f:cObject(typoscriptObjectPath: 'lib.properties.listCategoriesAction')}
     </div>
-    <div class="clear"></div>
-    
-    
-    
+
+    <div class="tx_properties_wrapper">
+
+        <div class="tx_properties_sidebar">
+
+            <div class="tx_properties_filters">
+                <form method="post">
+
+                    <div class="filterOption list">
+                        <legend></legend>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="tx_properties_content">
+
+            <div class="tx_properties_toolbar">
+
+            </div>
+
+        </div>
+        <div class="clearboth"> </div>
+
+    </div>
+
 </div>

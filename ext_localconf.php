@@ -9,9 +9,11 @@ if (!defined('TYPO3_MODE')) {
 	'Pi1',
 	array(
 		'Object' => 'list, show',
+		'Category' => 'listCategories',
 		
 	),
 	array(
-		'Object' => 'list, show',	
+		'Object' => 'list, show',
+		'Category' => 'listCategories',
 	)
 );
