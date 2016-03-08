@@ -3,6 +3,18 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2015-09-01T15:22:45Z" product-name="properties">
 		<header/>
 		<body>
+			<trans-unit id="filter.type">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="filter.type.both">
+				<source>Show all</source>
+			</trans-unit>
+			<trans-unit id="filter.type.building">
+				<source>Building</source>
+			</trans-unit>
+			<trans-unit id="filter.type.lot">
+				<source>Lot</source>
+			</trans-unit>
 			<trans-unit id="filter.presences">
 				<source>Presences</source>
 			</trans-unit>

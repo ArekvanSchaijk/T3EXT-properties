@@ -36,7 +36,15 @@ class FilterUtility {
     /**
      * @const string
      */
-    const   FILTER_CATEGORY = 'category',
+    const   FILTER_TYPE = 'type',
+            FILTER_CATEGORY = 'category',
             FILTER_PRESENCES = 'presences';
+
+    /**
+     * @const int
+     */
+    const   FILTER_TYPE_BOTH = 0,
+            FILTER_TYPE_BUILDING = 1,
+            FILTER_TYPE_LOT = 2;
 
 }

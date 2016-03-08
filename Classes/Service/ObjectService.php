@@ -25,6 +25,8 @@ namespace Ucreation\Properties\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Domain\Model\Category;
+use Ucreation\Properties\Domain\Model\Presence;
 use Ucreation\Properties\Utility\FilterUtility;
 use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -62,7 +64,17 @@ class ObjectService implements SingletonInterface {
 	/**
 	 * @var array
 	 */
-	protected $registredFilters = NULL;
+	protected $registeredFilters = NULL;
+
+	/**
+	 * @var array
+	 */
+	protected $presences = NULL;
+
+	/**
+	 * @var int
+	 */
+	protected $type = NULL;
 
 	/**
 	 * Is Prepared
@@ -148,6 +160,14 @@ class ObjectService implements SingletonInterface {
 				unset($linkArguments[$parameterName]);
 			}
 		}
+		// Processes the presences
+		if ($linkArguments[LinkUtility::PRESENCES]) {
+			$linkArguments[LinkUtility::PRESENCES] = implode(',', $linkArguments[LinkUtility::PRESENCES]);
+		}
+		// Removes the type argument when it's selected as 'both'
+		if (!$linkArguments[LinkUtility::TYPE]) {
+			unset ($linkArguments[LinkUtility::TYPE]);
+		}
 		return $linkArguments;
 	}
 
@@ -157,10 +177,11 @@ class ObjectService implements SingletonInterface {
 	 * @return array
 	 */
 	public function getRegistredFilters() {
-		if (is_null($this->registredFilters)) {
-			$this->registredFilters = array();
+		if (is_null($this->registeredFilters)) {
+			$this->registeredFilters = array();
 			// Known filters array
 			$knownFilters = array(
+				FilterUtility::FILTER_TYPE,
 				FilterUtility::FILTER_CATEGORY,
 				FilterUtility::FILTER_PRESENCES,
 			);
@@ -169,11 +190,35 @@ class ObjectService implements SingletonInterface {
 			// Loops through all filters and collect all filters which are registred by setup
 			foreach ($knownFilters as $filter) {
 				if (in_array(strtolower($filter), $registredFilters)) {
-					$this->registredFilters[] = $filter;
+					$this->registeredFilters[] = $filter;
 				}
 			}
 		}
-		return $this->registredFilters;
+		return $this->registeredFilters;
+	}
+
+	/**
+	 * Get Active Type
+	 *
+	 * @return int
+	 */
+	public function getActiveType() {
+		if (is_null($this->type)) {
+			$this->type = FilterUtility::FILTER_TYPE_BOTH;
+			if ($this->request->hasArgument(LinkUtility::TYPE)) {
+				switch ($this->request->getArgument(LinkUtility::TYPE)) {
+					case FilterUtility::FILTER_TYPE_BUILDING:
+						$this->type = FilterUtility::FILTER_TYPE_BUILDING;
+						break;
+					case FilterUtility::FILTER_TYPE_LOT:
+						$this->type = FilterUtility::FILTER_TYPE_LOT;
+						break;
+					default:
+						$this->type = FilterUtility::FILTER_TYPE_BOTH;
+				}
+			}
+		}
+		return $this->type;
 	}
 
 	/**
@@ -183,6 +228,42 @@ class ObjectService implements SingletonInterface {
 	 */
 	public function isFilterRegistred($filterName) {
 		return in_array($filterName, $this->getRegistredFilters());
+	}
+
+	/**
+	 * Is Presence Active
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Presence $presence
+	 * @return bool
+	 */
+	public function isPresenceActive(Presence $presence) {
+		if (is_null($this->presences)) {
+			$this->presences = array();
+			if ($this->request->hasArgument(LinkUtility::PRESENCES)) {
+				$presences = GeneralUtility::trimExplode(',', $this->request->getArgument(LinkUtility::PRESENCES));
+				foreach ($presences as $key => $value) {
+					if (ctype_digit($value) && !in_array($value, $this->presences)) {
+						$this->presences[] = $value;
+					}
+				}
+			}
+		}
+		return in_array($presence->getUid(), $this->presences);
+	}
+
+	/**
+	 * Is Category Active
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Category $category
+	 * @return bool
+	 */
+	public function isCategoryActive(Category $category) {
+		if ($this->request->hasArgument(LinkUtility::CATEGORY)) {
+			if ($this->request->getArgument(LinkUtility::CATEGORY) == $category->getUid()) {
+				return TRUE;
+			}
+		}
+		return FALSE;
 	}
 
 }

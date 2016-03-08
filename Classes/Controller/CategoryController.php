@@ -58,14 +58,6 @@ class CategoryController extends BaseController {
                     }
                 }
             }
-            foreach ($categories as $category) {
-                if ($category->getUid() == $activeCategoryId) {
-                    $category->setIsActive(TRUE);
-                }
-                $category->setLinkArguments(
-                    $this->objectService->getLinkArguments(array(LinkUtility::CATEGORY => $category->getUid()))
-                );
-            }
         }
         $this->view->assign('categories', $categories);
     }

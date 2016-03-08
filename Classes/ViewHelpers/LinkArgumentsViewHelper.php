@@ -1,10 +1,10 @@
 <?php
-namespace Ucreation\Properties\Controller;
+namespace Ucreation\Properties\ViewHelpers;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2015 Arek van Schaijk <info@ucreation.nl>, Ucreation
+ *  (c) 2016 Arek van Schaijk <info@ucreation.nl>, Ucreation
  *
  *  All rights reserved
  *
@@ -25,41 +25,29 @@ namespace Ucreation\Properties\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * Class BaseController
+ * Class LinkArgumentsViewHelper
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class BaseController extends ActionController {
+class LinkArgumentsViewHelper extends AbstractViewHelper {
 
-	/**
-	 * @var string
-	 */
-	static protected $extName = 'Properties';
+    /**
+     * @var \Ucreation\Properties\Service\ObjectService
+     * @inject
+     */
+    protected $objectService = NULL;
 
-	/**
-	 * @var \Ucreation\Properties\Service\ObjectService
-	 * @inject
-	 */
-	protected $objectService = NULL;
-	
-	/**
-	 * Initialize Action
-	 *
-	 * @return void
-	 */
-	public function initializeAction() {
-		// Checks if the extending class has a 'initialize' method and calls it
-		if (method_exists($this, 'initialize')) {
-			$this->initialize();	
-		}
-		// Prepares the object service
-		if (!$this->objectService->isPrepared()) {
-			$this->objectService->prepare($this->request, $this->settings);
-		}
-	}
-	
+    /**
+     * Render
+     *
+     * @return array
+     */
+    public function render() {
+        return $this->objectService->getLinkArguments();
+    }
+
 }

@@ -59,6 +59,12 @@ class ObjectRepository extends Repository {
 			// Loops trough all registred filters
 			foreach ($registredFilters as $registredFilter) {
 				switch ($registredFilter) {
+					// Filter by type
+					case FilterUtility::FILTER_TYPE:
+						if (($activeType = $objectService->getActiveType())) {
+							$matchings[] = $query->equals('type', $activeType);
+						}
+						break;
 					// Filter by category
 					case FilterUtility::FILTER_CATEGORY:
 						if (($categoryId = $objectService->getActiveCategoryId())) {

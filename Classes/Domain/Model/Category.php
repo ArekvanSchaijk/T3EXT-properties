@@ -26,6 +26,7 @@ namespace Ucreation\Properties\Domain\Model;
  ***************************************************************/
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use Ucreation\Properties\Utility\LinkUtility;
 
 /**
  * Class Category
@@ -49,6 +50,12 @@ class Category extends AbstractEntity {
 	 * @var array
 	 */
 	protected $linkArguments = array();
+
+	/**
+	 * @var \Ucreation\Properties\Service\ObjectService
+	 * @inject
+	 */
+	protected $objectService = NULL;
 
 	/**
 	 * Get Name
@@ -75,17 +82,7 @@ class Category extends AbstractEntity {
 	 * @return bool
 	 */
 	public function getIsActive() {
-		return $this->isActive;
-	}
-
-	/**
-	 * Set Is Active
-	 *
-	 * @param bool $isActive
-	 * @return void
-	 */
-	public function setIsActive($isActive) {
-		$this->isActive = $isActive;
+		return $this->objectService->isCategoryActive($this);
 	}
 
 	/**
@@ -94,17 +91,7 @@ class Category extends AbstractEntity {
 	 * @return array
 	 */
 	public function getLinkArguments() {
-		return $this->linkArguments;
-	}
-
-	/**
-	 * Set Link Arguments
-	 *
-	 * @param array $linkArguments
-	 * @return void
-	 */
-	public function setLinkArguments(array $linkArguments) {
-		$this->linkArguments = $linkArguments;
+		return $this->objectService->getLinkArguments(array(LinkUtility::CATEGORY => $this->getUid()));
 	}
 
 }

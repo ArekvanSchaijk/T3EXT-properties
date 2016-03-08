@@ -51,6 +51,12 @@ class Presence extends AbstractEntity {
 	protected $isDisabled = FALSE;
 
 	/**
+	 * @var \Ucreation\Properties\Service\ObjectService
+	 * @inject
+	 */
+	protected $objectService = NULL;
+
+	/**
 	 * Get Name
 	 * 
 	 * @return string
@@ -75,17 +81,7 @@ class Presence extends AbstractEntity {
 	 * @return bool
 	 */
 	public function getIsActive() {
-		return $this->isActive;
-	}
-
-	/**
-	 * Set Is Active
-	 *
-	 * @param bool $isActive
-	 * @return void
-	 */
-	public function setIsActive($isActive) {
-		$this->isActive = $isActive;
+		return $this->objectService->isPresenceActive($this);
 	}
 
 	/**

@@ -345,21 +345,6 @@
 			<trans-unit id="tx_properties_domain_model_garagesort.name">
 				<source>Name</source>
 			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_filteroption">
-				<source>Filter Option</source>
-			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_filteroption.filter_for">
-				<source>Filter For</source>
-			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_filteroption.name">
-				<source>Name</source>
-			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_filteroption.filter_from">
-				<source>Filter From</source>
-			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_filteroption.filter_to">
-				<source>Filter To</source>
-			</trans-unit>
 		</body>
 	</file>
 </xliff>

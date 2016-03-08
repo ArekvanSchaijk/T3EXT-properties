@@ -27,6 +27,7 @@ namespace Ucreation\Properties\Controller;
 
 use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Utility\FilterUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class ObjectController
@@ -79,6 +80,9 @@ class ObjectController extends BaseController {
 	 * @return void
 	 */
 	public function filtersAction() {
+		// Filter type
+		$this->view->assign('types', $this->getObjectTypes());
+		$this->view->assign('activeType', $this->objectService->getActiveType());
 		// Filter presences
 		if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_PRESENCES)) {
 			$presences = $this->presenceRepository->findAll();
@@ -92,7 +96,21 @@ class ObjectController extends BaseController {
 	 * @return void
 	 */
 	protected function performFiltersFormPost() {
-		
+		$this->redirect(NULL, NULL, NULL, $this->objectService->getLinkArguments());
+	}
+
+	/**
+	 * Get Object Types
+	 *
+	 * @return array
+	 * @static
+	 */
+	protected function getObjectTypes() {
+		return array(
+			FilterUtility::FILTER_TYPE_BOTH => LocalizationUtility::translate('filter.type.both', static::$extName),
+			FilterUtility::FILTER_TYPE_BUILDING => LocalizationUtility::translate('filter.type.building', static::$extName),
+			FilterUtility::FILTER_TYPE_LOT => LocalizationUtility::translate('filter.type.lot', static::$extName),
+		);
 	}
 
 }

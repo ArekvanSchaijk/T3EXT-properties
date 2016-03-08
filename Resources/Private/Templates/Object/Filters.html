@@ -1,5 +1,7 @@
+{namespace ppt=Ucreation\Properties\ViewHelpers}
 <div class="tx_properties_filters">
-    <f:form action="list">
+    <f:form action="list" arguments="{ppt:LinkArguments()}">
+        <f:render partial="Object/List/Filters/Type" arguments="{types: types, activeType: activeType}" />
         <f:if condition="{presences}">
             <f:render partial="Object/List/Filters/Presences" arguments="{presences: presences}" />
         </f:if>
