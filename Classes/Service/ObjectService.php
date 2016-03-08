@@ -25,6 +25,7 @@ namespace Ucreation\Properties\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Utility\FilterUtility;
 use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -57,6 +58,11 @@ class ObjectService implements SingletonInterface {
 	 * @var bool|array
 	 */
 	protected $linkArguments = FALSE;
+
+	/**
+	 * @var array
+	 */
+	protected $registredFilters = NULL;
 
 	/**
 	 * Is Prepared
@@ -143,6 +149,40 @@ class ObjectService implements SingletonInterface {
 			}
 		}
 		return $linkArguments;
+	}
+
+	/**
+	 * Get Registred Filters
+	 *
+	 * @return array
+	 */
+	public function getRegistredFilters() {
+		if (is_null($this->registredFilters)) {
+			$this->registredFilters = array();
+			// Known filters array
+			$knownFilters = array(
+				FilterUtility::FILTER_CATEGORY,
+				FilterUtility::FILTER_PRESENCES,
+			);
+			// Gets the registred filters
+			$registredFilters = GeneralUtility::trimExplode(',', $this->settings['filters']['registred']);
+			// Loops through all filters and collect all filters which are registred by setup
+			foreach ($knownFilters as $filter) {
+				if (in_array(strtolower($filter), $registredFilters)) {
+					$this->registredFilters[] = $filter;
+				}
+			}
+		}
+		return $this->registredFilters;
+	}
+
+	/**
+	 * Is Filter Registred
+	 *
+	 * @return bool
+	 */
+	public function isFilterRegistred($filterName) {
+		return in_array($filterName, $this->getRegistredFilters());
 	}
 
 }

@@ -26,8 +26,7 @@ namespace Ucreation\Properties\Controller;
  ***************************************************************/
 
 use Ucreation\Properties\Domain\Model\Object;
-use Ucreation\Properties\Utility\LinkUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Ucreation\Properties\Utility\FilterUtility;
 
 /**
  * Class ObjectController
@@ -44,12 +43,23 @@ class ObjectController extends BaseController {
 	protected $objectRepository = NULL;
 
 	/**
+	 * @var \Ucreation\Properties\Domain\Repository\PresenceRepository
+	 * @inject
+	 */
+	protected $presenceRepository = NULL;
+
+	/**
 	 * List Action
 	 * 
 	 * @return void
 	 */
 	public function listAction() {
-		$objects = $this->objectRepository->findAll();
+		// Determines if the filter form is posted
+		if ($this->request->hasArgument('submitFilters')) {
+			$this->performFiltersFormPost();
+			exit;
+		}
+		$objects = $this->objectRepository->getFilteredObjects($this->objectService);
 		$this->view->assign('objects', $objects);
 	}
 	
@@ -60,6 +70,28 @@ class ObjectController extends BaseController {
 	 * @return void
 	 */
 	public function showAction(Object $object = NULL) {
+
+	}
+
+	/**
+	 * Filters Action
+	 *
+	 * @return void
+	 */
+	public function filtersAction() {
+		// Filter presences
+		if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_PRESENCES)) {
+			$presences = $this->presenceRepository->findAll();
+			$this->view->assign('presences', $presences);
+		}
+	}
+
+	/**
+	 * Perform Filters Form Post
+	 *
+	 * @return void
+	 */
+	protected function performFiltersFormPost() {
 		
 	}
 

@@ -16,6 +16,9 @@ plugin.tx_properties {
 		    register = {$plugin.tx_properties.settings.linkArguments.register}
 		    remove = {$plugin.tx_properties.settings.linkArguments.remove}
 		}
+		filters {
+            registred = {$plugin.tx_properties.settings.filters.registred}
+		}
 	}
 }
 
@@ -30,6 +33,22 @@ lib.properties.listCategoriesAction {
 	switchableControllerActions {
 		Category {
 			1 = listCategories
+		}
+	}
+	view =< plugin.tx_properties.view
+	settings =< plugin.tx_properties.settings
+}
+
+lib.properties.filtersAction = USER
+lib.properties.filtersAction {
+	userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+	pluginName = Pi1
+	extensionName = Properties
+	vendorName = Ucreation
+	controller = Object
+	switchableControllerActions {
+		Object {
+			1 = filters
 		}
 	}
 	view =< plugin.tx_properties.view

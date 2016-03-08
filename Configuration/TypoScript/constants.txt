@@ -20,5 +20,8 @@ plugin.tx_properties {
 		    register =
 		    remove =
 		}
+		filters {
+		    registred = category, presences
+		}
 	}
 }

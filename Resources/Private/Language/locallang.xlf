@@ -3,6 +3,12 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2015-09-01T15:22:45Z" product-name="properties">
 		<header/>
 		<body>
+			<trans-unit id="filter.presences">
+				<source>Presences</source>
+			</trans-unit>
+			<trans-unit id="filter.submit">
+				<source>Submit</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

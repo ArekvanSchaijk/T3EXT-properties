@@ -1,0 +1,10 @@
+<div class="tx_properties_filters">
+    <f:form action="list">
+        <f:if condition="{presences}">
+            <f:render partial="Object/List/Filters/Presences" arguments="{presences: presences}" />
+        </f:if>
+        <div class="postForm">
+            <f:form.submit name="submitFilters" value="{f:translate(key: 'filter.submit')}" />
+        </div>
+    </f:form>
+</div>

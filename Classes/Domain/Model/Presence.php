@@ -41,6 +41,16 @@ class Presence extends AbstractEntity {
 	protected $name = '';
 
 	/**
+	 * @var bool
+	 */
+	protected $isActive = FALSE;
+
+	/**
+	 * @var bool
+	 */
+	protected $isDisabled = FALSE;
+
+	/**
 	 * Get Name
 	 * 
 	 * @return string
@@ -57,6 +67,44 @@ class Presence extends AbstractEntity {
 	 */
 	public function setName($name) {
 		$this->name = $name;
+	}
+
+	/**
+	 * Get Is Active
+	 *
+	 * @return bool
+	 */
+	public function getIsActive() {
+		return $this->isActive;
+	}
+
+	/**
+	 * Set Is Active
+	 *
+	 * @param bool $isActive
+	 * @return void
+	 */
+	public function setIsActive($isActive) {
+		$this->isActive = $isActive;
+	}
+
+	/**
+	 * Get Is Disabled
+	 *
+	 * @return bool
+	 */
+	public function getIsDisabled() {
+		return $this->isDisabled;
+	}
+
+	/**
+	 * Set Is Disabled
+	 *
+	 * @param bool $isDisabled
+	 * @return void
+	 */
+	public function setIsDisabled($isDisabled) {
+		$this->isDisabled = $isDisabled;
 	}
 
 }

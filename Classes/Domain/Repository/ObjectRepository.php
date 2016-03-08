@@ -26,6 +26,8 @@ namespace Ucreation\Properties\Domain\Repository;
  ***************************************************************/
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
+use Ucreation\Properties\Service\ObjectService;
+use Ucreation\Properties\Utility\FilterUtility;
 
 /**
  * Class ObjectRepository
@@ -34,20 +36,47 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * @author Arek van Schaijk <info@ucreation.nl>
  */
 class ObjectRepository extends Repository {
-	
+
 	/**
-	 * @var \Ucreation\Properties\Domain\Repository\CategoryRepository
-	 * @inject
+	 * @var array
 	 */
-	protected $categoryRepository = NULL;
-	
+	protected $defaultOrderings = array(
+		'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+	);
+
 	/**
-	 * Get Categories
+	 * Get Filtered Objects
 	 *
-	 * @return 
+	 * @param ObjectService $objectService
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
 	 */
-	public function getCategories() {
-		
+	public function getFilteredObjects(ObjectService $objectService) {
+		$matchings = array();
+		// Creates an new query
+		$query = $this->createQuery();
+		// Apply filters
+		if (($registredFilters = $objectService->getRegistredFilters())) {
+			// Loops trough all registred filters
+			foreach ($registredFilters as $registredFilter) {
+				switch ($registredFilter) {
+					// Filter by category
+					case FilterUtility::FILTER_CATEGORY:
+						if (($categoryId = $objectService->getActiveCategoryId())) {
+							$matchings[] = $query->equals('category', $categoryId);
+						}
+						break;
+				}
+			}
+		}
+		// Apply the matchings
+		if ($matchings) {
+			if (count($matchings) == 1) {
+				$query->matching($matchings[0]);
+			} else {
+				$query->matching($query->logicalAnd($matchings));
+			}
+		}
+		return $query->execute();
 	}
-	
+
 }

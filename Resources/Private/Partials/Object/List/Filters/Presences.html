@@ -1,0 +1,22 @@
+<legend>{f:translate(key: 'filter.presences')}</legend>
+<div class="filterOption presences">
+    <ul>
+        <f:for each="{presences}" as="presence">
+            <f:if condition="{presence.isDisabled}">
+                <f:then>
+                    <li class="disabled"><f:form.checkbox name="presences" id="presence{presence.uid}" value="{presence.uid}" disabled="disabled" /> <label for="presence{presence.uid}">{presence.name}</label></li>
+                </f:then>
+                <f:else>
+                    <f:if condition="{presence.isActive}">
+                        <f:then>
+                            <li class="active"><f:form.checkbox name="presences" id="presence{presence.uid}" value="{presence.uid}" checked="checked" /> <label for="presence{presence.uid}">{presence.name}</label></li>
+                        </f:then>
+                        <f:else>
+                            <li><f:form.checkbox name="presences" id="presence{presence.uid}" value="{presence.uid}" /> <label for="presence{presence.uid}">{presence.name}</label></li>
+                        </f:else>
+                    </f:if>
+                </f:else>
+            </f:if>
+        </f:for>
+    </ul>
+</div>
