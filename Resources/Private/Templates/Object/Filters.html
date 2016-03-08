@@ -1,12 +1,24 @@
 {namespace ppt=Ucreation\Properties\ViewHelpers}
 <div class="tx_properties_filters">
     <f:form action="list" arguments="{ppt:LinkArguments()}">
-        <f:render partial="Object/List/Filters/Type" arguments="{types: types, activeType: activeType}" />
+        <f:if condition="{types}">
+            <f:render partial="Object/List/Filters/Type" arguments="{types: types, activeType: activeType}" />
+            <f:if condition="{offerTypes}">
+                <f:render partial="Object/List/Filters/Offer" arguments="{offerTypes: offerTypes, activeOfferType: activeOfferType}" />
+            </f:if>
+        </f:if>
+        <f:if condition="{towns}">
+            <f:render partial="Object/List/Filters/Town" arguments="{towns: towns, activeTown: activeTown}" />
+        </f:if>
+
+        <f:render partial="Object/List/Filters/Price" />
+
         <f:if condition="{presences}">
             <f:render partial="Object/List/Filters/Presences" arguments="{presences: presences}" />
         </f:if>
         <div class="postForm">
             <f:form.submit name="submitFilters" value="{f:translate(key: 'filter.submit')}" />
         </div>
+
     </f:form>
 </div>

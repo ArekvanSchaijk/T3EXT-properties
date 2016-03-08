@@ -57,14 +57,18 @@ class LinkUtility {
 	 * @const string
 	 */	
 	const	TYPE = 'type',
-			CATEGORY	= 'category',
-			PRESENCES	= 'presences';
+			OFFER = 'offer',
+			TOWN = 'town',
+			CATEGORY = 'category',
+			PRESENCES = 'presences';
 	
 	/**
 	 * @var array
 	 */
 	static protected $availableParameterNames = array(
 		self::TYPE,
+		self::OFFER,
+		self::TOWN,
 		self::CATEGORY,
 		self::PRESENCES
 	);

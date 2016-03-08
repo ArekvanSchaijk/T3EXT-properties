@@ -33,18 +33,20 @@ namespace Ucreation\Properties\Utility;
  */
 class FilterUtility {
 
-    /**
-     * @const string
-     */
-    const   FILTER_TYPE = 'type',
-            FILTER_CATEGORY = 'category',
-            FILTER_PRESENCES = 'presences';
+    const   FILTER_CATEGORY = 'category';
 
-    /**
-     * @const int
-     */
-    const   FILTER_TYPE_BOTH = 0,
+    const   FILTER_TOWN = 'town';
+
+    const   FILTER_PRESENCES = 'presences';
+
+    const   FILTER_TYPE = 'type',
+            FILTER_TYPE_BOTH = 0,
             FILTER_TYPE_BUILDING = 1,
             FILTER_TYPE_LOT = 2;
+
+    const   FILTER_OFFER = 'offer',
+            FILTER_OFFER_BOTH = 0,
+            FILTER_OFFER_SALE = 1,
+            FILTER_OFFER_RENT = 2;
 
 }

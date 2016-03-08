@@ -21,7 +21,7 @@ plugin.tx_properties {
 		    remove =
 		}
 		filters {
-		    registred = type, category, presences
+		    registred = type, offer, town, category, presences
 		}
 	}
 }

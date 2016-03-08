@@ -26,6 +26,7 @@ namespace Ucreation\Properties\Domain\Repository;
  ***************************************************************/
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
+use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Service\ObjectService;
 use Ucreation\Properties\Utility\FilterUtility;
 
@@ -48,7 +49,7 @@ class ObjectRepository extends Repository {
 	 * Get Filtered Objects
 	 *
 	 * @param ObjectService $objectService
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
 	 */
 	public function getFilteredObjects(ObjectService $objectService) {
 		$matchings = array();
@@ -59,16 +60,38 @@ class ObjectRepository extends Repository {
 			// Loops trough all registred filters
 			foreach ($registredFilters as $registredFilter) {
 				switch ($registredFilter) {
+					// Filter by category
+					case FilterUtility::FILTER_CATEGORY:
+						if (($categoryId = $objectService->getActiveCategoryId())) {
+							$matchings[] = $query->equals('category', $categoryId);
+						}
+						break;
 					// Filter by type
 					case FilterUtility::FILTER_TYPE:
 						if (($activeType = $objectService->getActiveType())) {
 							$matchings[] = $query->equals('type', $activeType);
 						}
+					// Filter by town
+					case FilterUtility::FILTER_TOWN:
+						if (($townId = $objectService->getActiveTownId())) {
+							$matchings[] = $query->equals('town', $townId);
+						}
 						break;
-					// Filter by category
-					case FilterUtility::FILTER_CATEGORY:
-						if (($categoryId = $objectService->getActiveCategoryId())) {
-							$matchings[] = $query->equals('category', $categoryId);
+					// Filter by offer
+					case FilterUtility::FILTER_OFFER:
+						if (($activeOfferType = $objectService->getActiveOfferType())) {
+							// Filter for sale only
+							if ($activeOfferType == FilterUtility::FILTER_OFFER_SALE) {
+								$matchings[] = $query->logicalOr(
+									$query->equals('offer', Object::OFFER_BOTH),
+									$query->equals('offer', Object::OFFER_SALE)
+								);
+							} else if ($activeOfferType == FilterUtility::FILTER_OFFER_RENT) {
+								$matchings[] = $query->logicalOr(
+									$query->equals('offer', Object::OFFER_BOTH),
+									$query->equals('offer', Object::OFFER_RENT)
+								);
+							}
 						}
 						break;
 				}

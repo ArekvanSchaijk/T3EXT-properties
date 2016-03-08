@@ -36,18 +36,18 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  * @author Arek van Schaijk <info@ucreation.nl>
  */
 class ObjectController extends BaseController {
-	
-	/**
-	 * @var \Ucreation\Properties\Domain\Repository\ObjectRepository
-	 * @inject
-	 */
-	protected $objectRepository = NULL;
 
 	/**
 	 * @var \Ucreation\Properties\Domain\Repository\PresenceRepository
 	 * @inject
 	 */
 	protected $presenceRepository = NULL;
+
+	/**
+	 * @var \Ucreation\Properties\Domain\Repository\TownRepository
+	 * @inject
+	 */
+	protected $townRepository = NULL;
 
 	/**
 	 * List Action
@@ -60,7 +60,7 @@ class ObjectController extends BaseController {
 			$this->performFiltersFormPost();
 			exit;
 		}
-		$objects = $this->objectRepository->getFilteredObjects($this->objectService);
+		$objects = $this->objectService->getFilteredObjects();
 		$this->view->assign('objects', $objects);
 	}
 	
@@ -81,12 +81,28 @@ class ObjectController extends BaseController {
 	 */
 	public function filtersAction() {
 		// Filter type
-		$this->view->assign('types', $this->getObjectTypes());
+		$this->view->assign('types', self::getObjectTypes());
 		$this->view->assign('activeType', $this->objectService->getActiveType());
-		// Filter presences
-		if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_PRESENCES)) {
-			$presences = $this->presenceRepository->findAll();
-			$this->view->assign('presences', $presences);
+		if ($this->objectService->getActiveType() == FilterUtility::FILTER_TYPE_BUILDING) {
+			// Filter offer
+			if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_OFFER)) {
+				$this->view->assign('offerTypes', self::getObjectOfferTypes());
+				$this->view->assign('activeOfferType', $this->objectService->getActiveOfferType());
+			}
+			// Filter presences
+			if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_PRESENCES)) {
+				$presences = $this->presenceRepository->findAll();
+				$this->view->assign('presences', $presences);
+			}
+		}
+		// Price
+		$this->view->assign('priceLowest', $this->objectService->getObjectLowestPrice());
+		$this->view->assign('priceHighest', $this->objectService->getObjectHighestPrice());
+		// Filter town
+		if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_TOWN)) {
+			$towns = $this->townRepository->findAll();
+			$this->view->assign('towns', $towns);
+			$this->view->assign('activeTown', $this->objectService->getActiveTownId());
 		}
 	}
 
@@ -105,11 +121,24 @@ class ObjectController extends BaseController {
 	 * @return array
 	 * @static
 	 */
-	protected function getObjectTypes() {
+	static protected function getObjectTypes() {
 		return array(
 			FilterUtility::FILTER_TYPE_BOTH => LocalizationUtility::translate('filter.type.both', static::$extName),
 			FilterUtility::FILTER_TYPE_BUILDING => LocalizationUtility::translate('filter.type.building', static::$extName),
 			FilterUtility::FILTER_TYPE_LOT => LocalizationUtility::translate('filter.type.lot', static::$extName),
+		);
+	}
+
+	/**
+	 * Get Object Offer Types
+	 *
+	 * @return array
+	 */
+	static protected function getObjectOfferTypes() {
+		return array(
+			FilterUtility::FILTER_OFFER_BOTH => LocalizationUtility::translate('filter.offer.both', static::$extName),
+			FilterUtility::FILTER_OFFER_SALE => LocalizationUtility::translate('filter.offer.sale', static::$extName),
+			FilterUtility::FILTER_OFFER_RENT => LocalizationUtility::translate('filter.offer.rent', static::$extName),
 		);
 	}
 

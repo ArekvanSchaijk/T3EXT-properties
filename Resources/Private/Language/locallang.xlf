@@ -15,6 +15,24 @@
 			<trans-unit id="filter.type.lot">
 				<source>Lot</source>
 			</trans-unit>
+			<trans-unit id="filter.offer">
+				<source>Kind of offer</source>
+			</trans-unit>
+			<trans-unit id="filter.offer.both">
+				<source>For Sale/For Rent</source>
+			</trans-unit>
+			<trans-unit id="filter.offer.sale">
+				<source>For Sale</source>
+			</trans-unit>
+			<trans-unit id="filter.offer.rent">
+				<source>For Rent</source>
+			</trans-unit>
+			<trans-unit id="filter.town">
+				<source>Town</source>
+			</trans-unit>
+			<trans-unit id="filter.town.0">
+				<source>Show all</source>
+			</trans-unit>
 			<trans-unit id="filter.presences">
 				<source>Presences</source>
 			</trans-unit>

@@ -26,6 +26,7 @@ namespace Ucreation\Properties\Service;
  ***************************************************************/
 
 use Ucreation\Properties\Domain\Model\Category;
+use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Domain\Model\Presence;
 use Ucreation\Properties\Utility\FilterUtility;
 use Ucreation\Properties\Utility\LinkUtility;
@@ -77,12 +78,107 @@ class ObjectService implements SingletonInterface {
 	protected $type = NULL;
 
 	/**
+	 * @var int
+	 */
+	protected $offerType = NULL;
+
+	/**
+	 * @var bool|\TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
+	 */
+	protected $objects = FALSE;
+
+	/**
+	 * @var float
+	 */
+	protected $objectLowestPrice = 0;
+
+	/**
+	 * @var float
+	 */
+	protected $objectHighestPrice = 0;
+
+	/**
+	 * @var bool
+	 */
+	protected $isObjectsProcessed = FALSE;
+
+	/**
+	 * @var \Ucreation\Properties\Domain\Repository\ObjectRepository
+	 * @inject
+	 */
+	protected $objectRepository = NULL;
+
+	/**
 	 * Is Prepared
 	 *
 	 * @return bool
 	 */
 	public function isPrepared() {
 		return $this->prepared;
+	}
+
+	/**
+	 * Get Filtered Objects
+	 *
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
+	 */
+	public function getFilteredObjects() {
+		if ($this->objects === FALSE) {
+			$this->objects = $this->objectRepository->getFilteredObjects($this);
+		}
+		return $this->objects;
+	}
+
+	/**
+	 * Get Object Lowest Price
+	 *
+	 * @return float
+	 */
+	public function getObjectLowestPrice() {
+		$this->processObjects();
+		return $this->objectLowestPrice;
+	}
+
+	/**
+	 * Get Object Highest Price
+	 *
+	 * @return float
+	 */
+	public function getObjectHighestPrice() {
+		$this->processObjects();
+		return $this->objectHighestPrice;
+	}
+
+	/**
+	 * Process Object Details
+	 *
+	 * @return void
+	 */
+	protected function processObjects() {
+		if (!$this->isObjectsProcessed) {
+			$this->isObjectsProcessed = TRUE;
+			$this->objectLowestPrice = 10000000000;
+			foreach ($this->getFilteredObjects() as $object) {
+				$price = $object->getPrice();
+				// Calculates object prices
+				if (
+					($object->getOffer() == Object::OFFER_BOTH || $object->getOffer() == Object::OFFER_SALE) &&
+					$price > 0
+				) {
+					// Highest
+					if ($object->getPrice() > $this->objectHighestPrice) {
+						$this->objectHighestPrice = $price;
+					}
+					// Lowest
+					if ($object->getPrice() < $this->objectLowestPrice) {
+						$this->objectLowestPrice = $price;
+					}
+				}
+			}
+			if ($this->objectLowestPrice == 10000000000) {
+				$this->objectLowestPrice = 0;
+			}
+		}
 	}
 
 	/**
@@ -114,6 +210,22 @@ class ObjectService implements SingletonInterface {
 			if (($categoryId = $this->request->getArgument(LinkUtility::CATEGORY))) {
 				if (ctype_digit($categoryId)) {
 					return $categoryId;
+				}
+			}
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Get Active Town Id
+	 *
+	 * @return int
+	 */
+	public function getActiveTownId() {
+		if ($this->request->hasArgument(LinkUtility::TOWN)) {
+			if (($townId = $this->request->getArgument(LinkUtility::TOWN))) {
+				if (ctype_digit($townId)) {
+					return $townId;
 				}
 			}
 		}
@@ -160,13 +272,17 @@ class ObjectService implements SingletonInterface {
 				unset($linkArguments[$parameterName]);
 			}
 		}
+		// Removes the type argument when it's selected as 'both'
+		if (!$linkArguments[LinkUtility::TYPE]) {
+			unset($linkArguments[LinkUtility::TYPE]);
+		}
+		// Removes the offer argument when it's selected as 'both'
+		if (!$linkArguments[LinkUtility::OFFER]) {
+			unset($linkArguments[LinkUtility::OFFER]);
+		}
 		// Processes the presences
 		if ($linkArguments[LinkUtility::PRESENCES]) {
 			$linkArguments[LinkUtility::PRESENCES] = implode(',', $linkArguments[LinkUtility::PRESENCES]);
-		}
-		// Removes the type argument when it's selected as 'both'
-		if (!$linkArguments[LinkUtility::TYPE]) {
-			unset ($linkArguments[LinkUtility::TYPE]);
 		}
 		return $linkArguments;
 	}
@@ -182,6 +298,8 @@ class ObjectService implements SingletonInterface {
 			// Known filters array
 			$knownFilters = array(
 				FilterUtility::FILTER_TYPE,
+				FilterUtility::FILTER_OFFER,
+				FilterUtility::FILTER_TOWN,
 				FilterUtility::FILTER_CATEGORY,
 				FilterUtility::FILTER_PRESENCES,
 			);
@@ -219,6 +337,30 @@ class ObjectService implements SingletonInterface {
 			}
 		}
 		return $this->type;
+	}
+
+	/**
+	 * Get Active Offer Type
+	 *
+	 * @return int
+	 */
+	public function getActiveOfferType() {
+		if (is_null($this->offerType)) {
+			$this->offerType = FilterUtility::FILTER_OFFER_BOTH;
+			if ($this->request->hasArgument(LinkUtility::OFFER)) {
+				switch ($this->request->getArgument(LinkUtility::OFFER)) {
+					case FilterUtility::FILTER_OFFER_SALE:
+						$this->offerType = FilterUtility::FILTER_OFFER_SALE;
+						break;
+					case FilterUtility::FILTER_OFFER_RENT:
+						$this->offerType = FilterUtility::FILTER_OFFER_RENT;
+						break;
+					default:
+						$this->type = FilterUtility::FILTER_OFFER_BOTH;
+				}
+			}
+		}
+		return $this->offerType;
 	}
 
 	/**
