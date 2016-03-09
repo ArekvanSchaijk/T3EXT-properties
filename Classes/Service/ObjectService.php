@@ -50,7 +50,7 @@ class ObjectService implements SingletonInterface {
 	protected $prepared = FALSE;
 	
 	/**
-	 * @var \TYPO3\CMS\Extbase\Mvc\Web\Request
+	 * @var \TYPO3\CMS\Extbase\Mvc\Web\Request|null
 	 */
 	protected $request = NULL;
 
@@ -60,57 +60,77 @@ class ObjectService implements SingletonInterface {
 	protected $settings = array();
 
 	/**
-	 * @var bool|array
+	 * @var array|bool
 	 */
 	protected $linkArguments = FALSE;
 
 	/**
-	 * @var array
+	 * @var array|null
 	 */
 	protected $registeredFilters = NULL;
 
 	/**
-	 * @var array
+	 * @var array|null
 	 */
 	protected $presences = NULL;
 
 	/**
-	 * @var int
+	 * @var int|null
 	 */
 	protected $type = NULL;
 
 	/**
-	 * @var int
+	 * @var int|null
 	 */
 	protected $offerType = NULL;
 
 	/**
-	 * @var bool|\TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
+	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>|bool
 	 */
 	protected $objects = FALSE;
 
 	/**
-	 * @var int
+	 * @var int|null
 	 */
 	protected $selectedLowestPrice = NULL;
 
 	/**
-	 * @var int
+	 * @var int|null
 	 */
 	protected $selectedHighestPrice = NULL;
 
 	/**
-	 * @var float
+	 * @var int|null
+	 */
+	protected $selectedLowestLotSize = NULL;
+
+	/**
+	 * @var int|null
+	 */
+	protected $selectedHighestLotSize = NULL;
+
+	/**
+	 * @var int|null
 	 */
 	protected $objectLowestPrice = NULL;
 
 	/**
-	 * @var float
+	 * @var int|null
 	 */
 	protected $objectHighestPrice = NULL;
 
 	/**
-	 * @var array
+	 * @var int|null
+	 */
+	protected $objectLowestLotSize = NULL;
+
+	/**
+	 * @var int|null
+	 */
+	protected $objectHighestLotSize = NULL;
+
+	/**
+	 * @var array|null
 	 */
 	protected $filters = NULL;
 
@@ -160,7 +180,7 @@ class ObjectService implements SingletonInterface {
 	/**
 	 * Get Object Highest Price
 	 *
-	 * @return float
+	 * @return int
 	 */
 	public function getObjectHighestPrice() {
 		if (is_null($this->objectHighestPrice)) {
@@ -171,6 +191,38 @@ class ObjectService implements SingletonInterface {
 			}
 		}
 		return $this->objectHighestPrice;
+	}
+
+	/**
+	 * Get Object Lowest Lot Size
+	 *
+	 * @return int
+	 */
+	public function getObjectLowestLotSize() {
+		if (is_null($this->objectLowestLotSize)) {
+			$this->objectLowestLotSize = FALSE;
+			$object = $this->objectRepository->findByLowestLotSize($this);
+			if ($object) {
+				$this->objectLowestLotSize = $object->getLotSize();
+			}
+		}
+		return $this->objectLowestLotSize;
+	}
+
+	/**
+	 * Get Object Highest Lot Size
+	 *
+	 * @return int
+	 */
+	public function getObjectHighestLotSize() {
+		if (is_null($this->objectHighestLotSize)) {
+			$this->objectHighestLotSize = FALSE;
+			$object = $this->objectRepository->findByHighestLotSize($this);
+			if ($object) {
+				$this->objectHighestLotSize = $object->getLotSize();
+			}
+		}
+		return $this->objectHighestLotSize;
 	}
 
 	/**
@@ -197,9 +249,17 @@ class ObjectService implements SingletonInterface {
 		if ($filters[FilterUtility::FILTER_PRICE_LOWEST]) {
 			$constrains[FilterUtility::FILTER_PRICE_LOWEST] = $query->greaterThanOrEqual('price', $filters[FilterUtility::FILTER_PRICE_LOWEST]);
 		}
-		// Highest price
+		// Highest Price
 		if ($filters[FilterUtility::FILTER_PRICE_HIGHEST]) {
 			$constrains[FilterUtility::FILTER_PRICE_HIGHEST] = $query->lessThanOrEqual('price', $filters[FilterUtility::FILTER_PRICE_HIGHEST]);
+		}
+		// Lowest Lot Size
+		if ($filters[FilterUtility::FILTER_LOT_SIZE_LOWEST]) {
+			$constrains[FilterUtility::FILTER_LOT_SIZE_LOWEST] = $query->greaterThanOrEqual('lotSize', $filters[FilterUtility::FILTER_LOT_SIZE_LOWEST]);
+		}
+		// Highest Lot Size
+		if ($filters[FilterUtility::FILTER_LOT_SIZE_HIGHEST]) {
+			$constrains[FilterUtility::FILTER_LOT_SIZE_HIGHEST] = $query->lessThanOrEqual('lotSize', $filters[FilterUtility::FILTER_LOT_SIZE_HIGHEST]);
 		}
 		// Town
 		if ($filters[FilterUtility::FILTER_TOWN]) {
@@ -252,6 +312,16 @@ class ObjectService implements SingletonInterface {
 					case FilterUtility::FILTER_PRICE_HIGHEST:
 						if (($highestPrice = $this->getSelectedHighestPrice()) !== FALSE) {
 							$this->filters[FilterUtility::FILTER_PRICE_HIGHEST] = $highestPrice;
+						}
+						break;
+					case FilterUtility::FILTER_LOT_SIZE_LOWEST:
+						if (($lowestLotSize = $this->getSelectedLowestLotSize())) {
+							$this->filters[FilterUtility::FILTER_LOT_SIZE_LOWEST] = $lowestLotSize;
+						}
+						break;
+					case FilterUtility::FILTER_LOT_SIZE_HIGHEST:
+						if (($highestLotSize = $this->getSelectedHighestLotSize())) {
+							$this->filters[FilterUtility::FILTER_LOT_SIZE_HIGHEST] = $highestLotSize;
 						}
 						break;
 					case FilterUtility::FILTER_TOWN:
@@ -525,16 +595,48 @@ class ObjectService implements SingletonInterface {
 				if (strpos($price, '-') !== FALSE) {
 					$price = GeneralUtility::trimExplode('-', $price);
 					$this->selectedLowestPrice = (int)$price[0];
-					$lowestPossiblePrice = $this->getObjectLowestPrice();
-					if ($this->selectedLowestPrice < $lowestPossiblePrice) {
-						$this->selectedLowestPrice = $lowestPossiblePrice;
-					}
 					$this->selectedHighestPrice = (int)$price[1];
-					$highestPossiblePrice = $this->getObjectHighestPrice();
-					if ($this->selectedHighestPrice > $highestPossiblePrice) {
-						$this->selectedHighestPrice = $highestPossiblePrice;
-					}
 
+				}
+			}
+		}
+	}
+
+	/**
+	 * Get Selected Lowest Lot Size
+	 *
+	 * @return int
+	 */
+	public function getSelectedLowestLotSize() {
+		$this->processLotSizeSelection();
+		return $this->selectedLowestLotSize;
+	}
+
+	/**
+	 * Get Selected Highest Lot Size
+	 *
+	 * @return int
+	 */
+	public function getSelectedHighestLotSize() {
+		$this->processLotSizeSelection();
+		return $this->selectedHighestLotSize;
+	}
+
+	/**
+	 * Process Lot Size Selection
+	 *
+	 * @return void
+	 */
+	protected function processLotSizeSelection() {
+		if (is_null($this->selectedLowestLotSize) || is_null($this->selectedHighestLotSize)) {
+			$this->selectedLowestLotSize = FALSE;
+			$this->selectedHighestPrice = FALSE;
+			if ($this->request->hasArgument(LinkUtility::LOT_SIZE)) {
+				$lotSize = $this->request->getArgument(LinkUtility::LOT_SIZE);
+				if (strpos($lotSize, '-') !== FALSE) {
+					$lotSize = GeneralUtility::trimExplode('-', $lotSize);
+					$this->selectedLowestLotSize = (int)$lotSize[0];
+					$this->selectedHighestLotSize = (int)$lotSize[1];
 				}
 			}
 		}

@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff version="1.0">
+	<file source-language="en" target-language="nl" datatype="plaintext" original="messages" date="2015-09-01T15:22:45Z" product-name="properties">
+		<header/>
+		<body>
+			<trans-unit id="tab.location" approved="yes">
+				<source>Location</source> <target state="translated">Locatie</target></trans-unit>
+			<trans-unit id="tab.object" approved="yes">
+				<source>Object Details</source> <target state="translated">Object Details</target></trans-unit>
+			<trans-unit id="tab.offer" approved="yes">
+				<source>Offer Details</source> <target state="translated">Aanbod details</target></trans-unit>
+			<trans-unit id="tab.media" approved="yes">
+				<source>Media</source> <target state="translated">Media</target></trans-unit>
+			<trans-unit id="tab.contact" approved="yes">
+				<source>Contact</source> <target state="translated">Contact</target></trans-unit>
+			<trans-unit id="palettes.location.address" approved="yes">
+				<source>Address</source> <target state="translated">Adres</target></trans-unit>
+			<trans-unit id="palettes.location.geodata" approved="yes">
+				<source>Geo Data</source> <target state="translated">Geo Data</target></trans-unit>
+			<trans-unit id="palettes.object.surfaces" approved="yes">
+				<source>Surfaces (in square meters)</source> <target state="translated">Oppervlakte (in viekante meters)</target></trans-unit>
+			<trans-unit id="palettes.object.property_details" approved="yes">
+				<source>Property Details</source> <target state="translated">Object details</target></trans-unit>
+			<trans-unit id="palettes.object.garage_details" approved="yes">
+				<source>Garage Details</source> <target state="translated">Garage Details</target></trans-unit>
+			<trans-unit id="palettes.offer.sale_details" approved="yes">
+				<source>Sale Details</source> <target state="translated">Verkoop details</target></trans-unit>
+			<trans-unit id="palettes.offer.rent_details" approved="yes">
+				<source>Rent Details</source> <target state="translated">Verhuur details</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object" approved="yes">
+				<source>Object</source> <target state="translated">Object</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.name" approved="yes">
+				<source>Name</source> <target state="translated">Naam</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type" approved="yes">
+				<source>Type</source> <target state="translated">Type</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- Selecteer –-</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type.1" approved="yes">
+				<source>Building</source> <target state="translated">Gebouw</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type.2" approved="yes">
+				<source>Lot</source> <target state="translated">Kavel</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type_building" approved="yes">
+				<source>Type Building</source> <target state="translated">Staat gebouw</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type_building.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- selecteer --</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type_building.1" approved="yes">
+				<source>New</source> <target state="translated">Nieuw</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.type_building.2" approved="yes">
+				<source>Existing</source> <target state="translated">Bestaand</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.sort" approved="yes">
+				<source>Sort</source> <target state="translated">Soort</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.offer" approved="yes">
+				<source>Type of offer</source> <target state="translated">Type aanbod</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.offer.0" approved="yes">
+				<source>For Sale</source> <target state="translated">Te Koop</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.offer.1" approved="yes">
+				<source>For Rent</source> <target state="translated">Te Huur</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.offer.2" approved="yes">
+				<source>For Sale or For Rent (both)</source> <target state="translated">Te koop of Te Huur</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.images" approved="yes">
+				<source>Images</source> <target state="translated">Afbeeldingen</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.year" approved="yes">
+				<source>Year</source> <target state="translated">Bouwjaar</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class" approved="yes">
+				<source>Environmental Class</source> <target state="translated">Energielabel</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- selecteer --</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.1" approved="yes">
+				<source>A-label</source> <target state="translated">A-label</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.2" approved="yes">
+				<source>B-label</source> <target state="translated">B-label</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.3" approved="yes">
+				<source>C-label</source> <target state="translated">C-label</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.4" approved="yes">
+				<source>D-label</source> <target state="translated">D-label</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.5" approved="yes">
+				<source>E-label</source> <target state="translated">E-label</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.6" approved="yes">
+				<source>F-label</source> <target state="translated">F-label</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.environmental_class.7" approved="yes">
+				<source>G-label</source> <target state="translated">G-label</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.description" approved="yes">
+				<source>Description</source> <target state="translated">Omschrijving</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.street" approved="yes">
+				<source>Street</source> <target state="translated">Straat</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.street_number" approved="yes">
+				<source>Number</source> <target state="translated">Huisnummer</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.zip_code" approved="yes">
+				<source>Zip Code</source> <target state="translated">Postcode</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.country" approved="yes">
+				<source>Country</source> <target state="translated">Land</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.contact" approved="yes">
+				<source>Contact</source> <target state="translated">Contact</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.price" approved="yes">
+				<source>Price</source> <target state="translated">Prijs</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price" approved="yes">
+				<source>Rent Price</source> <target state="translated">Huurprijs</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_type" approved="yes">
+				<source>Rent Price Type</source> <target state="translated">Huurprijs type</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_type.0" approved="yes">
+				<source>Basic</source> <target state="translated">Basis</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_type.1" approved="yes">
+				<source>All inclusive</source> <target state="translated">All inclusive</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_availability" approved="yes">
+				<source>Rent Availability</source> <target state="translated">Huur beschikbaarheid</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_availability.0" approved="yes">
+				<source>Immediately Available</source> <target state="translated">Direct beschikbaar</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_availability.1" approved="yes">
+				<source>Wait</source> <target state="translated">Wacht</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_availability.2" approved="yes">
+				<source>By date</source> <target state="translated">Op datum</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_availability.3" approved="yes">
+				<source>In Consultation</source> <target state="translated">In overleg</target></trans-unit>			
+			<trans-unit id="tx_properties_domain_model_object.rent_wait" approved="yes">
+				<source>Wait</source> <target state="translated">Wacht</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_wait.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- selecteer --</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_wait.1" approved="yes">
+				<source>Up to 1 month</source> <target state="translated">Tot 1 maand</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_wait.2" approved="yes">
+				<source>Up to 2 months</source> <target state="translated">Tot 2 maanden</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_wait.3" approved="yes">
+				<source>Up to 3 months</source> <target state="translated">Tot 3 maanden</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_wait.4" approved="yes">
+				<source>Up to 6 months</source> <target state="translated">Tot 6 maanden</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_available_date" approved="yes">
+				<source>Rent Available Date</source> <target state="translated">Beschikbaar vanaf</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rental_agreement" approved="yes">
+				<source>Rental Agreement</source> <target state="translated">Huurovereenkomst</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rental_agreement.0" approved="yes">
+				<source>Undetermined Time</source> <target state="translated">Onbepaalde tijd</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rental_agreement.1" approved="yes">
+				<source>Temporary Rent</source> <target state="translated">Tijdelijke verhuur</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.lease_conditions" approved="yes">
+				<source>Lease Conditions</source> <target state="translated">Lease condities</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.lease_conditions.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- selecteer --</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.lease_conditions.1" approved="yes">
+				<source>Padded</source> <target state="translated">Gestoffeerd</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.lease_conditions.2" approved="yes">
+				<source>Furnished</source> <target state="translated">Gemeubileerd</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.accessibility" approved="yes">
+				<source>Accessibility</source> <target state="translated">Toegankelijkheid</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.accessibility.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- selecteer --</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.accessibility.1" approved="yes">
+				<source>Custom Home</source> <target state="translated">Op maat gemaakt</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.accessibility.2" approved="yes">
+				<source>Disability Home</source> <target state="translated">Invaliden woning</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.accessibility.3" approved="yes">
+				<source>Seniors Home</source> <target state="translated">Senioren woning</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.price_per_square_metre" approved="yes">
+				<source>Price Per Square Metre</source> <target state="translated">Prijs per vierkante meter</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.lot_size" approved="yes">
+				<source>Lot Size</source> <target state="translated">Oppervlakte perceelt</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.living_area" approved="yes">
+				<source>Living Area</source> <target state="translated">Woongedeelte</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_area" approved="yes">
+				<source>Garden Area</source> <target state="translated">Tuin</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.number_of_rooms" approved="yes">
+				<source>Number Of Rooms</source> <target state="translated">Aantal Kamers</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.number_of_bedrooms" approved="yes">
+				<source>Number Of Bedrooms</source> <target state="translated">Aantal Slaapkamers</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.latitude" approved="yes">
+				<source>Latitude</source> <target state="translated">Breedtegraad</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.longitude" approved="yes">
+				<source>Longitude</source> <target state="translated">Lengtegraad</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.latitude_longitude_md5" approved="yes">
+				<source>Latitude Longitude Md5</source> <target state="translated">Lengte-breedtegraad sleutel</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.category" approved="yes">
+				<source>Category</source> <target state="translated">Categorie</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.category.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- selecteer --</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.presences" approved="yes">
+				<source>Presences</source> <target state="translated">Aanwezigheden</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.town" approved="yes">
+				<source>Town</source> <target state="translated">Plaats</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.town.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- selecteer --</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.position" approved="yes">
+				<source>Position</source> <target state="translated">Ligging</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.position.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- selecteer --</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_position" approved="yes">
+				<source>Garden Position</source> <target state="translated">Ligging tuin</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_position.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- selecteer --</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_position.1" approved="yes">
+				<source>North</source> <target state="translated">Noorden</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_position.2" approved="yes">
+				<source>West</source> <target state="translated">Westen</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_position.3" approved="yes">
+				<source>South</source> <target state="translated">Zuiden</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garden_position.4" approved="yes">
+				<source>East</source> <target state="translated">Oosten</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.construction_type" approved="yes">
+				<source>Construction Type</source> <target state="translated">Soort bouw</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.construction_type.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- selecteer --</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garage" approved="yes">
+				<source>Garage</source> <target state="translated">Garage</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garage.0" approved="yes">
+				<source>Check if this object has a garage</source> <target state="translated">Selecteer als dit object een garage heeft</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garage_capacity" approved="yes">
+				<source>Garage Capacity</source> <target state="translated">Garage Capaciteit</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garage_sort" approved="yes">
+				<source>Sort Garage</source> <target state="translated">Soort garage</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.garage_sort.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- selecteer --</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_presence" approved="yes">
+				<source>Presence</source> <target state="translated">Aanwezigheden</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_presence.name" approved="yes">
+				<source>Name</source> <target state="translated">Naam</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_category" approved="yes">
+				<source>Category</source> <target state="translated">Categorie</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.name" approved="yes">
+				<source>Name</source> <target state="translated">Naam</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_town" approved="yes">
+				<source>Town</source> <target state="translated">Plaats</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_town.name" approved="yes">
+				<source>Name</source> <target state="translated">Naam</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_position" approved="yes">
+				<source>Position</source> <target state="translated">Ligging</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_position.name" approved="yes">
+				<source>Name</source> <target state="translated">Naam</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_constructiontype" approved="yes">
+				<source>Construction Type</source> <target state="translated">Soort bouw</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_constructiontype.name" approved="yes">
+				<source>Name</source> <target state="translated">Naam</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_garagesort" approved="yes">
+				<source>Garage Sort</source> <target state="translated">Garage type</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_garagesort.name" approved="yes">
+				<source>Name</source> <target state="translated">Naam</target></trans-unit>
+		</body>
+	</file>
+</xliff>

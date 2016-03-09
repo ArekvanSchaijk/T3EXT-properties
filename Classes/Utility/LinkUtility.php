@@ -60,6 +60,7 @@ class LinkUtility {
 			OFFER = 'offer',
 			TOWN = 'town',
 			PRICE = 'price',
+			LOT_SIZE = 'lotSize',
 			CATEGORY = 'category',
 			PRESENCES = 'presences';
 	
@@ -71,6 +72,7 @@ class LinkUtility {
 		self::OFFER,
 		self::TOWN,
 		self::PRICE,
+		self::LOT_SIZE,
 		self::CATEGORY,
 		self::PRESENCES
 	);

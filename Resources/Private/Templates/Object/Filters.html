@@ -11,7 +11,13 @@
             <f:render partial="Object/List/Filters/Town" arguments="{towns: towns, activeTown: activeTown}" />
         </f:if>
 
-        <f:render partial="Object/List/Filters/Price" arguments="{priceHighest: priceHighest, priceLowest: priceLowest, selectedPriceLowest: selectedPriceLowest, selectedPriceHighest: selectedPriceHighest}" />
+        <f:if condition="{showPrice}">
+            <f:render partial="Object/List/Filters/Price" arguments="{priceHighest: priceHighest, priceLowest: priceLowest, selectedPriceLowest: selectedPriceLowest, selectedPriceHighest: selectedPriceHighest}" />
+        </f:if>
+
+        <f:if condition="{showLotSize}">
+            <f:render partial="Object/List/Filters/LotSize" arguments="{lotSizeHighest: lotSizeHighest, lotSizeLowest: lotSizeLowest, selectedLotSizeLowest: selectedLotSizeLowest, selectedLotSizeHighest: selectedLotSizeHighest}" />
+        </f:if>
 
         <f:if condition="{presences}">
             <f:render partial="Object/List/Filters/Presences" arguments="{presences: presences}" />

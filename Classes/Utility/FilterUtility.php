@@ -43,6 +43,10 @@ class FilterUtility {
             FILTER_PRICE_LOWEST = 'price_lowest',
             FILTER_PRICE_HIGHEST = 'price_highest';
 
+    const   FILTER_LOT_SIZE = 'lot_size',
+            FILTER_LOT_SIZE_LOWEST = 'lot_size_lowest',
+            FILTER_LOT_SIZE_HIGHEST = 'lot_size_highest';
+
     const   FILTER_TYPE = 'type',
             FILTER_TYPE_BOTH = 0,
             FILTER_TYPE_BUILDING = 1,
@@ -66,6 +70,9 @@ class FilterUtility {
             self::FILTER_PRICE,
             self::FILTER_PRICE_LOWEST,
             self::FILTER_PRICE_HIGHEST,
+            self::FILTER_LOT_SIZE,
+            self::FILTER_LOT_SIZE_LOWEST,
+            self::FILTER_LOT_SIZE_HIGHEST,
             self::FILTER_TOWN,
             self::FILTER_CATEGORY,
             self::FILTER_PRESENCES,

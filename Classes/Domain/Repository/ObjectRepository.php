@@ -74,11 +74,15 @@ class ObjectRepository extends Repository {
 		$query->setOrderings(array('price' => QueryInterface::ORDER_ASCENDING));
 		// Get query contrains
 		$constrains = $objectService->getQueryFilterConstrains($query);
-		// Removes the pricing constrains
-		unset($constrains[FilterUtility::FILTER_PRICE_LOWEST]);
-		unset($constrains[FilterUtility::FILTER_PRICE_HIGHEST]);
-		unset($constrains[FilterUtility::FILTER_OFFER]);
-		unset($constrains[FilterUtility::FILTER_PRICE]);
+		// Removes some existing constrains
+		unset(
+			$constrains[FilterUtility::FILTER_PRICE_LOWEST],
+			$constrains[FilterUtility::FILTER_PRICE_HIGHEST],
+			$constrains[FilterUtility::FILTER_OFFER],
+			$constrains[FilterUtility::FILTER_PRICE],
+			$constrains[FilterUtility::FILTER_LOT_SIZE_LOWEST],
+			$constrains[FilterUtility::FILTER_LOT_SIZE_HIGHEST]
+		);
 		// Adds a new constrains for the offer
 		$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
 			$query->equals('offer', Object::OFFER_BOTH),
@@ -102,11 +106,15 @@ class ObjectRepository extends Repository {
 		$query->setOrderings(array('price' => QueryInterface::ORDER_DESCENDING));
 		// Get query contrains
 		$constrains = $objectService->getQueryFilterConstrains($query);
-		// Removes the pricing constrains
-		unset($constrains[FilterUtility::FILTER_PRICE_LOWEST]);
-		unset($constrains[FilterUtility::FILTER_PRICE_HIGHEST]);
-		unset($constrains[FilterUtility::FILTER_OFFER]);
-		unset($constrains[FilterUtility::FILTER_PRICE]);
+		// Removes some existing constrains
+		unset(
+			$constrains[FilterUtility::FILTER_PRICE_LOWEST],
+			$constrains[FilterUtility::FILTER_PRICE_HIGHEST],
+			$constrains[FilterUtility::FILTER_OFFER],
+			$constrains[FilterUtility::FILTER_PRICE],
+			$constrains[FilterUtility::FILTER_LOT_SIZE_LOWEST],
+			$constrains[FilterUtility::FILTER_LOT_SIZE_HIGHEST]
+		);
 		// Adds a new constrains for the offer
 		$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
 			$query->equals('offer', Object::OFFER_BOTH),
@@ -114,6 +122,60 @@ class ObjectRepository extends Repository {
 		);
 		// Adds another constrains for the price (this must be filled in)
 		$constrains[FilterUtility::FILTER_PRICE] = $query->greaterThan('price', 0);
+		// Sets limit
+		$query->setLimit((int)1);
+		return $query->execute()->getFirst();
+	}
+
+	/**
+	 * Find By Lowest Lot Size
+	 *
+	 * @param \Ucreation\Properties\Service\ObjectService $objectService
+	 * @return \Ucreation\Properties\Domain\Model\Object
+	 */
+	public function findByLowestLotSize(ObjectService $objectService) {
+		$query = $this->createQuery();
+		$query->setOrderings(array('lotSize' => QueryInterface::ORDER_ASCENDING));
+		// Get query contrains
+		$constrains = $objectService->getQueryFilterConstrains($query);
+		// Removes some existing constrains
+		unset(
+			$constrains[FilterUtility::FILTER_PRICE_LOWEST],
+			$constrains[FilterUtility::FILTER_PRICE_HIGHEST],
+			$constrains[FilterUtility::FILTER_OFFER],
+			$constrains[FilterUtility::FILTER_PRICE],
+			$constrains[FilterUtility::FILTER_LOT_SIZE_LOWEST],
+			$constrains[FilterUtility::FILTER_LOT_SIZE_HIGHEST]
+		);
+		// Adds another constrains for the lot size
+		$constrains[FilterUtility::FILTER_LOT_SIZE] = $query->greaterThan('lotSize', 0);
+		// Sets limit
+		$query->setLimit((int)1);
+		return $query->execute()->getFirst();
+	}
+
+	/**
+	 * Find By Highest Lot Size
+	 *
+	 * @param \Ucreation\Properties\Service\ObjectService $objectService
+	 * @return \Ucreation\Properties\Domain\Model\Object
+	 */
+	public function findByHighestLotSize(ObjectService $objectService) {
+		$query = $this->createQuery();
+		$query->setOrderings(array('lotSize' => QueryInterface::ORDER_DESCENDING));
+		// Get query contrains
+		$constrains = $objectService->getQueryFilterConstrains($query);
+		// Removes some existing constrains
+		unset(
+			$constrains[FilterUtility::FILTER_PRICE_LOWEST],
+			$constrains[FilterUtility::FILTER_PRICE_HIGHEST],
+			$constrains[FilterUtility::FILTER_OFFER],
+			$constrains[FilterUtility::FILTER_PRICE],
+			$constrains[FilterUtility::FILTER_LOT_SIZE_LOWEST],
+			$constrains[FilterUtility::FILTER_LOT_SIZE_HIGHEST]
+		);
+		// Adds another constrains for the lot size
+		$constrains[FilterUtility::FILTER_LOT_SIZE] = $query->greaterThan('lotSize', 0);
 		// Sets limit
 		$query->setLimit((int)1);
 		return $query->execute()->getFirst();

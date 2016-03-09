@@ -606,7 +606,7 @@ class Object extends AbstractEntity {
 	 * @return float
 	 */
 	public function getPrice() {
-		return floor($this->price);
+		return $this->price;
 	}
 
 	/**

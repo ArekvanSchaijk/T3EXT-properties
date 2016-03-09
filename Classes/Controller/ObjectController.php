@@ -95,11 +95,25 @@ class ObjectController extends BaseController {
 				$this->view->assign('presences', $presences);
 			}
 		}
+
 		// Price
-		$this->view->assign('priceLowest', $this->objectService->getObjectLowestPrice());
-		$this->view->assign('priceHighest', $this->objectService->getObjectHighestPrice());
-		$this->view->assign('selectedPriceLowest', $this->objectService->getSelectedLowestPrice());
-		$this->view->assign('selectedPriceHighest', $this->objectService->getSelectedHighestPrice());
+		if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_PRICE)) {
+			$this->view->assign('showPrice', TRUE);
+			$this->view->assign('priceLowest', $this->objectService->getObjectLowestPrice());
+			$this->view->assign('priceHighest', $this->objectService->getObjectHighestPrice());
+			$this->view->assign('selectedPriceLowest', $this->objectService->getSelectedLowestPrice());
+			$this->view->assign('selectedPriceHighest', $this->objectService->getSelectedHighestPrice());
+		}
+
+		// Lot Size
+		if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_LOT_SIZE)) {
+			$this->view->assign('showLotSize', TRUE);
+			$this->view->assign('lotSizeLowest', $this->objectService->getObjectLowestLotSize());
+			$this->view->assign('lotSizeHighest', $this->objectService->getObjectHighestLotSize());
+			$this->view->assign('selectedLotSizeLowest', $this->objectService->getSelectedLowestLotSize());
+			$this->view->assign('selectedLotSizeHighest', $this->objectService->getSelectedHighestLotSize());
+		}
+
 		// Filter town
 		if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_TOWN)) {
 			$towns = $this->townRepository->findAll();

@@ -21,7 +21,7 @@ plugin.tx_properties {
 		    remove =
 		}
 		filters {
-		    registred = type, offer, price, price_lowest, price_highest, town, category, presences
+		    registred = type, offer, price, price_lowest, price_highest, lot_size, lot_size_lowest, lot_size_highest, town, category, presences
 		    #priceSliderMargin = 10000
 		}
 	}
