@@ -18,6 +18,7 @@ plugin.tx_properties {
 		}
 		filters {
             registred = {$plugin.tx_properties.settings.filters.registred}
+            #priceSliderMargin = {$plugin.tx_properties.settings.filters.priceSliderMargin}
 		}
 	}
 }

@@ -479,7 +479,7 @@ return array(
 			'config' => array(
 				'type' => 'input',
 				'size' => 8,
-				'eval' => 'double2'
+				'eval' => 'int'
 			)
 		),
 		'price_per_square_metre' => array(

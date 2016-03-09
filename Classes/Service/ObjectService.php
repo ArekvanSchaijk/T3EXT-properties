@@ -25,6 +25,8 @@ namespace Ucreation\Properties\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use Ucreation\Properties\Domain\Model\Category;
 use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Domain\Model\Presence;
@@ -88,19 +90,29 @@ class ObjectService implements SingletonInterface {
 	protected $objects = FALSE;
 
 	/**
-	 * @var float
+	 * @var int
 	 */
-	protected $objectLowestPrice = 0;
+	protected $selectedLowestPrice = NULL;
+
+	/**
+	 * @var int
+	 */
+	protected $selectedHighestPrice = NULL;
 
 	/**
 	 * @var float
 	 */
-	protected $objectHighestPrice = 0;
+	protected $objectLowestPrice = NULL;
 
 	/**
-	 * @var bool
+	 * @var float
 	 */
-	protected $isObjectsProcessed = FALSE;
+	protected $objectHighestPrice = NULL;
+
+	/**
+	 * @var array
+	 */
+	protected $filters = NULL;
 
 	/**
 	 * @var \Ucreation\Properties\Domain\Repository\ObjectRepository
@@ -135,7 +147,13 @@ class ObjectService implements SingletonInterface {
 	 * @return float
 	 */
 	public function getObjectLowestPrice() {
-		$this->processObjects();
+		if (is_null($this->objectLowestPrice)) {
+			$this->objectLowestPrice = FALSE;
+			$object = $this->objectRepository->findByLowestPrice($this);
+			if ($object) {
+				$this->objectLowestPrice = $object->getPrice();
+			}
+		}
 		return $this->objectLowestPrice;
 	}
 
@@ -145,40 +163,111 @@ class ObjectService implements SingletonInterface {
 	 * @return float
 	 */
 	public function getObjectHighestPrice() {
-		$this->processObjects();
+		if (is_null($this->objectHighestPrice)) {
+			$this->objectHighestPrice = FALSE;
+			$object = $this->objectRepository->findByHighestPrice($this);
+			if ($object) {
+				$this->objectHighestPrice = $object->getPrice();
+			}
+		}
 		return $this->objectHighestPrice;
 	}
 
 	/**
-	 * Process Object Details
+	 * Get Query Filter Contrains
 	 *
-	 * @return void
+	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+	 * @param array $filters
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\Query
 	 */
-	protected function processObjects() {
-		if (!$this->isObjectsProcessed) {
-			$this->isObjectsProcessed = TRUE;
-			$this->objectLowestPrice = 10000000000;
-			foreach ($this->getFilteredObjects() as $object) {
-				$price = $object->getPrice();
-				// Calculates object prices
-				if (
-					($object->getOffer() == Object::OFFER_BOTH || $object->getOffer() == Object::OFFER_SALE) &&
-					$price > 0
-				) {
-					// Highest
-					if ($object->getPrice() > $this->objectHighestPrice) {
-						$this->objectHighestPrice = $price;
-					}
-					// Lowest
-					if ($object->getPrice() < $this->objectLowestPrice) {
-						$this->objectLowestPrice = $price;
-					}
-				}
-			}
-			if ($this->objectLowestPrice == 10000000000) {
-				$this->objectLowestPrice = 0;
+	public function getQueryFilterConstrains(Query $query, array $filters = NULL) {
+		$constrains = array();
+		if (is_null($filters)) {
+			$filters = $this->getFilters();
+		}
+		// Category
+		if ($filters[FilterUtility::FILTER_CATEGORY]) {
+			$constrains[FilterUtility::FILTER_CATEGORY] = $query->equals('category', $filters[FilterUtility::FILTER_CATEGORY]);
+		}
+		// Type
+		if ($filters[FilterUtility::FILTER_TYPE]) {
+			$constrains[FilterUtility::FILTER_TYPE] = $query->equals('type', $filters[FilterUtility::FILTER_TYPE]);
+		}
+		// Lowest Price
+		if ($filters[FilterUtility::FILTER_PRICE_LOWEST]) {
+			$constrains[FilterUtility::FILTER_PRICE_LOWEST] = $query->greaterThanOrEqual('price', $filters[FilterUtility::FILTER_PRICE_LOWEST]);
+		}
+		// Highest price
+		if ($filters[FilterUtility::FILTER_PRICE_HIGHEST]) {
+			$constrains[FilterUtility::FILTER_PRICE_HIGHEST] = $query->lessThanOrEqual('price', $filters[FilterUtility::FILTER_PRICE_HIGHEST]);
+		}
+		// Town
+		if ($filters[FilterUtility::FILTER_TOWN]) {
+			$constrains[FilterUtility::FILTER_TOWN] = $query->equals('town', $filters[FilterUtility::FILTER_TOWN]);
+		}
+		// Offer
+		if ($filters[FilterUtility::FILTER_OFFER]) {
+			// Filter for sale only
+			if ($filters[FilterUtility::FILTER_OFFER] == FilterUtility::FILTER_OFFER_SALE) {
+				$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
+					$query->equals('offer', Object::OFFER_BOTH),
+					$query->equals('offer', Object::OFFER_SALE)
+				);
+			} else if ($filters[FilterUtility::FILTER_OFFER] == FilterUtility::FILTER_OFFER_RENT) {
+				$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
+					$query->equals('offer', Object::OFFER_BOTH),
+					$query->equals('offer', Object::OFFER_RENT)
+				);
 			}
 		}
+		return $constrains;
+	}
+
+	/**
+	 * Get Filters
+	 *
+	 * @return array
+	 */
+	public function getFilters() {
+		if (is_null($this->filters)) {
+			$this->filters = array();
+			// Loops through the registred filters
+			foreach ($this->getRegistredFilters() as $filterName) {
+				switch ($filterName) {
+					case FilterUtility::FILTER_CATEGORY:
+						if (($categoryId = $this->getActiveCategoryId())) {
+							$this->filters[FilterUtility::FILTER_CATEGORY] = $categoryId;
+						}
+						break;
+					case FilterUtility::FILTER_TYPE:
+						if (($activeType = $this->getActiveType())) {
+							$this->filters[FilterUtility::FILTER_TYPE] = $activeType;
+						}
+						break;
+					case FilterUtility::FILTER_PRICE_LOWEST:
+						if (($lowestPrice = $this->getSelectedLowestPrice()) !== FALSE) {
+							$this->filters[FilterUtility::FILTER_PRICE_LOWEST] = $lowestPrice;
+						}
+						break;
+					case FilterUtility::FILTER_PRICE_HIGHEST:
+						if (($highestPrice = $this->getSelectedHighestPrice()) !== FALSE) {
+							$this->filters[FilterUtility::FILTER_PRICE_HIGHEST] = $highestPrice;
+						}
+						break;
+					case FilterUtility::FILTER_TOWN:
+						if (($townId = $this->getActiveTownId())) {
+							$this->filters[FilterUtility::FILTER_TOWN] = $townId;
+						}
+						break;
+					case FilterUtility::FILTER_OFFER:
+						if (($activeOfferType = $this->getActiveOfferType())) {
+							$this->filters[FilterUtility::FILTER_OFFER] = $activeOfferType;
+						}
+						break;
+				}
+			}
+		}
+		return $this->filters;
 	}
 
 	/**
@@ -296,18 +385,12 @@ class ObjectService implements SingletonInterface {
 		if (is_null($this->registeredFilters)) {
 			$this->registeredFilters = array();
 			// Known filters array
-			$knownFilters = array(
-				FilterUtility::FILTER_TYPE,
-				FilterUtility::FILTER_OFFER,
-				FilterUtility::FILTER_TOWN,
-				FilterUtility::FILTER_CATEGORY,
-				FilterUtility::FILTER_PRESENCES,
-			);
+			$knownFilters = FilterUtility::getKnownFilters();
 			// Gets the registred filters
-			$registredFilters = GeneralUtility::trimExplode(',', $this->settings['filters']['registred']);
+			$registeredFilters = GeneralUtility::trimExplode(',', $this->settings['filters']['registred']);
 			// Loops through all filters and collect all filters which are registred by setup
 			foreach ($knownFilters as $filter) {
-				if (in_array(strtolower($filter), $registredFilters)) {
+				if (in_array(strtolower($filter), $registeredFilters)) {
 					$this->registeredFilters[] = $filter;
 				}
 			}
@@ -406,6 +489,55 @@ class ObjectService implements SingletonInterface {
 			}
 		}
 		return FALSE;
+	}
+
+	/**
+	 * Get Selected Lowest Price
+	 *
+	 * @return int
+	 */
+	public function getSelectedLowestPrice() {
+		$this->processPriceSelection();
+		return $this->selectedLowestPrice;
+	}
+
+	/**
+	 * Get Selected Highest Price
+	 *
+	 * @return int
+	 */
+	public function getSelectedHighestPrice() {
+		$this->processPriceSelection();
+		return $this->selectedHighestPrice;
+	}
+
+	/**
+	 * Process Price Selection
+	 *
+	 * @return void
+	 */
+	protected function processPriceSelection() {
+		if (is_null($this->selectedLowestPrice) || is_null($this->selectedHighestPrice)) {
+			$this->selectedLowestPrice = FALSE;
+			$this->selectedHighestPrice = FALSE;
+			if ($this->request->hasArgument(LinkUtility::PRICE)) {
+				$price = $this->request->getArgument(LinkUtility::PRICE);
+				if (strpos($price, '-') !== FALSE) {
+					$price = GeneralUtility::trimExplode('-', $price);
+					$this->selectedLowestPrice = (int)$price[0];
+					$lowestPossiblePrice = $this->getObjectLowestPrice();
+					if ($this->selectedLowestPrice < $lowestPossiblePrice) {
+						$this->selectedLowestPrice = $lowestPossiblePrice;
+					}
+					$this->selectedHighestPrice = (int)$price[1];
+					$highestPossiblePrice = $this->getObjectHighestPrice();
+					if ($this->selectedHighestPrice > $highestPossiblePrice) {
+						$this->selectedHighestPrice = $highestPossiblePrice;
+					}
+
+				}
+			}
+		}
 	}
 
 }

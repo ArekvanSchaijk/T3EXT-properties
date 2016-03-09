@@ -27,6 +27,12 @@
 			<trans-unit id="filter.offer.rent">
 				<source>For Rent</source>
 			</trans-unit>
+			<trans-unit id="filter.price">
+				<source>Price</source>
+			</trans-unit>
+			<trans-unit id="filter.lotSize">
+				<source>Lot Size</source>
+			</trans-unit>
 			<trans-unit id="filter.town">
 				<source>Town</source>
 			</trans-unit>

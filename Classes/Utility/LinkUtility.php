@@ -59,6 +59,7 @@ class LinkUtility {
 	const	TYPE = 'type',
 			OFFER = 'offer',
 			TOWN = 'town',
+			PRICE = 'price',
 			CATEGORY = 'category',
 			PRESENCES = 'presences';
 	
@@ -69,6 +70,7 @@ class LinkUtility {
 		self::TYPE,
 		self::OFFER,
 		self::TOWN,
+		self::PRICE,
 		self::CATEGORY,
 		self::PRESENCES
 	);

@@ -39,6 +39,10 @@ class FilterUtility {
 
     const   FILTER_PRESENCES = 'presences';
 
+    const   FILTER_PRICE = 'price',
+            FILTER_PRICE_LOWEST = 'price_lowest',
+            FILTER_PRICE_HIGHEST = 'price_highest';
+
     const   FILTER_TYPE = 'type',
             FILTER_TYPE_BOTH = 0,
             FILTER_TYPE_BUILDING = 1,
@@ -48,5 +52,24 @@ class FilterUtility {
             FILTER_OFFER_BOTH = 0,
             FILTER_OFFER_SALE = 1,
             FILTER_OFFER_RENT = 2;
+
+    /**
+     * Get Known Filters
+     * 
+     * @return array
+     * @static
+     */
+    static public function getKnownFilters() {
+        return array(
+            self::FILTER_TYPE,
+            self::FILTER_OFFER,
+            self::FILTER_PRICE,
+            self::FILTER_PRICE_LOWEST,
+            self::FILTER_PRICE_HIGHEST,
+            self::FILTER_TOWN,
+            self::FILTER_CATEGORY,
+            self::FILTER_PRESENCES,
+        );
+    }
 
 }

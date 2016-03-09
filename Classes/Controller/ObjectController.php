@@ -98,6 +98,8 @@ class ObjectController extends BaseController {
 		// Price
 		$this->view->assign('priceLowest', $this->objectService->getObjectLowestPrice());
 		$this->view->assign('priceHighest', $this->objectService->getObjectHighestPrice());
+		$this->view->assign('selectedPriceLowest', $this->objectService->getSelectedLowestPrice());
+		$this->view->assign('selectedPriceHighest', $this->objectService->getSelectedHighestPrice());
 		// Filter town
 		if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_TOWN)) {
 			$towns = $this->townRepository->findAll();

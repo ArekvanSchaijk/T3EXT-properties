@@ -25,10 +25,12 @@ namespace Ucreation\Properties\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Service\ObjectService;
 use Ucreation\Properties\Utility\FilterUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
  * Class ObjectRepository
@@ -42,70 +44,99 @@ class ObjectRepository extends Repository {
 	 * @var array
 	 */
 	protected $defaultOrderings = array(
-		'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+		'sorting' => QueryInterface::ORDER_ASCENDING
 	);
 
 	/**
 	 * Get Filtered Objects
 	 *
-	 * @param ObjectService $objectService
+	 * @param \Ucreation\Properties\Service\ObjectService $objectService
 	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
 	 */
 	public function getFilteredObjects(ObjectService $objectService) {
-		$matchings = array();
 		// Creates an new query
 		$query = $this->createQuery();
-		// Apply filters
-		if (($registredFilters = $objectService->getRegistredFilters())) {
-			// Loops trough all registred filters
-			foreach ($registredFilters as $registredFilter) {
-				switch ($registredFilter) {
-					// Filter by category
-					case FilterUtility::FILTER_CATEGORY:
-						if (($categoryId = $objectService->getActiveCategoryId())) {
-							$matchings[] = $query->equals('category', $categoryId);
-						}
-						break;
-					// Filter by type
-					case FilterUtility::FILTER_TYPE:
-						if (($activeType = $objectService->getActiveType())) {
-							$matchings[] = $query->equals('type', $activeType);
-						}
-					// Filter by town
-					case FilterUtility::FILTER_TOWN:
-						if (($townId = $objectService->getActiveTownId())) {
-							$matchings[] = $query->equals('town', $townId);
-						}
-						break;
-					// Filter by offer
-					case FilterUtility::FILTER_OFFER:
-						if (($activeOfferType = $objectService->getActiveOfferType())) {
-							// Filter for sale only
-							if ($activeOfferType == FilterUtility::FILTER_OFFER_SALE) {
-								$matchings[] = $query->logicalOr(
-									$query->equals('offer', Object::OFFER_BOTH),
-									$query->equals('offer', Object::OFFER_SALE)
-								);
-							} else if ($activeOfferType == FilterUtility::FILTER_OFFER_RENT) {
-								$matchings[] = $query->logicalOr(
-									$query->equals('offer', Object::OFFER_BOTH),
-									$query->equals('offer', Object::OFFER_RENT)
-								);
-							}
-						}
-						break;
-				}
-			}
-		}
-		// Apply the matchings
-		if ($matchings) {
-			if (count($matchings) == 1) {
-				$query->matching($matchings[0]);
-			} else {
-				$query->matching($query->logicalAnd($matchings));
-			}
-		}
+		// Get query contrains
+		$constrains = $objectService->getQueryFilterConstrains($query);
+		// Apply query constrains
+		$query = $this->applyQueryConstrains($query, $constrains);
 		return $query->execute();
+	}
+
+	/**
+	 * Get Lowest Price
+	 *
+	 * @param \Ucreation\Properties\Service\ObjectService $objectService
+	 * @return \Ucreation\Properties\Domain\Model\Object
+	 */
+	public function findByLowestPrice(ObjectService $objectService) {
+		$query = $this->createQuery();
+		$query->setOrderings(array('price' => QueryInterface::ORDER_ASCENDING));
+		// Get query contrains
+		$constrains = $objectService->getQueryFilterConstrains($query);
+		// Removes the pricing constrains
+		unset($constrains[FilterUtility::FILTER_PRICE_LOWEST]);
+		unset($constrains[FilterUtility::FILTER_PRICE_HIGHEST]);
+		unset($constrains[FilterUtility::FILTER_OFFER]);
+		unset($constrains[FilterUtility::FILTER_PRICE]);
+		// Adds a new constrains for the offer
+		$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
+			$query->equals('offer', Object::OFFER_BOTH),
+			$query->equals('offer', Object::OFFER_SALE)
+		);
+		// Adds another constrains for the price (this must be filled in)
+		$constrains[FilterUtility::FILTER_PRICE] = $query->greaterThan('price', 0);
+		// Sets limit
+		$query->setLimit((int)1);
+		return $query->execute()->getFirst();
+	}
+
+	/**
+	 * Find By Highest Price
+	 *
+	 * @param \Ucreation\Properties\Service\ObjectService $objectService
+	 * @return \Ucreation\Properties\Domain\Model\Object
+	 */
+	public function findByHighestPrice(ObjectService $objectService) {
+		$query = $this->createQuery();
+		$query->setOrderings(array('price' => QueryInterface::ORDER_DESCENDING));
+		// Get query contrains
+		$constrains = $objectService->getQueryFilterConstrains($query);
+		// Removes the pricing constrains
+		unset($constrains[FilterUtility::FILTER_PRICE_LOWEST]);
+		unset($constrains[FilterUtility::FILTER_PRICE_HIGHEST]);
+		unset($constrains[FilterUtility::FILTER_OFFER]);
+		unset($constrains[FilterUtility::FILTER_PRICE]);
+		// Adds a new constrains for the offer
+		$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
+			$query->equals('offer', Object::OFFER_BOTH),
+			$query->equals('offer', Object::OFFER_SALE)
+		);
+		// Adds another constrains for the price (this must be filled in)
+		$constrains[FilterUtility::FILTER_PRICE] = $query->greaterThan('price', 0);
+		// Sets limit
+		$query->setLimit((int)1);
+		return $query->execute()->getFirst();
+	}
+
+	/**
+	 * Apply Query Constrains
+	 *
+	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+	 * @param array|NULL $constrains
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\Query
+	 */
+	protected function applyQueryConstrains(Query $query, array $constrains = NULL) {
+		if ($constrains) {
+			if (count($constrains) == 1) {
+				$query->matching($constrains[0]);
+			} else {
+				$query->matching(
+					$query->logicalAnd($constrains)
+				);
+			}
+		}
+		return $query;
 	}
 
 }
