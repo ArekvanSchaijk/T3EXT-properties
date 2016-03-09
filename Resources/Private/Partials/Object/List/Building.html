@@ -1,1 +1,25 @@
-<h1>Building {object.name}</h1>
+<div class="tx_properties_object building">
+    <div class="image">
+        <f:if condition="{object.cover}">
+            <f:then>
+                <img src="{f:uri.image(src: object.cover.uid, treatIdAsReference: 1, width: settings.object.cover.listWidth, height: settings.object.cover.listHeight)}" alt="{object.cover.originalResource.alternative}" />
+            </f:then>
+            <f:else>
+                <f:if condition="{settings.object.defaultImage}">
+                    <img src="{f:uri.image(src: settings.object.defaultImage, width: settings.object.cover.listWidth, height: settings.object.cover.listHeight)}" alt="{f:translate(key: 'no_image_alt')}" />
+                </f:if>
+            </f:else>
+        </f:if>
+    </div>
+    <div class="details">
+        <h2><f:link.action arguments="{object: object}">{object.name}</f:link.action></h2>
+        <p class="address">{object.zipCode} {object.town.name}</p>
+        <div class="subDetails">
+            <f:if condition="{object.isSale}">
+                <p><span class="price">&euro; {object.price} k.k.</span><br />
+                    <f:if condition="{object.livingArea}">{object.livingArea} m&sup2; <f:if condition="{object.lotSize}">/ {object.lotSize} m&sup2;</f:if></f:if></p>
+            </f:if>
+        </div>
+    </div>
+    <div class="clearboth"> </div>
+</div>

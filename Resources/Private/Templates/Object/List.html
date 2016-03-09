@@ -20,16 +20,23 @@
             </div>
 
             <f:if condition="{objects}">
+                <f:then>
                 <div class="tx_properties_objets_list">
                     <f:for each="{objects}" as="object">
                         <f:if condition="{0:object.type} == {0:'1'}">
-                            <f:render partial="Object/List/Building" arguments="{object: object}" />
+                            <f:render partial="Object/List/Building" arguments="{object: object, settings: settings}" />
                         </f:if>
                         <f:if condition="{0:object.type} == {0:'2'}">
-                            <f:render partial="Object/List/Lot" arguments="{object: object}" />
+                            <f:render partial="Object/List/Lot" arguments="{object: object, settings: settings}" />
                         </f:if>
                     </f:for>
                 </div>
+                </f:then>
+                <f:else>
+                    <div class="tx_properties_no_objects_message">
+                        {f:translate(key: 'bjects.no_results')}
+                    </div>
+                </f:else>
             </f:if>
 
         </div>

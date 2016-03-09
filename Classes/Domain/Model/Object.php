@@ -139,9 +139,14 @@ class Object extends AbstractEntity {
 	protected $offer = self::OFFER_SALE;
 
 	/**
-	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
 	 */
 	protected $images = NULL;
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
+	 */
+	protected $cover = NULL;
 
 	/**
 	 * @var integer
@@ -327,14 +332,15 @@ class Object extends AbstractEntity {
 	 */
 	protected function initStorageObjects() {
 		$this->presences = new ObjectStorage();
+		$this->images = new ObjectStorage();
 	}
 	
 	/**
-	 * Is Sale
+	 * Get Is Sale
 	 *
 	 * @return boolean
 	 */
-	public function isSale() {
+	public function getIsSale() {
 		if ($this->offer == self::OFFER_SALE || self:: $this->offer == self::OFFER_BOTH) {
 			return TRUE;
 		}
@@ -450,8 +456,8 @@ class Object extends AbstractEntity {
 
 	/**
 	 * Get Images
-	 * 
-	 * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
+	 *
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
 	 */
 	public function getImages() {
 		return $this->images;
@@ -459,12 +465,29 @@ class Object extends AbstractEntity {
 
 	/**
 	 * Set Images
-	 * 
-	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $images
+	 *
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $images
 	 * @return void
 	 */
-	public function setImages(FileReference $images) {
+	public function setImages(ObjectStorage $images) {
 		$this->images = $images;
+	}
+
+	/**
+	 * Get Cover
+	 *
+	 * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
+	 */
+	public function getCover() {
+		if (is_null($this->cover)) {
+			if ($this->getImages()) {
+				foreach ($this->getImages() as $image) {
+					$this->cover = $image;
+					break;
+				}
+			}
+		}
+		return $this->cover;
 	}
 
 	/**

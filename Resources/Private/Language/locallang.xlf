@@ -3,47 +3,53 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2015-09-01T15:22:45Z" product-name="properties">
 		<header/>
 		<body>
+			<trans-unit id="no_image_alt">
+				<source>Voorbeeld afbeelding</source>
+			</trans-unit>
 			<trans-unit id="filter.type">
-				<source>Type</source>
+				<source>Soort object</source>
 			</trans-unit>
 			<trans-unit id="filter.type.both">
-				<source>Show all</source>
+				<source>-- Toon Alles --</source>
 			</trans-unit>
 			<trans-unit id="filter.type.building">
-				<source>Building</source>
+				<source>Gebouw</source>
 			</trans-unit>
 			<trans-unit id="filter.type.lot">
-				<source>Lot</source>
+				<source>Kavel</source>
 			</trans-unit>
 			<trans-unit id="filter.offer">
-				<source>Kind of offer</source>
+				<source>Soort aanbod</source>
 			</trans-unit>
 			<trans-unit id="filter.offer.both">
-				<source>For Sale/For Rent</source>
+				<source>Te koop en Te huur</source>
 			</trans-unit>
 			<trans-unit id="filter.offer.sale">
-				<source>For Sale</source>
+				<source>Te koop</source>
 			</trans-unit>
 			<trans-unit id="filter.offer.rent">
-				<source>For Rent</source>
+				<source>Te huur</source>
 			</trans-unit>
 			<trans-unit id="filter.price">
-				<source>Price</source>
+				<source>Prijs</source>
 			</trans-unit>
 			<trans-unit id="filter.lotSize">
-				<source>Lot Size</source>
+				<source>Oppervlakte</source>
 			</trans-unit>
 			<trans-unit id="filter.town">
-				<source>Town</source>
+				<source>Plaats</source>
 			</trans-unit>
 			<trans-unit id="filter.town.0">
-				<source>Show all</source>
+				<source>-- Toon Alles --</source>
 			</trans-unit>
 			<trans-unit id="filter.presences">
-				<source>Presences</source>
+				<source>Aanwezigheden</source>
 			</trans-unit>
 			<trans-unit id="filter.submit">
-				<source>Submit</source>
+				<source>Vernieuw</source>
+			</trans-unit>
+			<trans-unit id="objects.no_results">
+				<source>Er zijn geen objecten gevonden die voldoen aan uw zoekcriteria.</source>
 			</trans-unit>
 		</body>
 	</file>

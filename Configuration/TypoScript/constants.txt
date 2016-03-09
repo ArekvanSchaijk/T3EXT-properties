@@ -12,6 +12,14 @@ plugin.tx_properties {
 		storagePid =
 	}
 	settings {
+		object {
+		    cover {
+		        listWidth = 270
+		        listHeight = 180c
+		    }
+		    singlePid =
+		    defaultImage =
+		}
         categories {
             autoActivateFirstCategory = 1
         }

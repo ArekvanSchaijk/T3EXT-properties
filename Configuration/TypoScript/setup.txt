@@ -8,6 +8,14 @@ plugin.tx_properties {
 		storagePid = {$plugin.tx_properties.persistence.storagePid}
 	}
 	settings {
+		object {
+		    cover {
+		        listWidth = {$plugin.tx_properties.settings.object.cover.listWidth}
+		        listHeight = {$plugin.tx_properties.settings.object.cover.listHeight}
+		    }
+		    singlePid = {$plugin.tx_properties.settings.object.singlePid}
+		    defaultImage = {$plugin.tx_properties.settings.object.defaultImage}
+		}
 		categories {
             autoActivateFirstCategory = {$plugin.tx_properties.settings.categories.autoActivateFirstCategory}
 		}
