@@ -341,7 +341,7 @@ class Object extends AbstractEntity {
 	 * @return boolean
 	 */
 	public function getIsSale() {
-		if ($this->offer == self::OFFER_SALE || self:: $this->offer == self::OFFER_BOTH) {
+		if ($this->getOffer() == self::OFFER_SALE || $this->getOffer() == self::OFFER_BOTH) {
 			return TRUE;
 		}
 		return FALSE;
@@ -353,7 +353,7 @@ class Object extends AbstractEntity {
 	 * @return boolean
 	 */
 	public function isRent() {
-		if ($this->offer == self::OFFER_RENT || self:: $this->offer == self::OFFER_BOTH) {
+		if ($this->getOffer() == self::OFFER_RENT || $this->getOffer() == self::OFFER_BOTH) {
 			return TRUE;
 		}
 		return FALSE;
