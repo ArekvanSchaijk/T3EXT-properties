@@ -54,7 +54,7 @@ class BaseController extends ActionController {
 	public function initializeAction() {
 		// Checks if the extending class has a 'initialize' method and calls it
 		if (method_exists($this, 'initialize')) {
-			$this->initialize();	
+			$this->initialize();
 		}
 		// Prepares the object service
 		if (!$this->objectService->isPrepared()) {

@@ -20,7 +20,7 @@ return array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => 'name,type,sort,offer,images,year,environmental_class,description,street,zip_code,contact,price,rent_price,rent_price_type,price_per_square_metre,lot_size,living_area,garden_area,number_of_rooms,latitude,longitude,latitude_longitude_md5,category,presences,town,position,construction_type,',
+		'searchFields' => 'name,type,sort,offer,images,year,environmental_class,description,street,zip_code,contact,status,price,rent_price,rent_price_type,price_per_square_metre,lot_size,living_area,garden_area,number_of_rooms,latitude,longitude,latitude_longitude_md5,category,presences,town,position,construction_type,',
 		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_object.gif'
 	),
 	'interface' => array(
@@ -65,7 +65,7 @@ return array(
 			'canNotCollapse' => TRUE
 		),
 		'sale_details' => array(
-			'showitem' => 'price, --linebreak--, price_per_square_metre',
+			'showitem' => 'status, --linebreak--, price, --linebreak--, price_per_square_metre',
 			'canNotCollapse' => TRUE
 		),
 		'rent_details' => array(
@@ -463,6 +463,32 @@ return array(
 					array(
 						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.offer.2',
 						\Ucreation\Properties\Domain\Model\Object::OFFER_BOTH
+					),
+				)
+			)
+		),
+		'status' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.status',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+			'config' => array(
+				'type' => 'select',
+				'items' => array(
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.status.0',
+						\Ucreation\Properties\Domain\Model\Object::STATUS_AVAILABLE,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.status.1',
+						\Ucreation\Properties\Domain\Model\Object::STATUS_SOLD,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.status.2',
+						\Ucreation\Properties\Domain\Model\Object::STATUS_LEASED,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.status.3',
+						\Ucreation\Properties\Domain\Model\Object::STATUS_NOTAVAILABLE,
 					),
 				)
 			)

@@ -6,6 +6,9 @@
 			<trans-unit id="no_image_alt">
 				<source>Voorbeeld afbeelding</source>
 			</trans-unit>
+			<trans-unit id="filter.not_available">
+				<source>Deze filter is in de huidige selectie niet beschikbaar.</source>
+			</trans-unit>
 			<trans-unit id="filter.type">
 				<source>Soort object</source>
 			</trans-unit>
@@ -38,6 +41,9 @@
 			</trans-unit>
 			<trans-unit id="filter.town">
 				<source>Plaats</source>
+			</trans-unit>
+			<trans-unit id="filter.towns">
+				<source>Plaatsen</source>
 			</trans-unit>
 			<trans-unit id="filter.town.0">
 				<source>-- Toon Alles --</source>

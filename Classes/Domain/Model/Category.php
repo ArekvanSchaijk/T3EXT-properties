@@ -25,7 +25,6 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use Ucreation\Properties\Utility\LinkUtility;
 
 /**
@@ -34,7 +33,7 @@ use Ucreation\Properties\Utility\LinkUtility;
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class Category extends AbstractEntity {
+class Category extends AbstractModel {
 
 	/**
 	 * @var string
@@ -50,12 +49,6 @@ class Category extends AbstractEntity {
 	 * @var array
 	 */
 	protected $linkArguments = array();
-
-	/**
-	 * @var \Ucreation\Properties\Service\ObjectService
-	 * @inject
-	 */
-	protected $objectService = NULL;
 
 	/**
 	 * Get Name
@@ -82,7 +75,7 @@ class Category extends AbstractEntity {
 	 * @return bool
 	 */
 	public function getIsActive() {
-		return $this->objectService->isCategoryActive($this);
+		return $this->getObjectService()->isCategoryActive($this);
 	}
 
 	/**
@@ -91,7 +84,7 @@ class Category extends AbstractEntity {
 	 * @return array
 	 */
 	public function getLinkArguments() {
-		return $this->objectService->getLinkArguments(array(LinkUtility::CATEGORY => $this->getUid()));
+		return $this->getObjectService()->getLinkArguments(array(LinkUtility::CATEGORY => $this->getUid()));
 	}
 
 }

@@ -4,7 +4,7 @@ namespace Ucreation\Properties\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2015 Arek van Schaijk <info@ucreation.nl>, Ucreation
+ *  (c) 2016 Arek van Schaijk <info@ucreation.nl>, Ucreation
  *
  *  All rights reserved
  *
@@ -25,63 +25,37 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
- * Class Town
+ * Class AbstractModel
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class Town extends AbstractModel {
+abstract class AbstractModel extends AbstractEntity {
 
-	/**
-	 * @var string
-	 */
-	protected $name = '';
+    /**
+     * @var \Ucreation\Properties\Service\ObjectService
+     */
+    protected $objectService = NULL;
 
-	/**
-	 * Get Name
-	 * 
-	 * @return string
-	 */
-	public function getName() {
-		return $this->name;
-	}
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @inject
+     */
+    protected $objectManager = NULL;
 
-	/**
-	 * Set Name
-	 * 
-	 * @param string $name
-	 * @return void
-	 */
-	public function setName($name) {
-		$this->name = $name;
-	}
-
-	/**
-	 * Get Is Active
-	 *
-	 * @return bool
-	 */
-	public function getIsActive() {
-		return $this->getObjectService()->isTownActive($this);
-	}
-
-	/**
-	 * Get Count Available Objects
-	 *
-	 * @return int
-	 */
-	public function getFilterAvailableObjects() {
-		return 1;
-	}
-
-	/**
-	 * Get Is Disabled
-	 *
-	 * @return bool
-	 */
-	public function getIsDisabled() {
-		return ($this->getFilterAvailableObjects() ? FALSE : TRUE);
-	}
+    /**
+     * Get Object Service
+     *
+     * @return \Ucreation\Properties\Service\ObjectService
+     */
+    protected function getObjectService() {
+        if (!$this->objectService) {
+            $this->objectService = $this->objectManager->get('Ucreation\\Properties\\Service\\ObjectService');
+        }
+        return $this->objectService;
+    }
 
 }

@@ -30,6 +30,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use Ucreation\Properties\Domain\Model\Category;
 use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Domain\Model\Presence;
+use Ucreation\Properties\Domain\Model\Town;
 use Ucreation\Properties\Utility\FilterUtility;
 use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -68,6 +69,11 @@ class ObjectService implements SingletonInterface {
 	 * @var array|null
 	 */
 	protected $registeredFilters = NULL;
+
+	/**
+	 * @var array|null
+	 */
+	protected $towns = NULL;
 
 	/**
 	 * @var array|null
@@ -226,6 +232,23 @@ class ObjectService implements SingletonInterface {
 	}
 
 	/**
+	 * Get Available Objects Count By Presence
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Presence $presence
+	 * @return int
+	 */
+	public function getAvailableObjectsCountByPresence(Presence $presence) {
+		$filters = $this->getFilters();
+		if (!$filters[FilterUtility::FILTER_PRESENCES]) {
+			$filters[FilterUtility::FILTER_PRESENCES] = array();
+		}
+		if (!in_array($presence->getUid(), $filters[FilterUtility::FILTER_PRESENCES])) {
+			$filters[FilterUtility::FILTER_PRESENCES][] = $presence->getUid();
+		}
+		return $this->objectRepository->findCountByFilters($this, $filters);
+	}
+
+	/**
 	 * Get Query Filter Contrains
 	 *
 	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
@@ -239,7 +262,7 @@ class ObjectService implements SingletonInterface {
 		}
 		// Category
 		if ($filters[FilterUtility::FILTER_CATEGORY]) {
-			$constrains[FilterUtility::FILTER_CATEGORY] = $query->equals('category', $filters[FilterUtility::FILTER_CATEGORY]);
+			$constrains[FilterUtility::FILTER_CATEGORY] = $query->equals('category.uid', $filters[FilterUtility::FILTER_CATEGORY]);
 		}
 		// Type
 		if ($filters[FilterUtility::FILTER_TYPE]) {
@@ -264,6 +287,20 @@ class ObjectService implements SingletonInterface {
 		// Town
 		if ($filters[FilterUtility::FILTER_TOWN]) {
 			$constrains[FilterUtility::FILTER_TOWN] = $query->equals('town', $filters[FilterUtility::FILTER_TOWN]);
+		}
+		// Towns
+		if ($filters[FilterUtility::FILTER_TOWNS]) {
+			$constrains[FilterUtility::FILTER_TOWNS] = array();
+			foreach ($filters[FilterUtility::FILTER_TOWNS] as $townId) {
+				$constrains[FilterUtility::FILTER_TOWNS][] = $query->equals('town', $townId);
+			}
+		}
+		// Presences
+		if ($filters[FilterUtility::FILTER_PRESENCES]) {
+			$constrains[FilterUtility::FILTER_PRESENCES] = array();
+			foreach ($filters[FilterUtility::FILTER_PRESENCES] as $presenceId) {
+				$constrains[FilterUtility::FILTER_PRESENCES][] = $query->contains('presences', $presenceId);
+			}
 		}
 		// Offer
 		if ($filters[FilterUtility::FILTER_OFFER]) {
@@ -329,9 +366,19 @@ class ObjectService implements SingletonInterface {
 							$this->filters[FilterUtility::FILTER_TOWN] = $townId;
 						}
 						break;
+					case FilterUtility::FILTER_TOWNS:
+						if (($activeTowns = $this->getActiveTowns())) {
+							$this->filters[FilterUtility::FILTER_TOWNS] = $activeTowns;
+						}
+						break;
 					case FilterUtility::FILTER_OFFER:
 						if (($activeOfferType = $this->getActiveOfferType())) {
 							$this->filters[FilterUtility::FILTER_OFFER] = $activeOfferType;
+						}
+						break;
+					case FilterUtility::FILTER_PRESENCES:
+						if (($activePresences = $this->getActivePresences())) {
+							$this->filters[FilterUtility::FILTER_PRESENCES] = $activePresences;
 						}
 						break;
 				}
@@ -439,6 +486,10 @@ class ObjectService implements SingletonInterface {
 		if (!$linkArguments[LinkUtility::OFFER]) {
 			unset($linkArguments[LinkUtility::OFFER]);
 		}
+		// Processes the towns
+		if ($linkArguments[LinkUtility::TOWNS]) {
+			$linkArguments[LinkUtility::TOWNS] = implode(',', $linkArguments[LinkUtility::TOWNS]);
+		}
 		// Processes the presences
 		if ($linkArguments[LinkUtility::PRESENCES]) {
 			$linkArguments[LinkUtility::PRESENCES] = implode(',', $linkArguments[LinkUtility::PRESENCES]);
@@ -526,24 +577,63 @@ class ObjectService implements SingletonInterface {
 	}
 
 	/**
+	 * Is Town Active
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Town $town
+	 * @return bool
+	 */
+	public function isTownActive(Town $town) {
+		return in_array($town->getUid(), $this->getActiveTowns());
+	}
+
+	/**
+	 * Get Active Towns
+	 *
+	 * @return array
+	 */
+	public function getActiveTowns() {
+		if (is_null($this->towns)) {
+			$this->towns = array();
+			if ($this->request->hasArgument(LinkUtility::TOWNS)) {
+				$towns = GeneralUtility::trimExplode(',', $this->request->getArgument(LinkUtility::TOWNS));
+				foreach ($towns as $value) {
+					if (ctype_digit($value) && !in_array($value, $this->towns)) {
+						$this->towns[] = $value;
+					}
+				}
+			}
+		}
+		return $this->towns;
+	}
+
+	/**
 	 * Is Presence Active
 	 *
 	 * @param \Ucreation\Properties\Domain\Model\Presence $presence
 	 * @return bool
 	 */
 	public function isPresenceActive(Presence $presence) {
+		return in_array($presence->getUid(), $this->getActivePresences());
+	}
+
+	/**
+	 * Get Active Presences
+	 *
+	 * @return array
+	 */
+	public function getActivePresences() {
 		if (is_null($this->presences)) {
 			$this->presences = array();
 			if ($this->request->hasArgument(LinkUtility::PRESENCES)) {
 				$presences = GeneralUtility::trimExplode(',', $this->request->getArgument(LinkUtility::PRESENCES));
-				foreach ($presences as $key => $value) {
+				foreach ($presences as $value) {
 					if (ctype_digit($value) && !in_array($value, $this->presences)) {
 						$this->presences[] = $value;
 					}
 				}
 			}
 		}
-		return in_array($presence->getUid(), $this->presences);
+		return $this->presences;
 	}
 
 	/**

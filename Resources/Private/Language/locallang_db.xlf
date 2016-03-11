@@ -69,6 +69,21 @@
 			<trans-unit id="tx_properties_domain_model_object.type_building.2">
 				<source>Existing</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.status">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.status.0">
+				<source>Available</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.status.1">
+				<source>Sold</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.status.2">
+				<source>Leased</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.status.3">
+				<source>Not Available</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.sort">
 				<source>Sort</source>
 			</trans-unit>

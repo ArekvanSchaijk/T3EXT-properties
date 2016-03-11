@@ -90,6 +90,8 @@ class ObjectRepository extends Repository {
 		);
 		// Adds another constrains for the price (this must be filled in)
 		$constrains[FilterUtility::FILTER_PRICE] = $query->greaterThan('price', 0);
+		// Apply query constrains
+		$query = $this->applyQueryConstrains($query, $constrains);
 		// Sets limit
 		$query->setLimit((int)1);
 		return $query->execute()->getFirst();
@@ -106,15 +108,12 @@ class ObjectRepository extends Repository {
 		$query->setOrderings(array('price' => QueryInterface::ORDER_DESCENDING));
 		// Get query contrains
 		$constrains = $objectService->getQueryFilterConstrains($query);
-		// Removes some existing constrains
-		unset(
-			$constrains[FilterUtility::FILTER_PRICE_LOWEST],
-			$constrains[FilterUtility::FILTER_PRICE_HIGHEST],
-			$constrains[FilterUtility::FILTER_OFFER],
-			$constrains[FilterUtility::FILTER_PRICE],
-			$constrains[FilterUtility::FILTER_LOT_SIZE_LOWEST],
-			$constrains[FilterUtility::FILTER_LOT_SIZE_HIGHEST]
-		);
+		// Create some new constrains
+		$newConstrains = array();
+		unset($constrains[FilterUtility::FILTER_OFFER]);
+		if ($constrains[FilterUtility::FILTER_CATEGORY]) {
+			$newConstrains[FilterUtility::FILTER_CATEGORY] = $constrains[FilterUtility::FILTER_CATEGORY];
+		}
 		// Adds a new constrains for the offer
 		$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
 			$query->equals('offer', Object::OFFER_BOTH),
@@ -122,6 +121,8 @@ class ObjectRepository extends Repository {
 		);
 		// Adds another constrains for the price (this must be filled in)
 		$constrains[FilterUtility::FILTER_PRICE] = $query->greaterThan('price', 0);
+		// Apply query constrains
+		$query = $this->applyQueryConstrains($query, $newConstrains);
 		// Sets limit
 		$query->setLimit((int)1);
 		return $query->execute()->getFirst();
@@ -138,17 +139,21 @@ class ObjectRepository extends Repository {
 		$query->setOrderings(array('lotSize' => QueryInterface::ORDER_ASCENDING));
 		// Get query contrains
 		$constrains = $objectService->getQueryFilterConstrains($query);
-		// Removes some existing constrains
-		unset(
-			$constrains[FilterUtility::FILTER_PRICE_LOWEST],
-			$constrains[FilterUtility::FILTER_PRICE_HIGHEST],
-			$constrains[FilterUtility::FILTER_OFFER],
-			$constrains[FilterUtility::FILTER_PRICE],
-			$constrains[FilterUtility::FILTER_LOT_SIZE_LOWEST],
-			$constrains[FilterUtility::FILTER_LOT_SIZE_HIGHEST]
+		// Create some new constrains
+		$newConstrains = array();
+		unset($constrains[FilterUtility::FILTER_OFFER]);
+		if ($constrains[FilterUtility::FILTER_CATEGORY]) {
+			$newConstrains[FilterUtility::FILTER_CATEGORY] = $constrains[FilterUtility::FILTER_CATEGORY];
+		}
+		// Adds a new constrains for the offer
+		$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
+			$query->equals('offer', Object::OFFER_BOTH),
+			$query->equals('offer', Object::OFFER_SALE)
 		);
 		// Adds another constrains for the lot size
 		$constrains[FilterUtility::FILTER_LOT_SIZE] = $query->greaterThan('lotSize', 0);
+		// Apply query constrains
+		$query = $this->applyQueryConstrains($query, $newConstrains);
 		// Sets limit
 		$query->setLimit((int)1);
 		return $query->execute()->getFirst();
@@ -165,30 +170,60 @@ class ObjectRepository extends Repository {
 		$query->setOrderings(array('lotSize' => QueryInterface::ORDER_DESCENDING));
 		// Get query contrains
 		$constrains = $objectService->getQueryFilterConstrains($query);
-		// Removes some existing constrains
-		unset(
-			$constrains[FilterUtility::FILTER_PRICE_LOWEST],
-			$constrains[FilterUtility::FILTER_PRICE_HIGHEST],
-			$constrains[FilterUtility::FILTER_OFFER],
-			$constrains[FilterUtility::FILTER_PRICE],
-			$constrains[FilterUtility::FILTER_LOT_SIZE_LOWEST],
-			$constrains[FilterUtility::FILTER_LOT_SIZE_HIGHEST]
+		// Create some new constrains
+		$newConstrains = array();
+		unset($constrains[FilterUtility::FILTER_OFFER]);
+		if ($constrains[FilterUtility::FILTER_CATEGORY]) {
+			$newConstrains[FilterUtility::FILTER_CATEGORY] = $constrains[FilterUtility::FILTER_CATEGORY];
+		}
+		// Adds a new constrains for the offer
+		$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
+			$query->equals('offer', Object::OFFER_BOTH),
+			$query->equals('offer', Object::OFFER_SALE)
 		);
 		// Adds another constrains for the lot size
 		$constrains[FilterUtility::FILTER_LOT_SIZE] = $query->greaterThan('lotSize', 0);
+		// Apply query constrains
+		$query = $this->applyQueryConstrains($query, $newConstrains);
 		// Sets limit
 		$query->setLimit((int)1);
 		return $query->execute()->getFirst();
 	}
 
 	/**
+	 * Find Count By Filters
+	 *
+	 * @param \Ucreation\Properties\Service\ObjectService $objectService
+	 * @param array|NULL $filters
+	 * @return int
+	 */
+	public function findCountByFilters(ObjectService $objectService, array $filters = NULL) {
+		$query = $this->createQuery();
+		// Get query contrains
+		$constrains = $objectService->getQueryFilterConstrains($query, $filters);
+		// Apply query constrains
+		$query = $this->applyQueryConstrains($query, $constrains);
+		return $query->execute()->count();
+	}
+
+	/**
 	 * Apply Query Constrains
 	 *
 	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
-	 * @param array|NULL $constrains
+	 * @param array|NULL $constrainsArray
 	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\Query
 	 */
-	protected function applyQueryConstrains(Query $query, array $constrains = NULL) {
+	protected function applyQueryConstrains(Query $query, array $constrainsArray = NULL) {
+		$constrains = array();
+		foreach ($constrainsArray as $constrainsItem) {
+			if (is_array($constrainsItem)) {
+				foreach ($constrainsItem as $constrainsSubItem) {
+					$constrains[] = $constrainsSubItem;
+				}
+			} else {
+				$constrains[] = $constrainsItem;
+			}
+		}
 		if ($constrains) {
 			if (count($constrains) == 1) {
 				$query->matching($constrains[0]);

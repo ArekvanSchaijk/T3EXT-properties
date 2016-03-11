@@ -3,28 +3,31 @@
     <f:form action="list" arguments="{ppt:LinkArguments()}">
         <f:if condition="{types}">
             <f:render partial="Object/List/Filters/Type" arguments="{types: types, activeType: activeType}" />
-            <f:if condition="{offerTypes}">
+            <f:if condition="{showOfferFilter}">
                 <f:render partial="Object/List/Filters/Offer" arguments="{offerTypes: offerTypes, activeOfferType: activeOfferType}" />
             </f:if>
         </f:if>
-        <f:if condition="{towns}">
+        <f:if condition="{showTownFilter}">
             <f:render partial="Object/List/Filters/Town" arguments="{towns: towns, activeTown: activeTown}" />
         </f:if>
 
-        <f:if condition="{showPrice}">
+        <f:if condition="{showTownsFilter}">
+            <f:render partial="Object/List/Filters/Towns" arguments="{towns: towns}" />
+        </f:if>
+
+        <f:if condition="{showPriceFilter}">
             <f:render partial="Object/List/Filters/Price" arguments="{priceHighest: priceHighest, priceLowest: priceLowest, selectedPriceLowest: selectedPriceLowest, selectedPriceHighest: selectedPriceHighest}" />
         </f:if>
 
-        <f:if condition="{showLotSize}">
+        <f:if condition="{showLotSizeFilter}">
             <f:render partial="Object/List/Filters/LotSize" arguments="{lotSizeHighest: lotSizeHighest, lotSizeLowest: lotSizeLowest, selectedLotSizeLowest: selectedLotSizeLowest, selectedLotSizeHighest: selectedLotSizeHighest}" />
         </f:if>
 
-        <f:if condition="{presences}">
+        <f:if condition="{showPresencesFilter}">
             <f:render partial="Object/List/Filters/Presences" arguments="{presences: presences}" />
         </f:if>
         <div class="postForm">
             <f:form.submit name="submitFilters" value="{f:translate(key: 'filter.submit')}" />
         </div>
-
     </f:form>
 </div>

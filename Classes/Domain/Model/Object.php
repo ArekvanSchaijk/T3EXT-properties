@@ -43,6 +43,14 @@ class Object extends AbstractEntity {
 	const	TYPE_NONE = 0,	
 			TYPE_BUILDING = 1,
 			TYPE_LOT = 2;
+
+	/**
+	 * @const integer
+	 */
+	const	STATUS_AVAILABLE = 0,
+			STATUS_SOLD = 1,
+			STATUS_LEASED = 2,
+			STATUS_NOTAVAILABLE = 3;
 	
 	/**
 	 * @const integer
@@ -182,6 +190,11 @@ class Object extends AbstractEntity {
 	 * @var string
 	 */
 	protected $contact = '';
+
+	/**
+	 * @var int
+	 */
+	protected $status = self::STATUS_AVAILABLE;
 
 	/**
 	 * @var float
@@ -621,6 +634,73 @@ class Object extends AbstractEntity {
 	 */
 	public function setContact($contact) {
 		$this->contact = $contact;
+	}
+
+	/**
+	 * Get Status
+	 *
+	 * @return int
+	 */
+	public function getStatus() {
+		return $this->status;
+	}
+
+	/**
+	 * Set Status
+	 *
+	 * @param int $status
+	 * @return void
+	 */
+	public function setStatus($status) {
+		$this->status = $status;
+	}
+
+	/**
+	 * Get Is Available
+	 *
+	 * @return bool
+	 */
+	public function getIsAvailable() {
+		if ($this->getStatus() == self::STATUS_AVAILABLE) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Get Is Sold
+	 *
+	 * @return bool
+	 */
+	public function getIsSold() {
+		if ($this->getStatus() == self::STATUS_SOLD) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Get Is Leased
+	 *
+	 * @return bool
+	 */
+	public function getIsLeased() {
+		if ($this->getStatus() == self::STATUS_LEASED) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Get Is Not Available
+	 *
+	 * @return bool
+	 */
+	public function getIsNotAvailable() {
+		if ($this->getStatus() == self::STATUS_NOTAVAILABLE) {
+			return TRUE;
+		}
+		return FALSE;
 	}
 
 	/**

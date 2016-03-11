@@ -8,6 +8,7 @@ CREATE TABLE tx_properties_domain_model_object (
 
 	name varchar(100) DEFAULT '' NOT NULL,
 	type tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	status tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	type_building tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	sort tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	offer tinyint(4) unsigned DEFAULT '0' NOT NULL,

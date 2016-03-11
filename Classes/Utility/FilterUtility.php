@@ -35,7 +35,8 @@ class FilterUtility {
 
     const   FILTER_CATEGORY = 'category';
 
-    const   FILTER_TOWN = 'town';
+    const   FILTER_TOWN = 'town',
+            FILTER_TOWNS = 'towns';
 
     const   FILTER_PRESENCES = 'presences';
 
@@ -74,6 +75,7 @@ class FilterUtility {
             self::FILTER_LOT_SIZE_LOWEST,
             self::FILTER_LOT_SIZE_HIGHEST,
             self::FILTER_TOWN,
+            self::FILTER_TOWNS,
             self::FILTER_CATEGORY,
             self::FILTER_PRESENCES,
         );

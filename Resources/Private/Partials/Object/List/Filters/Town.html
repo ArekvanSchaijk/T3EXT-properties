@@ -1,4 +1,11 @@
 <legend><label for="town">{f:translate(key: 'filter.town')}</label></legend>
-<div class="filterOption town">
-    <f:form.select name="town" id="town" options="{towns}" optionValueField="uid" optionLabelField="name" prependOptionLabel="{f:translate(key: 'filter.town.0')}" prependOptionValue="" value="{activeTown}" />
-</div>
+<f:if condition="{towns}">
+    <f:then>
+        <div class="filterOption town">
+            <f:form.select name="town" id="town" options="{towns}" optionValueField="uid" optionLabelField="name" prependOptionLabel="{f:translate(key: 'filter.town.0')}" prependOptionValue="" value="{activeTown}" />
+        </div>
+    </f:then>
+    <f:else>
+        <p class="filter-not-available">{f:translate(key: 'filter.not_available')}</p>
+    </f:else>
+</f:if>

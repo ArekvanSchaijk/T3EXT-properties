@@ -25,15 +25,13 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-
 /**
  * Class Presence
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class Presence extends AbstractEntity {
+class Presence extends AbstractModel {
 
 	/**
 	 * @var string
@@ -49,6 +47,11 @@ class Presence extends AbstractEntity {
 	 * @var bool
 	 */
 	protected $isDisabled = FALSE;
+
+	/**
+	 * @var int|null
+	 */
+	protected $filterAvailableObjects = NULL;
 
 	/**
 	 * @var \Ucreation\Properties\Service\ObjectService
@@ -81,7 +84,19 @@ class Presence extends AbstractEntity {
 	 * @return bool
 	 */
 	public function getIsActive() {
-		return $this->objectService->isPresenceActive($this);
+		return $this->getObjectService()->isPresenceActive($this);
+	}
+
+	/**
+	 * Get Count Available Objects
+	 *
+	 * @return int
+	 */
+	public function getFilterAvailableObjects() {
+		if (is_null($this->filterAvailableObjects)) {
+			$this->filterAvailableObjects = $this->getObjectService()->getAvailableObjectsCountByPresence($this);
+		}
+		return $this->filterAvailableObjects;
 	}
 
 	/**
@@ -90,17 +105,7 @@ class Presence extends AbstractEntity {
 	 * @return bool
 	 */
 	public function getIsDisabled() {
-		return $this->isDisabled;
-	}
-
-	/**
-	 * Set Is Disabled
-	 *
-	 * @param bool $isDisabled
-	 * @return void
-	 */
-	public function setIsDisabled($isDisabled) {
-		$this->isDisabled = $isDisabled;
+		return ($this->getFilterAvailableObjects() ? FALSE : TRUE);
 	}
 
 }
