@@ -18,6 +18,9 @@
 			<trans-unit id="tab.contact">
 				<source>Contact</source>
 			</trans-unit>
+			<trans-unit id="palettes.contact_details">
+				<source>Contact Details</source>
+			</trans-unit>
 			<trans-unit id="palettes.location.address">
 				<source>Address</source>
 			</trans-unit>
@@ -135,6 +138,9 @@
 			<trans-unit id="tx_properties_domain_model_object.description">
 				<source>Description</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.alternative_description">
+				<source>Alternative Description</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.street">
 				<source>Street</source>
 			</trans-unit>
@@ -147,8 +153,38 @@
 			<trans-unit id="tx_properties_domain_model_object.country">
 				<source>Country</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.use_existing_contact">
+				<source>Use existing contact</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.use_existing_contact.0">
+				<source>If checked, you need to select an existing contact</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.contact">
 				<source>Contact</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.contact.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.contact_name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.contact_company">
+				<source>Company</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.contact_address">
+				<source>Address</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.contact_phone">
+				<source>Phone</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.contact_secondary_phone">
+				<source>Secondary Phone</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.contact_email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.contact_website">
+				<source>Website</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.price">
 				<source>Price</source>
@@ -255,6 +291,12 @@
 			<trans-unit id="tx_properties_domain_model_object.number_of_bedrooms">
 				<source>Number Of Bedrooms</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.determine_latlong_automatic">
+				<source>Determine Latitude Longitude Automatic</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.determine_latlong_automatic.0">
+				<source>If checked, the Latitude and Longitude will be calculated automatic based on the given location details if possible</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.latitude">
 				<source>Latitude</source>
 			</trans-unit>
@@ -359,6 +401,30 @@
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_garagesort.name">
 				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contact">
+				<source>Contact</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contact.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contact.company">
+				<source>Company</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contact.address">
+				<source>Address</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contact.phone">
+				<source>Phone</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contact.secondary_phone">
+				<source>Secondary Phone</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contact.email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contact.website">
+				<source>Website</source>
 			</trans-unit>
 		</body>
 	</file>

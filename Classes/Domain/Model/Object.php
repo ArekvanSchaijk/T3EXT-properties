@@ -174,6 +174,11 @@ class Object extends AbstractEntity {
 	/**
 	 * @var string
 	 */
+	protected $alternativeDescription = '';
+
+	/**
+	 * @var string
+	 */
 	protected $street = '';
 	
 	/**
@@ -187,9 +192,49 @@ class Object extends AbstractEntity {
 	protected $zipCode = '';
 
 	/**
+	 * @var bool
+	 */
+	protected $useExistingContact = FALSE;
+
+	/**
+	 * @var \Ucreation\Properties\Domain\Model\Contact
+	 */
+	protected $contact = NULL;
+
+	/**
 	 * @var string
 	 */
-	protected $contact = '';
+	protected $contactName = '';
+
+	/**
+	 * @var string
+	 */
+	protected $contactCompany = '';
+
+	/**
+	 * @var string
+	 */
+	protected $contactAddress = '';
+
+	/**
+	 * @var string
+	 */
+	protected $contactPhone = '';
+
+	/**
+	 * @var string
+	 */
+	protected $contactSecondaryPhone = '';
+
+	/**
+	 * @var string
+	 */
+	protected $contactEmail = '';
+
+	/**
+	 * @var string
+	 */
+	protected $contactWebsite = '';
 
 	/**
 	 * @var int
@@ -330,6 +375,11 @@ class Object extends AbstractEntity {
 	 * @var \Ucreation\Properties\Domain\Model\GarageSort
 	 */
 	protected $garageSort = NULL;
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+	 */
+	protected $objectManager = NULL;
 
 	/**
 	 * Constructor
@@ -551,6 +601,25 @@ class Object extends AbstractEntity {
 	}
 
 	/**
+	 * Get Alternative Description
+	 *
+	 * @return string
+	 */
+	public function getAlternativeDescription() {
+		return $this->alternativeDescription;
+	}
+
+	/**
+	 * Set Alternative Description
+	 *
+	 * @param string $alternativeDescription
+	 * @return void
+	 */
+	public function setAlternativeDescription($alternativeDescription) {
+		$this->alternativeDescription = $alternativeDescription;
+	}
+
+	/**
 	 * Set Description
 	 * 
 	 * @param string $description
@@ -618,22 +687,133 @@ class Object extends AbstractEntity {
 	}
 
 	/**
+	 * Get Use Existing Contact
+	 *
+	 * @return bool
+	 */
+	public function getUseExistingContact() {
+		return $this->useExistingContact;
+	}
+
+	/**
+	 * Is Use Existing Contact
+	 *
+	 * @return bool
+	 */
+	public function isUseExistingContact() {
+		return $this->getUseExistingContact();
+	}
+
+	/**
+	 * Set Use Existing Contact
+	 *
+	 * @param bool $useExistingContact
+	 * @return void
+	 */
+	public function setUseExistingContact($useExistingContact) {
+		$this->useExistingContact = $useExistingContact;
+	}
+
+	/**
 	 * Get Contact
 	 * 
-	 * @return string
+	 * @return \Ucreation\Properties\Domain\Model\Contact
 	 */
 	public function getContact() {
 		return $this->contact;
 	}
 
 	/**
+	 * Get Contact Object
+	 *
+	 * @return \Ucreation\Properties\Domain\Model\Contact
+	 */
+	public function getContactObject() {
+		if ($this->isUseExistingContact()) {
+			return $this->getContact();
+		}
+		$contact = $this->objectManager->get('Ucreation\\Properties\\Domain\\Model\\Contact');
+		$contact->setName($this->getContactName());
+		$contact->setCompany($this->getContactCompany());
+		$contact->setAddress($this->getContactAddress());
+		$contact->setPhone($this->getContactPhone());
+		$contact->setSecondaryPhone($this->getContactSecondaryPhone());
+		$contact->setEmail($this->getContactEmail());
+		$contact->setWebsite($this->getContactWebsite());
+		return $contact;
+	}
+
+	/**
 	 * Set Contact
 	 * 
-	 * @param string $contact
+	 * @param \Ucreation\Properties\Domain\Model\Contact $contact
 	 * @return void
 	 */
-	public function setContact($contact) {
+	public function setContact(Contact $contact) {
 		$this->contact = $contact;
+	}
+
+	/**
+	 * Get Contact Name
+	 *
+	 * @return string
+	 */
+	public function getContactName() {
+		return $this->contactName;
+	}
+
+	/**
+	 * Get Contact Company
+	 *
+	 * @return string
+	 */
+	public function getContactCompany() {
+		return $this->contactCompany;
+	}
+
+	/**
+	 * Get Contact Address
+	 *
+	 * @return string
+	 */
+	public function getContactAddress() {
+		return $this->contactAddress;
+	}
+
+	/**
+	 * Get Contact Phone
+	 *
+	 * @return string
+	 */
+	public function getContactPhone() {
+		return $this->contactPhone;
+	}
+
+	/**
+	 * Get Contact Secondary Phone
+	 *
+	 * @return string
+	 */
+	public function getContactSecondaryPhone() {
+		return $this->contactSecondaryPhone;
+	}
+
+	/**
+	 * Get Contact Email
+	 *
+	 * @return string
+	 */
+	public function getContactEmail() {
+		return $this->contactEmail;
+	}
+
+	/**
+	 * Get Contact Website
+	 *
+	 * @return string
+	 */
+	public function getContactWebsite() {
+		return $this->contactWebsite;
 	}
 
 	/**

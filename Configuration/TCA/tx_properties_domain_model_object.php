@@ -1,7 +1,7 @@
 <?php
 return array(
 	'ctrl' => array(
-		'requestUpdate' => 'type, offer, rent_availability, garage',
+		'requestUpdate' => 'type, offer, rent_availability, garage, use_existing_contact, determine_latlong_automatic',
 		'title'	=> 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object',
 		'label' => 'name',
 		'tstamp' => 'tstamp',
@@ -20,14 +20,14 @@ return array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => 'name,type,sort,offer,images,year,environmental_class,description,street,zip_code,contact,status,price,rent_price,rent_price_type,price_per_square_metre,lot_size,living_area,garden_area,number_of_rooms,latitude,longitude,latitude_longitude_md5,category,presences,town,position,construction_type,',
+		'searchFields' => 'name,type,sort,offer,images,year,environmental_class,description,alternative_description,street,zip_code,contact,contact_name,contact_company,contact_address,contact_phone,contact_secondary_phone,contact_email,contact_website,status,price,rent_price,rent_price_type,price_per_square_metre,lot_size,living_area,garden_area,number_of_rooms,latitude,longitude,latitude_longitude_md5,category,presences,town,position,construction_type,',
 		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_object.gif'
 	),
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, construction_type, garage, garage_capacity, garage_sort, images',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, type, name, category, description;;;richtext:rte_transform[mode=ts_links],
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, type, name, category, description;;;richtext:rte_transform[mode=ts_links], alternative_description;;;richtext:rte_transform[mode=ts_links],
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.location,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.location.address;address,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.location.geodata;geodata,
@@ -40,7 +40,8 @@ return array(
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.offer.sale_details;sale_details,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.offer.rent_details;rent_details,
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.media, images,
-			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.contact, contact,
+			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.contact, use_existing_contact,
+				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.contact_details;contact_details,
 			--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, hidden, starttime, endtime'),
 	),
 	'palettes' => array(
@@ -49,7 +50,7 @@ return array(
 			'canNotCollapse' => TRUE
 		),
 		'geodata' => array(
-			'showitem' => 'longitude, latitude, --linebreak--, latitude_longitude_md5',
+			'showitem' => 'determine_latlong_automatic, --linebreak--, longitude, latitude, --linebreak--, latitude_longitude_md5',
 			'canNotCollapse' => TRUE
 		),
 		'surfaces' => array(
@@ -72,11 +73,15 @@ return array(
 			'showitem' => 'rent_price, rent_price_type, --linebreak--, rent_availability, --linebreak--, rent_wait, --linebreak--, rent_available_date, --linebreak--, rental_agreement, --linebreak--, lease_conditions',
 			'canNotCollapse' => TRUE
 		),
+		'contact_details' => array(
+			'showitem' => 'contact, contact_name, --linebreak--, contact_company, --linebreak--, contact_address, --linebreak--, contact_phone, contact_secondary_phone, --linebreak--, contact_email, --linebreak--, contact_website',
+			'canNotCollapse' => TRUE
+		),
 	),
 	'columns' => array(
 		'sys_language_uid' => array(
 			'exclude' => FALSE,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.langu age',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'sys_language',
@@ -219,10 +224,33 @@ return array(
 				)
 			),
 		),
+		'alternative_description' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.alternative_description',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+			'config' => array(
+				'type' => 'text',
+				'cols' => '48',
+				'rows' => '5',
+				'eval' => 'trim',
+				'wizards' => array(
+					'RTE' => array(
+						'notNewRecords' => 1,
+						'RTEonly' => 1,
+						'type' => 'script',
+						'title' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:bodytext.W.RTE',
+						'icon' => 'EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_rte.gif',
+						'module' => array(
+							'name' => 'wizard_rte'
+						)
+					)
+				)
+			),
+		),
 		'position' => array(
 			'exclude' => FALSE,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.position',
-			'displayCond' => 'FIELD:type:>:0',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_properties_domain_model_position',
@@ -308,7 +336,7 @@ return array(
 		'images' => array(
 			'exclude' => FALSE,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.images',
-			'displayCond' => 'FIELD:type:>:0',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
 			'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
 				'images',
 				array(
@@ -414,34 +442,195 @@ return array(
 				'eval' => 'trim'
 			),
 		),
+		'determine_latlong_automatic' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.determine_latlong_automatic',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+			'config' => array(
+				'type' => 'check',
+				'items' => array(
+					1 => array(
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.determine_latlong_automatic.0',
+					),
+				),
+			),
+		),
 		'latitude' => array(
 			'exclude' => FALSE,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.latitude',
-			'displayCond' => 'FIELD:type:>:0',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+					'FIELD:determine_latlong_automatic:=:0',
+				),
+			),
 			'config' => array(
 				'type' => 'input',
 				'size' => 10,
-				'readOnly' => TRUE,
 			),
 		),
 		'longitude' => array(
 			'exclude' => FALSE,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.longitude',
-			'displayCond' => 'FIELD:type:>:0',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+					'FIELD:determine_latlong_automatic:=:0',
+				),
+			),
 			'config' => array(
 				'type' => 'input',
 				'size' => 10,
-				'readOnly' => TRUE,
+			),
+		),
+		'garage' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.garage',
+			'displayCond' => 'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
+			'config' => array(
+				'type' => 'check',
+				'items' => array(
+					1 => array(
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.garage.0',
+					),
+				),
+			),
+		),
+		'use_existing_contact' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.use_existing_contact',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+			'config' => array(
+				'type' => 'check',
+				'items' => array(
+					1 => array(
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.use_existing_contact.0',
+					),
+				),
 			),
 		),
 		'contact' => array(
 			'exclude' => FALSE,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.contact',
-			'displayCond' => 'FIELD:type:>:0',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+					'FIELD:use_existing_contact:>:0',
+				),
+			),
+			'config' => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_properties_domain_model_contact',
+				'minitems' => 0,
+				'maxitems' => 1,
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.contact.0', 0),
+				),
+			),
+		),
+		'contact_name' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.contact_name',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+					'FIELD:use_existing_contact:=:0',
+				),
+			),
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			)
+		),
+		'contact_company' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.contact_company',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+					'FIELD:use_existing_contact:=:0',
+				),
+			),
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			)
+		),
+		'contact_address' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.contact_address',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+					'FIELD:use_existing_contact:=:0',
+				),
+			),
 			'config' => array(
 				'type' => 'text',
-				'cols' => 40,
-				'rows' => 15,
+				'cols' => '48',
+				'rows' => '4',
+				'eval' => 'trim',
+			)
+		),
+		'contact_phone' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.contact_phone',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+					'FIELD:use_existing_contact:=:0',
+				),
+			),
+			'config' => array(
+				'type' => 'input',
+				'size' => 12,
+				'eval' => 'trim'
+			)
+		),
+		'contact_secondary_phone' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.contact_secondary_phone',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+					'FIELD:use_existing_contact:=:0',
+				),
+			),
+			'config' => array(
+				'type' => 'input',
+				'size' => 12,
+				'eval' => 'trim'
+			)
+		),
+		'contact_email' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.contact_email',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+					'FIELD:use_existing_contact:=:0',
+				),
+			),
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			)
+		),
+		'contact_website' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.contact_website',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+					'FIELD:use_existing_contact:=:0',
+				),
+			),
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
 				'eval' => 'trim'
 			)
 		),
@@ -849,7 +1038,7 @@ return array(
 		'latitude_longitude_md5' => array(
 			'exclude' => FALSE,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.latitude_longitude_md5',
-			'displayCond' => 'FIELD:type:>:0',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
 			'config' => array(
 				'type' => 'passthrough',
 			),

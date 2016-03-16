@@ -35,26 +35,6 @@ class LinkUtility {
 	
 	/**
 	 * @const string
-	 */
-	const	__			= '__link';
-	
-	/**
-	 * @const string
-	 */
-	const	__ARGUMENTS	= 'arguments';
-	
-	/**
-	 * @const string
-	 */
-	const	__REMOVE	= '__remove';
-	
-	/**
-	 * @const string
-	 */
-	const	__BREAK		= '__break';
-	
-	/**
-	 * @const string
 	 */	
 	const	TYPE = 'type',
 			OFFER = 'offer',
