@@ -202,6 +202,11 @@ class Object extends AbstractEntity {
 	protected $contact = NULL;
 
 	/**
+	 * @var \Ucreation\Properties\Domain\Model\Contact|bool|null
+	 */
+	protected $contactObject = FALSE;
+
+	/**
 	 * @var string
 	 */
 	protected $contactName = '';
@@ -739,29 +744,33 @@ class Object extends AbstractEntity {
 	 * @return \Ucreation\Properties\Domain\Model\Contact|null
 	 */
 	public function getContactObject() {
-		if ($this->isUseExistingContact()) {
-			return $this->getContact();
+		if ($this->contactObject === FALSE) {
+			if ($this->isUseExistingContact()) {
+				$this->contactObject = $this->getContact();
+			} else {
+				$contact = NULL;
+				if (
+					$this->getContactName() ||
+					$this->getContactCompany() ||
+					$this->getContactAddress() ||
+					$this->getContactPhone() ||
+					$this->getContactSecondaryPhone() ||
+					$this->getContactEmail() ||
+					$this->getContactWebsite()
+				) {
+					$contact = $this->objectManager->get('Ucreation\\Properties\\Domain\\Model\\Contact');
+					$contact->setName($this->getContactName());
+					$contact->setCompany($this->getContactCompany());
+					$contact->setAddress($this->getContactAddress());
+					$contact->setPhone($this->getContactPhone());
+					$contact->setSecondaryPhone($this->getContactSecondaryPhone());
+					$contact->setEmail($this->getContactEmail());
+					$contact->setWebsite($this->getContactWebsite());
+				}
+				$this->contactObject = $contact;
+			}
 		}
-		$contact = NULL;
-		if (
-			$this->getContactName() ||
-			$this->getContactCompany() ||
-			$this->getContactAddress() ||
-			$this->getContactPhone() ||
-			$this->getContactSecondaryPhone() ||
-			$this->getContactEmail() ||
-			$this->getContactWebsite()
-		) {
-			$contact = $this->objectManager->get('Ucreation\\Properties\\Domain\\Model\\Contact');
-			$contact->setName($this->getContactName());
-			$contact->setCompany($this->getContactCompany());
-			$contact->setAddress($this->getContactAddress());
-			$contact->setPhone($this->getContactPhone());
-			$contact->setSecondaryPhone($this->getContactSecondaryPhone());
-			$contact->setEmail($this->getContactEmail());
-			$contact->setWebsite($this->getContactWebsite());
-		}
-		return $contact;
+		return $this->contactObject;
 	}
 
 	/**
