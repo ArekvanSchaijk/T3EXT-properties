@@ -67,21 +67,12 @@ class Town extends AbstractModel {
 	}
 
 	/**
-	 * Get Count Available Objects
-	 *
-	 * @return int
-	 */
-	public function getFilterAvailableObjects() {
-		return 1;
-	}
-
-	/**
 	 * Get Is Disabled
 	 *
 	 * @return bool
 	 */
 	public function getIsDisabled() {
-		return ($this->getFilterAvailableObjects() ? FALSE : TRUE);
+		return FALSE;
 	}
 
 }

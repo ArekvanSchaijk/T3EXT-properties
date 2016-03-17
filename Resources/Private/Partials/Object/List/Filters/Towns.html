@@ -6,10 +6,10 @@
                 <f:for each="{towns}" as="town">
                     <f:if condition="{town.isActive}">
                         <f:then>
-                            <li class="active{f:if(condition: town.isDisabled, then: ' disabled')}"><f:form.checkbox name="towns[]" id="town{town.uid}" value="{town.uid}" checked="checked" /> <label for="town{town.uid}">{town.name} <span class="filter-available-count">({town.filterAvailableObjects})</span></label></li>
+                            <li class="active{f:if(condition: town.isDisabled, then: ' disabled')}"><f:form.checkbox name="towns[]" id="town{town.uid}" value="{town.uid}" checked="checked" /> <label for="town{town.uid}">{town.name}</label></li>
                         </f:then>
                         <f:else>
-                            <li class="{f:if(condition: town.isDisabled, then: 'disabled')}"><f:form.checkbox name="towns[]" id="town{town.uid}" value="{town.uid}" /> <label for="town{town.uid}">{town.name} <span class="filter-available-count">({town.filterAvailableObjects})</span></label></li>
+                            <li class="{f:if(condition: town.isDisabled, then: 'disabled')}"><f:form.checkbox name="towns[]" id="town{town.uid}" value="{town.uid}" /> <label for="town{town.uid}">{town.name}</label></li>
                         </f:else>
                     </f:if>
                 </f:for>

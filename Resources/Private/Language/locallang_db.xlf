@@ -18,6 +18,9 @@
 			<trans-unit id="tab.contact">
 				<source>Contact</source>
 			</trans-unit>
+			<trans-unit id="tab.filter_settings">
+				<source>Filter Settings</source>
+			</trans-unit>
 			<trans-unit id="palettes.contact_details">
 				<source>Contact Details</source>
 			</trans-unit>
@@ -386,6 +389,42 @@
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_category.name">
 				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_offer">
+				<source>Disable Filter Offer</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_offer.0">
+				<source>If checked, the filter 'offer' will be disabled while being in this category</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_town">
+				<source>Disable Filter Town</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_town.0">
+				<source>If checked, the filter 'town' will be disabled while being in this category</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_towns">
+				<source>Disable Filter Towns</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_towns.0">
+				<source>If checked, the filter 'towns' will be disabled while being in this category</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_price">
+				<source>Disable Filter Price</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_price.0">
+				<source>If checked, the filter 'price' will be disabled while being in this category</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_surface">
+				<source>Disable Filter Surface</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_surface.0">
+				<source>If checked, the filter 'surface' will be disabled while being in this category</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_presences">
+				<source>Disable Filter Presences</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_presences.0">
+				<source>If checked, the filter 'presences' will be disabled while being in this category</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_town">
 				<source>Town</source>
