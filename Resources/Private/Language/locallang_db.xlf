@@ -189,6 +189,15 @@
 			<trans-unit id="tx_properties_domain_model_object.price">
 				<source>Price</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.price_type">
+				<source>Price Type</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.price_type.0">
+				<source>K.K.</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.price_type.1">
+				<source>V.O.N.</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rent_price">
 				<source>Rent Price</source>
 			</trans-unit>

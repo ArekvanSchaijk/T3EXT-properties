@@ -20,11 +20,11 @@ return array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => 'name,type,sort,offer,images,year,environmental_class,description,alternative_description,street,zip_code,contact,contact_name,contact_company,contact_address,contact_phone,contact_secondary_phone,contact_email,contact_website,status,price,rent_price,rent_price_type,price_per_square_metre,lot_size,living_area,garden_area,number_of_rooms,latitude,longitude,latitude_longitude_md5,category,presences,town,position,construction_type,',
+		'searchFields' => 'name,type,sort,offer,images,year,environmental_class,description,alternative_description,street,zip_code,contact,contact_name,contact_company,contact_address,contact_phone,contact_secondary_phone,contact_email,contact_website,status,price,price_type,rent_price,rent_price_type,price_per_square_metre,lot_size,living_area,garden_area,number_of_rooms,latitude,longitude,latitude_longitude_md5,category,presences,town,position,construction_type,',
 		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_object.gif'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, construction_type, garage, garage_capacity, garage_sort, images',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, price_type, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, construction_type, garage, garage_capacity, garage_sort, images',
 	),
 	'types' => array(
 		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, type, name, category, description;;;richtext:rte_transform[mode=ts_links], alternative_description;;;richtext:rte_transform[mode=ts_links],
@@ -66,7 +66,7 @@ return array(
 			'canNotCollapse' => TRUE
 		),
 		'sale_details' => array(
-			'showitem' => 'status, --linebreak--, price, --linebreak--, price_per_square_metre',
+			'showitem' => 'status, --linebreak--, price,, price_type, --linebreak--, price_per_square_metre',
 			'canNotCollapse' => TRUE
 		),
 		'rent_details' => array(
@@ -695,6 +695,29 @@ return array(
 				'type' => 'input',
 				'size' => 8,
 				'eval' => 'int'
+			)
+		),
+		'price_type' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.price_type',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+					'FIELD:offer:IN:'.\Ucreation\Properties\Domain\Model\Object::OFFER_SALE.','.\Ucreation\Properties\Domain\Model\Object::OFFER_BOTH,
+				),
+			),
+			'config' => array(
+				'type' => 'select',
+				'items' => array(
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.price_type.0',
+						\Ucreation\Properties\Domain\Model\Object::PRICE_TYPE_KK,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.price_type.1',
+						\Ucreation\Properties\Domain\Model\Object::PRICE_TYPE_VON,
+					),
+				)
 			)
 		),
 		'price_per_square_metre' => array(

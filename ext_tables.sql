@@ -31,6 +31,7 @@ CREATE TABLE tx_properties_domain_model_object (
   contact_email varchar(255) DEFAULT '' NOT NULL,
   contact_website varchar(255) DEFAULT '' NOT NULL,
 	price int(12) DEFAULT '0' NOT NULL,
+	price_type tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	rent_price double(12,2) DEFAULT '0.00' NOT NULL,
 	rent_price_type tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	rent_availability tinyint(4) unsigned DEFAULT '0' NOT NULL,

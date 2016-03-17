@@ -60,6 +60,27 @@
 			<trans-unit id="object.rooms">
 				<source>kamers</source>
 			</trans-unit>
+			<trans-unit id="object.contact">
+				<source>Contactgegevens</source>
+			</trans-unit>
+			<trans-unit id="object.contact.broker">
+				<source>Makelaar</source>
+			</trans-unit>
+			<trans-unit id="object.contact.company_name">
+				<source>Company Name</source>
+			</trans-unit>
+			<trans-unit id="object.contact.contact">
+				<source>Contactpersoon</source>
+			</trans-unit>
+			<trans-unit id="object.contact.phone">
+				<source>Tel</source>
+			</trans-unit>
+			<trans-unit id="object.contact.email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="object.contact.website">
+				<source>Website</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

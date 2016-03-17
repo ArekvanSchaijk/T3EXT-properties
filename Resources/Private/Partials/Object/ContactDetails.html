@@ -1,0 +1,19 @@
+<address>
+    <f:if condition="{contact.companyName}">
+        <p class="contact-company-name"><strong>{contact.companyName}</strong></p>
+    </f:if>
+    <f:if condition="{contact.name}">
+        <p class="contact-name">{contact.name}</p>
+    </f:if>
+    <f:if condition="{contact.address}">
+        <p class="contact-address">
+            <f:format.nl2br>{contact.address}</f:format.nl2br>
+        </p>
+    </f:if>
+    <f:if condition="{contact.phone}">
+        <p class="contact-phone">{contact.phone}<f:if condition="{contact.secondaryPhone}"><br />{contact.secondaryPhone}</f:if></p>
+    </f:if>
+    <f:if condition="{contact.email}">
+
+    </f:if>
+</address>

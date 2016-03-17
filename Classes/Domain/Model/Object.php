@@ -38,14 +38,14 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 class Object extends AbstractEntity {
 	
 	/**
-	 * @const integer
+	 * @const int
 	 */
 	const	TYPE_NONE = 0,	
 			TYPE_BUILDING = 1,
 			TYPE_LOT = 2;
 
 	/**
-	 * @const integer
+	 * @const int
 	 */
 	const	STATUS_AVAILABLE = 0,
 			STATUS_SOLD = 1,
@@ -53,27 +53,33 @@ class Object extends AbstractEntity {
 			STATUS_NOTAVAILABLE = 3;
 	
 	/**
-	 * @const integer
+	 * @const int
 	 */		
 	const	TYPE_BUILDING_NONE = 0,
 			TYPE_BUILDING_NEW = 1,
 			TYPE_BUILDING_EXISTING = 2;
 
 	/**
-	 * @const integer
+	 * @const int
 	 */	
 	const	OFFER_SALE = 0,
 			OFFER_RENT = 1,
 			OFFER_BOTH = 2;
-			
+
 	/**
-	 * @const integer
+	 * @const int
+	 */
+	const	PRICE_TYPE_KK = 0,
+			PRICE_TYPE_VON = 1;
+
+	/**
+	 * @const int
 	 */		
 	const	RENT_PRICE_TYPE_BASIC = 0,
 			RENT_PRICE_TYPE_ALLINCLUSIVE = 1;
 			
 	/**
-	 * @const integer
+	 * @const int
 	 */
 	const	RENT_AVAILABILITY_IMMEDIATELY = 0,
 			RENT_AVAILABILITY_WAIT = 1,
@@ -81,19 +87,19 @@ class Object extends AbstractEntity {
 			RENT_AVAILABILITY_INCONSULTATION = 3;
 			
 	/**
-	 * @const integer
+	 * @const int
 	 */
 	const	RENTAL_AGREEMENT_UNDETERMEDTIME = 0,
 			RENTAL_AGREEMENT_TEMPORARYTIME = 1;
 		
 	/**
-	 * @const integer
+	 * @const int
 	 */	
 	const	LEASE_CONDITION_PADDED = 1,
 			LEASE_CONDITION_FURNISHED = 2;
 			
 	/**
-	 * @const integer
+	 * @const int
 	 */
 	const	ACCESSIBILITY_NONE = 0,
 			ACCESSIBILITY_CUSTOM = 1,
@@ -101,7 +107,7 @@ class Object extends AbstractEntity {
 			ACCESSIBILITY_SENIORS = 3;
 	
 	/**
-	 * @const integer
+	 * @const int
 	 */
 	const	ENVIRONMENTAL_CLASS_NONE = 0,
 			ENVIRONMENTAL_CLASS_A = 10,
@@ -113,8 +119,8 @@ class Object extends AbstractEntity {
 			ENVIRONMENTAL_CLASS_G = 70;
 		
 	/**
-	 * @const integer
-	 */	
+	 * @const int
+	 */
 	const	GARDEN_POSITION_NONE = 0,
 			GARDEN_POSITION_NORTH = 1,
 			GARDEN_POSITION_WEST = 2,
@@ -250,6 +256,11 @@ class Object extends AbstractEntity {
 	 * @var float
 	 */
 	protected $price = 0.0;
+
+	/**
+	 * @var int
+	 */
+	protected $priceType = self::PRICE_TYPE_KK;
 
 	/**
 	 * @var float
@@ -920,6 +931,25 @@ class Object extends AbstractEntity {
 	 */
 	public function setPrice($price) {
 		$this->price = $price;
+	}
+
+	/**
+	 * Get Price Type
+	 *
+	 * @return int
+	 */
+	public function getPriceType() {
+		return $this->priceType;
+	}
+
+	/**
+	 * Set Price Type
+	 *
+	 * @param int $priceType
+	 * @return void
+	 */
+	public function setPriceType($priceType) {
+		$this->priceType = $priceType;
 	}
 
 	/**
