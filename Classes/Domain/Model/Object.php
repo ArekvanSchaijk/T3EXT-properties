@@ -204,7 +204,7 @@ class Object extends AbstractEntity {
 	/**
 	 * @var \Ucreation\Properties\Domain\Model\Contact|bool|null
 	 */
-	protected $contactObject = FALSE;
+	protected $contactDetails = FALSE;
 
 	/**
 	 * @var string
@@ -739,14 +739,14 @@ class Object extends AbstractEntity {
 	}
 
 	/**
-	 * Get Contact Object
+	 * Get Contact Details
 	 *
 	 * @return \Ucreation\Properties\Domain\Model\Contact|null
 	 */
-	public function getContactObject() {
-		if ($this->contactObject === FALSE) {
+	public function getContactDetails() {
+		if ($this->contactDetails === FALSE) {
 			if ($this->isUseExistingContact()) {
-				$this->contactObject = $this->getContact();
+				$this->contactDetails = $this->getContact();
 			} else {
 				$contact = NULL;
 				if (
@@ -767,10 +767,10 @@ class Object extends AbstractEntity {
 					$contact->setEmail($this->getContactEmail());
 					$contact->setWebsite($this->getContactWebsite());
 				}
-				$this->contactObject = $contact;
+				$this->contactDetails = $contact;
 			}
 		}
-		return $this->contactObject;
+		return $this->contactDetails;
 	}
 
 	/**
