@@ -724,33 +724,44 @@ class Object extends AbstractEntity {
 	}
 
 	/**
-	 * Get Contact Object
-	 *
-	 * @return \Ucreation\Properties\Domain\Model\Contact
-	 */
-	public function getContactObject() {
-		if ($this->isUseExistingContact()) {
-			return $this->getContact();
-		}
-		$contact = $this->objectManager->get('Ucreation\\Properties\\Domain\\Model\\Contact');
-		$contact->setName($this->getContactName());
-		$contact->setCompany($this->getContactCompany());
-		$contact->setAddress($this->getContactAddress());
-		$contact->setPhone($this->getContactPhone());
-		$contact->setSecondaryPhone($this->getContactSecondaryPhone());
-		$contact->setEmail($this->getContactEmail());
-		$contact->setWebsite($this->getContactWebsite());
-		return $contact;
-	}
-
-	/**
 	 * Set Contact
-	 * 
+	 *
 	 * @param \Ucreation\Properties\Domain\Model\Contact $contact
 	 * @return void
 	 */
 	public function setContact(Contact $contact) {
 		$this->contact = $contact;
+	}
+
+	/**
+	 * Get Contact Object
+	 *
+	 * @return \Ucreation\Properties\Domain\Model\Contact|null
+	 */
+	public function getContactObject() {
+		if ($this->isUseExistingContact()) {
+			return $this->getContact();
+		}
+		$contact = NULL;
+		if (
+			$this->getContactName() ||
+			$this->getContactCompany() ||
+			$this->getContactAddress() ||
+			$this->getContactPhone() ||
+			$this->getContactSecondaryPhone() ||
+			$this->getContactEmail() ||
+			$this->getContactWebsite()
+		) {
+			$contact = $this->objectManager->get('Ucreation\\Properties\\Domain\\Model\\Contact');
+			$contact->setName($this->getContactName());
+			$contact->setCompany($this->getContactCompany());
+			$contact->setAddress($this->getContactAddress());
+			$contact->setPhone($this->getContactPhone());
+			$contact->setSecondaryPhone($this->getContactSecondaryPhone());
+			$contact->setEmail($this->getContactEmail());
+			$contact->setWebsite($this->getContactWebsite());
+		}
+		return $contact;
 	}
 
 	/**
