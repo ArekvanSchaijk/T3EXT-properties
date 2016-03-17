@@ -84,7 +84,9 @@ class Category extends AbstractModel {
 	 * @return array
 	 */
 	public function getLinkArguments() {
-		return $this->getObjectService()->getLinkArguments(array(LinkUtility::CATEGORY => $this->getUid()));
+		return array(
+			LinkUtility::CATEGORY => $this->getUid()
+		);
 	}
 
 }
