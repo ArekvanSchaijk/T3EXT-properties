@@ -41,25 +41,8 @@ abstract class AbstractModel extends AbstractEntity {
 
     /**
      * @var \Ucreation\Properties\Service\ObjectService
-     */
-    protected $objectService = NULL;
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      * @inject
      */
-    protected $objectManager = NULL;
-
-    /**
-     * Get Object Service
-     *
-     * @return \Ucreation\Properties\Service\ObjectService
-     */
-    protected function getObjectService() {
-        if (!$this->objectService) {
-            $this->objectService = $this->objectManager->get('Ucreation\\Properties\\Service\\ObjectService');
-        }
-        return $this->objectService;
-    }
+    protected $objectService = NULL;
 
 }

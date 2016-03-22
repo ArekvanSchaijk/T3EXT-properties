@@ -25,6 +25,8 @@ namespace Ucreation\Properties\Filter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Domain\Model\Object;
+use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
@@ -43,13 +45,62 @@ class OfferFilter extends AbstractFilter {
             OFFER_RENT = 2;
 
     /**
+     * Is Active
+     *
+     * @return bool
+     */
+    public function isActive() {
+        if (parent::isActive()) {
+            // Checks if there is an active category and checks if the category has disabled this filter
+            if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
+                if ($category->isDisableFilterOffer()) {
+                    return FALSE;
+                }
+            }
+            return TRUE:
+        }
+        return FALSE;
+    }
+
+    /**
+     * Get Active Offer
+     *
+     * @return int|bool
+     */
+    public function getActiveOffer() {
+        if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::OFFER)) {
+            $offer = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::OFFER);
+            if (ctype_digit($offer) && $offer <= 2) {
+                return $offer;
+            }
+        }
+        return FALSE;
+    }
+
+    /**
      * Get Query Constrain
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
-     * @return array
+     * @return array|bool
      */
     public function getQueryConstrain(Query $query) {
-
+        if (($offer = $this->getActiveOffer())) {
+            switch ($offer) {
+                case self::OFFER_BOTH:
+                    return FALSE;
+                case self::OFFER_SALE:
+                    return $query->logicalOr(
+                        $query->equals('offer', Object::OFFER_BOTH),
+                        $query->equals('offer', Object::OFFER_SALE)
+                    );
+                case self::OFFER_RENT:
+                    return $query->logicalOr(
+                        $query->equals('offer', Object::OFFER_BOTH),
+                        $query->equals('offer', Object::OFFER_RENT)
+                    );
+            }
+        }
+        return FALSE;
     }
 
 }

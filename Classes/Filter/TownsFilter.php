@@ -25,6 +25,8 @@ namespace Ucreation\Properties\Filter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Utility\LinkUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
@@ -36,13 +38,57 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 class TownsFilter extends AbstractFilter {
 
     /**
+     * Is Active
+     *
+     * @return bool
+     */
+    public function isActive() {
+        if (parent::isActive()) {
+            // Checks if there is an active category and checks if the category has disabled this filter
+            if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
+                if ($category->isDisableFilterTowns()) {
+                    return FALSE;
+                }
+            }
+            return TRUE:
+        }
+        return FALSE;
+    }
+
+    /**
+     * Get Active Towns
+     *
+     * @return array|bool
+     */
+    public function getActiveTowns() {
+        if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::TOWNS)) {
+            return GeneralUtility::trimExplode(',', $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::TOWNS));
+        }
+        return FALSE;
+    }
+
+    /**
      * Get Query Constrain
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
      * @return array
      */
     public function getQueryConstrain(Query $query) {
-
+        if (($towns = $this->getActiveTowns())) {
+            $constrains = array();
+            foreach ($towns as $townId) {
+                if (ctype_digit($townId)) {
+                    $constrains[] = $query->equals('town', $townId);
+                }
+            }
+            if ($constrains) {
+                if (count($constrains) == 1) {
+                    return $constrains[0];
+                }
+                return $query->logicalOr($constrains);
+            }
+        }
+        return FALSE;
     }
 
 }

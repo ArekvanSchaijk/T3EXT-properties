@@ -25,9 +25,10 @@ namespace Ucreation\Properties\Filter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
-use Ucreation\Properties\Utility\LinkUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
  * Class PriceFilter
@@ -78,7 +79,13 @@ class PriceFilter extends AbstractFilter {
         ) {
             return FALSE;
         }
-        return FALSE;
+        // Checks if there is an active category and checks if the category has disabled this filter
+        if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
+            if ($category->isDisableFilterPrice()) {
+                return FALSE;
+            }
+        }
+        return TRUE;
     }
 
     /**
@@ -88,7 +95,12 @@ class PriceFilter extends AbstractFilter {
      */
     public function getLowestPrice() {
         if ($this->lowestPrice === FALSE) {
-
+            $this->lowestPrice =
+                $this->getFilterService()
+                    ->getObjectService()
+                    ->getFilteredObjects(NULL, 0, array('price' => QueryInterface::ORDER_ASCENDING))
+                    ->getFirst()
+                    ->getPrice();
         }
         return $this->lowestPrice;
     }
@@ -104,36 +116,18 @@ class PriceFilter extends AbstractFilter {
     }
 
     /**
-     * Calculate Price Range
-     *
-     * @return void
-     */
-    protected function calculatePriceRange() {
-        $this->isPriceRangeCalculated = TRUE;
-        if ($this->filterService->getObjectService()->request->hasArgument(LinkUtility::PRICE_RANGE)) {
-            $range = $this->filterService->getObjectService()->request->getArgument(LinkUtility::PRICE_RANGE);
-            if (strpos($range, '-') !== FALSE) {
-                $range = GeneralUtility::trimExplode('-', $selectedPriceRange);
-                if (
-                    ctype_digit($range[0]) &&
-                    ctype_digit($range[1]) &&
-                    $range[1] >= $range[0]
-                ) {
-                    $this->selectedLowestPrice = $range[0];
-                    $this->selectedHighestPrice = $range[1];
-                }
-            }
-        }
-    }
-
-    /**
      * Get Highest Price
      *
      * @return int
      */
     public function getHighestPrice() {
         if ($this->highestPrice === FALSE) {
-            $filters = $this->filterService->getFilters();
+            $this->highestPrice =
+                $this->getFilterService()
+                    ->getObjectService()
+                    ->getFilteredObjects(NULL, 0, array('price' => QueryInterface::ORDER_DESCENDING))
+                    ->getFirst()
+                    ->getPrice();
         }
         return $this->highestPrice;
     }
@@ -170,6 +164,28 @@ class PriceFilter extends AbstractFilter {
             $this->calculatePriceRange();
         }
         return $this->selectedHighestPrice;
+    }
+
+    /**
+     * Calculate Price Range
+     *
+     * @return void
+     */
+    protected function calculatePriceRange() {
+        $this->isPriceRangeCalculated = TRUE;
+        if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::PRICE_RANGE)) {
+            $range = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::PRICE_RANGE);
+            if (strpos($range, '-') !== FALSE) {
+                $range = GeneralUtility::trimExplode('-', $selectedPriceRange);
+                if (
+                    ctype_digit($range[0]) &&
+                    ctype_digit($range[1]) &&
+                    $range[1] >= $range[0]
+                ) {
+                    $this->setSelectedPriceRange($range[0], $range[1])
+                }
+            }
+        }
     }
 
     /**

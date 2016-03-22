@@ -25,6 +25,8 @@ namespace Ucreation\Properties\Filter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Domain\Model\Object;
+use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
@@ -43,13 +45,43 @@ class TypeFilter extends AbstractFilter {
             TYPE_LOT = 2;
 
     /**
+     * Get Active Type
+     *
+     * @return int|bool
+     */
+    public function getActiveType() {
+        if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::TYPE)) {
+            $type = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::TYPE);
+            if (ctype_digit($type) && $type <= 2) {
+                return $type;
+            }
+        }
+        return FALSE;
+    }
+
+    /**
      * Get Query Constrain
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
      * @return array
      */
     public function getQueryConstrain(Query $query) {
-
+        if (($type = $this->getActiveType())) {
+            // Switch through the type
+            switch ($type) {
+                // Filter by both (buildings and lots)
+                case self::TYPE_BOTH:
+                    return $query->greaterThan('type', Object::TYPE_NONE);
+                // Filter by only buildings
+                case self::TYPE_BUILDING:
+                    return $query->equals('type', Object::TYPE_BUILDING);
+                // Filter by only lots
+                case self::TYPE_LOT:
+                    return $query->equals('type', Object::TYPE_LOT);
+            }
+        }
+        // Makes sure that we're not selecting objects without type set
+        return $query->greaterThan('type', Object::TYPE_NONE);
     }
 
 }

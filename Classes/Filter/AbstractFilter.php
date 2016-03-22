@@ -44,7 +44,7 @@ abstract class AbstractFilter {
      * @var \Ucreation\Properties\Service\FilterService
      * @inject
      */
-    protected $filterService = NULL;
+    private $filterService = NULL;
 
     /**
      * Is Active
@@ -65,6 +65,15 @@ abstract class AbstractFilter {
      */
     public function eliminate() {
         $this->isEliminated = TRUE;
+    }
+
+    /**
+     * Get Filter Service
+     *
+     * @return \Ucreation\Properties\Service\FilterService
+     */
+    protected function getFilterService() {
+        return $this->filterService;
     }
 
 }

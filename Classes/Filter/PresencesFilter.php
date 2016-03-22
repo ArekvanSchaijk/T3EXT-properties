@@ -25,6 +25,8 @@ namespace Ucreation\Properties\Filter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Utility\LinkUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
@@ -36,13 +38,39 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 class PresencesFilter extends AbstractFilter {
 
     /**
+     * Get Active Presences
+     *
+     * @return array|bool
+     */
+    public function getActivePresences() {
+        if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::PRESENCES)) {
+            return GeneralUtility::trimExplode(',', $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::PRESENCES));
+        }
+        return FALSE;
+    }
+
+    /**
      * Get Query Constrain
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
-     * @return array
+     * @return array|null
      */
     public function getQueryConstrain(Query $query) {
-
+        if (($presences = $this->getActivePresences())) {
+            $constrains = array();
+            foreach ($presences as $presenceId) {
+                if (ctype_digit($presenceId)) {
+                    $constrains[] = $query->contains('presences', $presenceId);
+                }
+            }
+            if ($constrains) {
+                if (count($constrains) == 1) {
+                    return $constrains[0];
+                }
+                return $constrains;
+            }
+        }
+        return FALSE;
     }
 
 }

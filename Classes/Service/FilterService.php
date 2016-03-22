@@ -142,7 +142,7 @@ class FilterService implements SingletonInterface {
      */
     public function getQueryConstrains(Query $query, array $filters = NULL, array $overrides = NULL, array $ignored = NULL) {
         $ignored = ($ignored ? : array());
-        $filters = ($filters ? : $this->getFilters());
+        $filters = (is_null($filters) ? : $this->getFilters());
         // Merge array with overrides
         if ($overrides) {
             $filters = array_merge($filters, $overrides);

@@ -26,6 +26,7 @@ namespace Ucreation\Properties\Filter;
  ***************************************************************/
 
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
+use Ucreation\Properties\Utility\LinkUtility;
 
 /**
  * Class TownFilter
@@ -36,13 +37,49 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 class TownFilter extends AbstractFilter {
 
     /**
+     * Is Active
+     *
+     * @return bool
+     */
+    public function isActive() {
+        if (parent::isActive()) {
+            // Checks if there is an active category and checks if the category has disabled this filter
+            if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
+                if ($category->isDisableFilterTown()) {
+                    return FALSE;
+                }
+            }
+            return TRUE:
+        }
+        return FALSE;
+    }
+
+    /**
+     * Get Active Town
+     *
+     * @return int|bool
+     */
+    public function getActiveTown() {
+        if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::TOWN)) {
+            $townId = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::TOWN);
+            if (ctype_digit($townId)) {
+                return $townId;
+            }
+        }
+        return FALSE;
+    }
+
+    /**
      * Get Query Constrain
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
-     * @return array
+     * @return array|bool
      */
     public function getQueryConstrain(Query $query) {
-
+        if (($townId = $this->getActiveTown())) {
+            return $query->equals('town', $this->getActiveTown());
+        }
+        return FALSE;
     }
 
 }

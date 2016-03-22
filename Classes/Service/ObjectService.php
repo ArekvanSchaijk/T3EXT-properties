@@ -26,7 +26,6 @@ namespace Ucreation\Properties\Service;
  ***************************************************************/
 
 use Ucreation\Properties\Utility\LinkUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Web\Request;
@@ -38,11 +37,6 @@ use TYPO3\CMS\Extbase\Mvc\Web\Request;
  * @author Arek van Schaijk <info@ucreation.nl>
  */
 class ObjectService implements SingletonInterface {
-	
-	/**
-	 * @var boolean
-	 */
-	protected $prepared = FALSE;
 
 	/**
 	 * @var array
@@ -55,26 +49,46 @@ class ObjectService implements SingletonInterface {
 	public $request = NULL;
 
 	/**
+	 * @var boolean
+	 */
+	protected $prepared = FALSE;
+
+	/**
 	 * @var array|bool
 	 */
 	protected $linkArguments = FALSE;
 
 	/**
-	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>|bool|null
+	 * @var \Ucreation\Properties\Domain\Model\Category|bool
 	 */
-	protected $objects = FALSE;
+	protected $activeCategory = FALSE;
 
 	/**
 	 * @var \Ucreation\Properties\Domain\Repository\ObjectRepository
 	 * @inject
 	 */
-	protected $objectRepository = NULL;
+	private $objectRepository = NULL;
+
+	/**
+	 * @var \Ucreation\Properties\Domain\Repository\CategoryRepository
+	 * @inject
+	 */
+	protected $categoryRepository = NULL;
 
 	/**
 	 * @var \Ucreation\Properties\Service\FilterService
 	 * @inject
 	 */
-	protected $filterService = NULL;
+	private $filterService = NULL;
+
+	/**
+	 * Get Filter Service
+	 *
+	 * @return \Ucreation\Properties\Service\FilterService
+	 */
+	public function getFilterService() {
+		return $this->filterService;
+	}
 
 	/**
 	 * Is Prepared
@@ -83,29 +97,6 @@ class ObjectService implements SingletonInterface {
 	 */
 	public function isPrepared() {
 		return $this->prepared;
-	}
-
-	/**
-	 * Get Filtered Objects
-	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
-	 */
-	public function getFilteredObjects() {
-		if ($this->objects === FALSE) {
-			$this->objects = $this->objectRepository->getFilteredObjects($this);
-		}
-		return $this->objects;
-	}
-
-	/**
-	 * Get Query Filter Contrains
-	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
-	 * @param array $filters
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\Query
-	 */
-	public function getQueryFilterConstrains(Query $query, array $filters = NULL) {
-
 	}
 
 	/**
@@ -125,6 +116,48 @@ class ObjectService implements SingletonInterface {
 			}
 			$this->prepared = TRUE;
 		}
+	}
+
+	/**
+	 * Get Filtered Objects
+	 *
+	 * @param array $filters
+	 * @param int $limit
+	 * @param array $orderings
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
+	 */
+	public function getFilteredObjects(array $filters = NULL, $limit = 0, array $orderings = NULL) {
+		return $this->objectRepository->findByFilters($this, $filters, $limit, $orderings);
+	}
+
+	/**
+	 * Get Active Category Id
+	 *
+	 * @return int|bool
+	 */
+	public function getActiveCategoryId() {
+		if ($this->request->hasArgument(LinkUtility::CATEGORY)) {
+			$categoryId = $this->request->getArgument(LinkUtility::CATEGORY);
+			if (ctype_digit($categoryId)) {
+				return $categoryId;
+			}
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Get Active Category
+	 *
+	 * @return \Ucreation\Properties\Domain\Model\Category
+	 */
+	public function getActiveCategory() {
+		if ($this->activeCategory === FALSE) {
+			$this->activeCategory = NULL;
+			if (($categoryId = $this->getActiveCategoryId())) {
+				$this->activeCategory = $this->categoryRepository->findOneByUid($categoryId);
+			}
+		}
+		return $this->activeCategory;
 	}
 
 	/**

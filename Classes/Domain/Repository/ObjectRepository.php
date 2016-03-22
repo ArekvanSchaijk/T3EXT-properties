@@ -25,9 +25,7 @@ namespace Ucreation\Properties\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Service\ObjectService;
-use Ucreation\Properties\Utility\FilterUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
@@ -46,162 +44,27 @@ class ObjectRepository extends AbstractRepository {
 	);
 
 	/**
-	 * Get Filtered Objects
+	 * Find By Filters
 	 *
 	 * @param \Ucreation\Properties\Service\ObjectService $objectService
+	 * @param array $filters
+	 * @param int $limit
+	 * @param array $orderings
 	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
 	 */
-	public function getFilteredObjects(ObjectService $objectService) {
-		// Creates an new query
+	public function findByFilters(ObjectService $objectService, array $filters = NULL, $limit = 0, array $orderings = NULL) {
+		// Creates a new query
 		$query = $this->createQuery();
-		// Get query contrains
-		$constrains = $objectService->getQueryFilterConstrains($query);
-		// Apply query constrains
+		// Gets the query constrains from the filter service
+		$constrains = $objectService->getFilterService()->getQueryConstrains($query, $filters);
+		// Apply the query constrains
 		$query = $this->applyQueryConstrains($query, $constrains);
+		// Sets the limit
+		if ($limit) {
+			$query->setLimit($limit);
+		}
+		// Executes the query
 		return $query->execute();
-	}
-
-	/**
-	 * Get Lowest Price
-	 *
-	 * @param \Ucreation\Properties\Service\ObjectService $objectService
-	 * @return \Ucreation\Properties\Domain\Model\Object
-	 */
-	public function findByLowestPrice(ObjectService $objectService) {
-		$query = $this->createQuery();
-		$query->setOrderings(array('price' => QueryInterface::ORDER_ASCENDING));
-		// Get query contrains
-		$constrains = $objectService->getQueryFilterConstrains($query);
-		// Removes some existing constrains
-		unset(
-			$constrains[FilterUtility::FILTER_PRICE_LOWEST],
-			$constrains[FilterUtility::FILTER_PRICE_HIGHEST],
-			$constrains[FilterUtility::FILTER_OFFER],
-			$constrains[FilterUtility::FILTER_PRICE],
-			$constrains[FilterUtility::FILTER_LOT_SIZE_LOWEST],
-			$constrains[FilterUtility::FILTER_LOT_SIZE_HIGHEST]
-		);
-		// Adds a new constrains for the offer
-		$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
-			$query->equals('offer', Object::OFFER_BOTH),
-			$query->equals('offer', Object::OFFER_SALE)
-		);
-		// Adds another constrains for the price (this must be filled in)
-		$constrains[FilterUtility::FILTER_PRICE] = $query->greaterThan('price', 0);
-		// Apply query constrains
-		$query = $this->applyQueryConstrains($query, $constrains);
-		// Sets limit
-		$query->setLimit((int)1);
-		return $query->execute()->getFirst();
-	}
-
-	/**
-	 * Find By Highest Price
-	 *
-	 * @param \Ucreation\Properties\Service\ObjectService $objectService
-	 * @return \Ucreation\Properties\Domain\Model\Object
-	 */
-	public function findByHighestPrice(ObjectService $objectService) {
-		$query = $this->createQuery();
-		$query->setOrderings(array('price' => QueryInterface::ORDER_DESCENDING));
-		// Get query contrains
-		$constrains = $objectService->getQueryFilterConstrains($query);
-		// Create some new constrains
-		$newConstrains = array();
-		unset($constrains[FilterUtility::FILTER_OFFER]);
-		if ($constrains[FilterUtility::FILTER_CATEGORY]) {
-			$newConstrains[FilterUtility::FILTER_CATEGORY] = $constrains[FilterUtility::FILTER_CATEGORY];
-		}
-		// Adds a new constrains for the offer
-		$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
-			$query->equals('offer', Object::OFFER_BOTH),
-			$query->equals('offer', Object::OFFER_SALE)
-		);
-		// Adds another constrains for the price (this must be filled in)
-		$constrains[FilterUtility::FILTER_PRICE] = $query->greaterThan('price', 0);
-		// Apply query constrains
-		$query = $this->applyQueryConstrains($query, $newConstrains);
-		// Sets limit
-		$query->setLimit((int)1);
-		return $query->execute()->getFirst();
-	}
-
-	/**
-	 * Find By Lowest Lot Size
-	 *
-	 * @param \Ucreation\Properties\Service\ObjectService $objectService
-	 * @return \Ucreation\Properties\Domain\Model\Object
-	 */
-	public function findByLowestLotSize(ObjectService $objectService) {
-		$query = $this->createQuery();
-		$query->setOrderings(array('lotSize' => QueryInterface::ORDER_ASCENDING));
-		// Get query contrains
-		$constrains = $objectService->getQueryFilterConstrains($query);
-		// Create some new constrains
-		$newConstrains = array();
-		unset($constrains[FilterUtility::FILTER_OFFER]);
-		if ($constrains[FilterUtility::FILTER_CATEGORY]) {
-			$newConstrains[FilterUtility::FILTER_CATEGORY] = $constrains[FilterUtility::FILTER_CATEGORY];
-		}
-		// Adds a new constrains for the offer
-		$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
-			$query->equals('offer', Object::OFFER_BOTH),
-			$query->equals('offer', Object::OFFER_SALE)
-		);
-		// Adds another constrains for the lot size
-		$constrains[FilterUtility::FILTER_LOT_SIZE] = $query->greaterThan('lotSize', 0);
-		// Apply query constrains
-		$query = $this->applyQueryConstrains($query, $newConstrains);
-		// Sets limit
-		$query->setLimit((int)1);
-		return $query->execute()->getFirst();
-	}
-
-	/**
-	 * Find By Highest Lot Size
-	 *
-	 * @param \Ucreation\Properties\Service\ObjectService $objectService
-	 * @return \Ucreation\Properties\Domain\Model\Object
-	 */
-	public function findByHighestLotSize(ObjectService $objectService) {
-		$query = $this->createQuery();
-		$query->setOrderings(array('lotSize' => QueryInterface::ORDER_DESCENDING));
-		// Get query contrains
-		$constrains = $objectService->getQueryFilterConstrains($query);
-		// Create some new constrains
-		$newConstrains = array();
-		unset($constrains[FilterUtility::FILTER_OFFER]);
-		if ($constrains[FilterUtility::FILTER_CATEGORY]) {
-			$newConstrains[FilterUtility::FILTER_CATEGORY] = $constrains[FilterUtility::FILTER_CATEGORY];
-		}
-		// Adds a new constrains for the offer
-		$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
-			$query->equals('offer', Object::OFFER_BOTH),
-			$query->equals('offer', Object::OFFER_SALE)
-		);
-		// Adds another constrains for the lot size
-		$constrains[FilterUtility::FILTER_LOT_SIZE] = $query->greaterThan('lotSize', 0);
-		// Apply query constrains
-		$query = $this->applyQueryConstrains($query, $newConstrains);
-		// Sets limit
-		$query->setLimit((int)1);
-		return $query->execute()->getFirst();
-	}
-
-	/**
-	 * Find Count By Filters
-	 *
-	 * @param \Ucreation\Properties\Service\ObjectService $objectService
-	 * @param array|NULL $filters
-	 * @return int
-	 */
-	public function findCountByFilters(ObjectService $objectService, array $filters = NULL) {
-		$query = $this->createQuery();
-		// Get query contrains
-		$constrains = $objectService->getQueryFilterConstrains($query, $filters);
-		// Apply query constrains
-		$query = $this->applyQueryConstrains($query, $constrains);
-		return $query->execute()->count();
 	}
 
 }
