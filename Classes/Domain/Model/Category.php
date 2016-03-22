@@ -51,6 +51,36 @@ class Category extends AbstractModel {
 	protected $linkArguments = array();
 
 	/**
+	 * @var bool
+	 */
+	protected $disableFilterOffer = FALSE;
+
+	/**
+	 * @var bool
+	 */
+	protected $disableFilterTown = FALSE;
+
+	/**
+	 * @var bool
+	 */
+	protected $disableFilterTowns = FALSE;
+
+	/**
+	 * @var bool
+	 */
+	protected $disableFilterPrice = FALSE;
+
+	/**
+	 * @var bool
+	 */
+	protected $disableFilterSurface = FALSE;
+
+	/**
+	 * @var bool
+	 */
+	protected $disableFilterPresences = FALSE;
+
+	/**
 	 * Get Name
 	 * 
 	 * @return string
@@ -87,6 +117,144 @@ class Category extends AbstractModel {
 		return array(
 			LinkUtility::CATEGORY => $this->getUid()
 		);
+	}
+
+	/**
+	 * Get Disable Filter Offer
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterOffer() {
+		return $this->disableFilterOffer;
+	}
+
+	/**
+	 * Is Disable Filter Offer
+	 *
+	 * @return bool
+	 */
+	public function isDisableFilterOffer() {
+		return $this->getDisableFilterOffer();
+	}
+
+	/**
+	 * Set Disable Filter Offer
+	 *
+	 * @param bool $disableFilterOffer
+	 * @return void
+	 */
+	public function setDisableFilterOffer($disableFilterOffer) {
+		$this->disableFilterOffer = $disableFilterOffer;
+	}
+
+	/**
+	 * Get Disable Filter Town
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterTown() {
+		return $this->disableFilterTown;
+	}
+
+	/**
+	 * Is Disable Filter Town
+	 *
+	 * @return bool
+	 */
+	public function isDisableFilterTown() {
+		return $this->getDisableFilterTown();
+	}
+
+	/**
+	 * Disable Filter Town
+	 *
+	 * @param bool $disableFilterTown
+	 * @return void
+	 */
+	public function setDisableFilterTown($disableFilterTown) {
+		$this->disableFilterTown = $disableFilterTown;
+	}
+
+	/**
+	 * Get Disable Filter Towns
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterTowns() {
+		return $this->disableFilterTowns;
+	}
+
+	/**
+	 * Is Disable Filter Towns
+	 *
+	 * @return bool
+	 */
+	public function isDisableFilterTowns() {
+		return $this->getDisableFilterTowns();
+	}
+
+	/**
+	 * Set Disable Filter Towns
+	 *
+	 * @param bool $disableFilterTowns
+	 * @return void
+	 */
+	public function setDisableFilterTowns($disableFilterTowns) {
+		$this->disableFilterTowns = $disableFilterTowns;
+	}
+
+	/**
+	 * Get Disable Filter Price
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterPrice() {
+		return $this->disableFilterPrice;
+	}
+
+	/**
+	 * Is Disable Filter Price
+	 *
+	 * @return bool
+	 */
+	public function isDisableFilterPrice() {
+		return $this->getDisableFilterPrice();
+	}
+
+	/**
+	 * Set Disable Filter Price
+	 *
+	 * @param bool $disableFilterPrice
+	 * @return void
+	 */
+	public function setDisableFilterPrice($disableFilterPrice) {
+		$this->disableFilterPrice = $disableFilterPrice;
+	}
+
+	/**
+	 * Get Disable Filter Presences
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterPresences() {
+		return $this->disableFilterPresences;
+	}
+
+	/**
+	 * Is Disable Filter Presences
+	 */
+	public function isDisableFilterPresences() {
+		return $this->getDisableFilterPresences();
+	}
+
+	/**
+	 * Set Disable Filter Presences
+	 *
+	 * @param bool $disableFilterPresences
+	 * @return void
+	 */
+	public function setDisableFilterPresences($disableFilterPresences) {
+		$this->disableFilterPresences = $disableFilterPresences;
 	}
 
 }

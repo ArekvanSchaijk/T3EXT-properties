@@ -24,6 +24,7 @@ namespace Ucreation\Properties\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
 use Ucreation\Properties\Utility\LinkUtility;
 
 /**

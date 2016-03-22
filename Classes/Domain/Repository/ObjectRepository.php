@@ -25,8 +25,6 @@ namespace Ucreation\Properties\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Persistence\Generic\Query;
-use TYPO3\CMS\Extbase\Persistence\Repository;
 use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Service\ObjectService;
 use Ucreation\Properties\Utility\FilterUtility;
@@ -38,7 +36,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class ObjectRepository extends Repository {
+class ObjectRepository extends AbstractRepository {
 
 	/**
 	 * @var array
@@ -204,36 +202,6 @@ class ObjectRepository extends Repository {
 		// Apply query constrains
 		$query = $this->applyQueryConstrains($query, $constrains);
 		return $query->execute()->count();
-	}
-
-	/**
-	 * Apply Query Constrains
-	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
-	 * @param array|NULL $constrainsArray
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\Query
-	 */
-	protected function applyQueryConstrains(Query $query, array $constrainsArray = NULL) {
-		$constrains = array();
-		foreach ($constrainsArray as $constrainsItem) {
-			if (is_array($constrainsItem)) {
-				foreach ($constrainsItem as $constrainsSubItem) {
-					$constrains[] = $constrainsSubItem;
-				}
-			} else {
-				$constrains[] = $constrainsItem;
-			}
-		}
-		if ($constrains) {
-			if (count($constrains) == 1) {
-				$query->matching($constrains[0]);
-			} else {
-				$query->matching(
-					$query->logicalAnd($constrains)
-				);
-			}
-		}
-		return $query;
 	}
 
 }

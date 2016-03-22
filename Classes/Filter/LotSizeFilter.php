@@ -1,5 +1,5 @@
 <?php
-namespace Ucreation\Properties\Domain\Model;
+namespace Ucreation\Properties\Filter;
 
 /***************************************************************
  *  Copyright notice
@@ -25,41 +25,42 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
- * Class AbstractModel
+ * Class LotSizeFilter
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-abstract class AbstractModel extends AbstractEntity {
-
-    // Force extending classes to have this functions
-    abstract public function getQueryConstrain(Query $query);
+class LotSizeFilter extends AbstractFilter {
 
     /**
-     * @var \Ucreation\Properties\Service\ObjectService
-     */
-    protected $objectService = NULL;
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-     * @inject
-     */
-    protected $objectManager = NULL;
-
-    /**
-     * Get Object Service
+     * Get Lowest Lot Size
      *
-     * @return \Ucreation\Properties\Service\ObjectService
+     * @return int
      */
-    protected function getObjectService() {
-        if (!$this->objectService) {
-            $this->objectService = $this->objectManager->get('Ucreation\\Properties\\Service\\ObjectService');
-        }
-        return $this->objectService;
+    public function getLowestLotSize() {
+
+    }
+
+    /**
+     * Get Highest Lot Size
+     *
+     * @return int
+     */
+    public function getHighestLotSize() {
+
+    }
+
+    /**
+     * Get Query Constrain
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+     * @return array
+     */
+    public function getQueryConstrain(Query $query) {
+
     }
 
 }

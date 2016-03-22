@@ -1,5 +1,5 @@
 <?php
-namespace Ucreation\Properties\Domain\Model;
+namespace Ucreation\Properties\Filter;
 
 /***************************************************************
  *  Copyright notice
@@ -25,41 +25,31 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
- * Class AbstractModel
+ * Class OfferFilter
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-abstract class AbstractModel extends AbstractEntity {
-
-    // Force extending classes to have this functions
-    abstract public function getQueryConstrain(Query $query);
+class TypeFilter extends AbstractFilter {
 
     /**
-     * @var \Ucreation\Properties\Service\ObjectService
+     * @const int
      */
-    protected $objectService = NULL;
+    const   TYPE_BOTH = 0,
+            TYPE_BUILDING = 1,
+            TYPE_LOT = 2;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-     * @inject
-     */
-    protected $objectManager = NULL;
-
-    /**
-     * Get Object Service
+     * Get Query Constrain
      *
-     * @return \Ucreation\Properties\Service\ObjectService
+     * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+     * @return array
      */
-    protected function getObjectService() {
-        if (!$this->objectService) {
-            $this->objectService = $this->objectManager->get('Ucreation\\Properties\\Service\\ObjectService');
-        }
-        return $this->objectService;
+    public function getQueryConstrain(Query $query) {
+
     }
 
 }

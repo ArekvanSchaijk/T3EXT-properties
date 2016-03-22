@@ -85,13 +85,13 @@ class ObjectController extends BaseController {
 		$this->view->assign('activeType', $this->objectService->getActiveType());
 		if ($this->objectService->getActiveType() == FilterUtility::FILTER_TYPE_BUILDING) {
 			// Filter offer
-			if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_OFFER)) {
+			if ($this->objectService->isFilterRegistered(FilterUtility::FILTER_OFFER)) {
 				$this->view->assign('showOfferFilter', TRUE);
 				$this->view->assign('offerTypes', self::getObjectOfferTypes());
 				$this->view->assign('activeOfferType', $this->objectService->getActiveOfferType());
 			}
 			// Filter presences
-			if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_PRESENCES)) {
+			if ($this->objectService->isFilterRegistered(FilterUtility::FILTER_PRESENCES)) {
 				$presences = $this->presenceRepository->findAll();
 				$this->view->assign('showPresencesFilter', TRUE);
 				$this->view->assign('presences', $presences);
@@ -99,7 +99,7 @@ class ObjectController extends BaseController {
 		}
 
 		// Price
-		if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_PRICE)) {
+		if ($this->objectService->isFilterRegistered(FilterUtility::FILTER_PRICE)) {
 			$objectLowestPrice = $this->objectService->getObjectLowestPrice();
 			$objectHighestPrice = $this->objectService->getObjectHighestPrice();
 			if ($objectLowestPrice !== FALSE && $objectHighestPrice !== FALSE && $objectLowestPrice != $objectHighestPrice) {
@@ -112,7 +112,7 @@ class ObjectController extends BaseController {
 		}
 
 		// Lot Size
-		if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_LOT_SIZE)) {
+		if ($this->objectService->isFilterRegistered(FilterUtility::FILTER_LOT_SIZE)) {
 			$objectLowestLotSize = $this->objectService->getObjectLowestLotSize();
 			$objectHighestLotSize = $this->objectService->getObjectHighestLotSize();
 			if ($objectLowestLotSize != $objectHighestLotSize) {
@@ -125,7 +125,7 @@ class ObjectController extends BaseController {
 		}
 
 		// Filter town
-		if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_TOWN)) {
+		if ($this->objectService->isFilterRegistered(FilterUtility::FILTER_TOWN)) {
 			$towns = $this->townRepository->findAll();
 			$this->view->assign('showTownFilter', TRUE);
 			$this->view->assign('towns', $towns);
@@ -133,7 +133,7 @@ class ObjectController extends BaseController {
 		}
 
 		// Filter towns (multiple)
-		if ($this->objectService->isFilterRegistred(FilterUtility::FILTER_TOWNS)) {
+		if ($this->objectService->isFilterRegistered(FilterUtility::FILTER_TOWNS)) {
 			$towns = $this->townRepository->findAll();
 			$this->view->assign('showTownsFilter', TRUE);
 			$this->view->assign('towns', $towns);

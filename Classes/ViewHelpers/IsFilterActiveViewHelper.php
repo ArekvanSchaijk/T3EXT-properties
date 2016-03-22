@@ -1,5 +1,5 @@
 <?php
-namespace Ucreation\Properties\Domain\Model;
+namespace Ucreation\Properties\ViewHelpers;
 
 /***************************************************************
  *  Copyright notice
@@ -25,41 +25,30 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use TYPO3\CMS\Extbase\Persistence\Generic\Query;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * Class AbstractModel
+ * Class SurfaceViewHelper
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-abstract class AbstractModel extends AbstractEntity {
-
-    // Force extending classes to have this functions
-    abstract public function getQueryConstrain(Query $query);
+class IsFilterActiveViewHelper extends AbstractViewHelper {
 
     /**
      * @var \Ucreation\Properties\Service\ObjectService
+     * @inject
      */
     protected $objectService = NULL;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-     * @inject
-     */
-    protected $objectManager = NULL;
-
-    /**
-     * Get Object Service
+     * Render
      *
-     * @return \Ucreation\Properties\Service\ObjectService
+     * @param string $filterName
+     * @return bool
      */
-    protected function getObjectService() {
-        if (!$this->objectService) {
-            $this->objectService = $this->objectManager->get('Ucreation\\Properties\\Service\\ObjectService');
-        }
-        return $this->objectService;
+    public function render($filterName) {
+        return $this->objectService->isFilterActive($filterName);
     }
 
 }

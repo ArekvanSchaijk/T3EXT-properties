@@ -4,7 +4,7 @@ namespace Ucreation\Properties\Service;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2015 Arek van Schaijk <info@ucreation.nl>, Ucreation
+ *  (c) 2016 Arek van Schaijk <info@ucreation.nl>, Ucreation
  *
  *  All rights reserved
  *
@@ -25,14 +25,8 @@ namespace Ucreation\Properties\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Resource\File;
-use TYPO3\CMS\Extbase\Persistence\Generic\Query;
-use Ucreation\Properties\Domain\Model\Category;
-use Ucreation\Properties\Domain\Model\Object;
-use Ucreation\Properties\Domain\Model\Presence;
-use Ucreation\Properties\Domain\Model\Town;
-use Ucreation\Properties\Utility\FilterUtility;
 use Ucreation\Properties\Utility\LinkUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Web\Request;
@@ -49,16 +43,16 @@ class ObjectService implements SingletonInterface {
 	 * @var boolean
 	 */
 	protected $prepared = FALSE;
-	
-	/**
-	 * @var \TYPO3\CMS\Extbase\Mvc\Web\Request|null
-	 */
-	protected $request = NULL;
 
 	/**
 	 * @var array
 	 */
-	protected $settings = array();
+	public $settings = array();
+	
+	/**
+	 * @var \TYPO3\CMS\Extbase\Mvc\Web\Request|null
+	 */
+	public $request = NULL;
 
 	/**
 	 * @var array|bool
@@ -66,85 +60,21 @@ class ObjectService implements SingletonInterface {
 	protected $linkArguments = FALSE;
 
 	/**
-	 * @var array|null
-	 */
-	protected $registeredFilters = NULL;
-
-	/**
-	 * @var array|null
-	 */
-	protected $towns = NULL;
-
-	/**
-	 * @var array|null
-	 */
-	protected $presences = NULL;
-
-	/**
-	 * @var int|null
-	 */
-	protected $type = NULL;
-
-	/**
-	 * @var int|null
-	 */
-	protected $offerType = NULL;
-
-	/**
-	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>|bool
+	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>|bool|null
 	 */
 	protected $objects = FALSE;
-
-	/**
-	 * @var int|null
-	 */
-	protected $selectedLowestPrice = NULL;
-
-	/**
-	 * @var int|null
-	 */
-	protected $selectedHighestPrice = NULL;
-
-	/**
-	 * @var int|null
-	 */
-	protected $selectedLowestLotSize = NULL;
-
-	/**
-	 * @var int|null
-	 */
-	protected $selectedHighestLotSize = NULL;
-
-	/**
-	 * @var int|null
-	 */
-	protected $objectLowestPrice = NULL;
-
-	/**
-	 * @var int|null
-	 */
-	protected $objectHighestPrice = NULL;
-
-	/**
-	 * @var int|null
-	 */
-	protected $objectLowestLotSize = NULL;
-
-	/**
-	 * @var int|null
-	 */
-	protected $objectHighestLotSize = NULL;
-
-	/**
-	 * @var array|null
-	 */
-	protected $filters = NULL;
 
 	/**
 	 * @var \Ucreation\Properties\Domain\Repository\ObjectRepository
 	 * @inject
 	 */
 	protected $objectRepository = NULL;
+
+	/**
+	 * @var \Ucreation\Properties\Service\FilterService
+	 * @inject
+	 */
+	protected $filterService = NULL;
 
 	/**
 	 * Is Prepared
@@ -168,87 +98,6 @@ class ObjectService implements SingletonInterface {
 	}
 
 	/**
-	 * Get Object Lowest Price
-	 *
-	 * @return float
-	 */
-	public function getObjectLowestPrice() {
-		if (is_null($this->objectLowestPrice)) {
-			$this->objectLowestPrice = FALSE;
-			$object = $this->objectRepository->findByLowestPrice($this);
-			if ($object) {
-				$this->objectLowestPrice = $object->getPrice();
-			}
-		}
-		return $this->objectLowestPrice;
-	}
-
-	/**
-	 * Get Object Highest Price
-	 *
-	 * @return int
-	 */
-	public function getObjectHighestPrice() {
-		if (is_null($this->objectHighestPrice)) {
-			$this->objectHighestPrice = FALSE;
-			$object = $this->objectRepository->findByHighestPrice($this);
-			if ($object) {
-				$this->objectHighestPrice = $object->getPrice();
-			}
-		}
-		return $this->objectHighestPrice;
-	}
-
-	/**
-	 * Get Object Lowest Lot Size
-	 *
-	 * @return int
-	 */
-	public function getObjectLowestLotSize() {
-		if (is_null($this->objectLowestLotSize)) {
-			$this->objectLowestLotSize = FALSE;
-			$object = $this->objectRepository->findByLowestLotSize($this);
-			if ($object) {
-				$this->objectLowestLotSize = $object->getLotSize();
-			}
-		}
-		return $this->objectLowestLotSize;
-	}
-
-	/**
-	 * Get Object Highest Lot Size
-	 *
-	 * @return int
-	 */
-	public function getObjectHighestLotSize() {
-		if (is_null($this->objectHighestLotSize)) {
-			$this->objectHighestLotSize = FALSE;
-			$object = $this->objectRepository->findByHighestLotSize($this);
-			if ($object) {
-				$this->objectHighestLotSize = $object->getLotSize();
-			}
-		}
-		return $this->objectHighestLotSize;
-	}
-
-	/**
-	 * Get Available Objects Count By Presence
-	 *
-	 * @param \Ucreation\Properties\Domain\Model\Presence $presence
-	 * @return int
-	 */
-	public function getAvailableObjectsCountByPresence(Presence $presence) {
-		$filters = $this->getFilters();
-		if (!$filters[FilterUtility::FILTER_PRESENCES]) {
-			$filters[FilterUtility::FILTER_PRESENCES] = array();
-		}
-		if (!in_array($presence->getUid(), $filters[FilterUtility::FILTER_PRESENCES])) {
-			$filters[FilterUtility::FILTER_PRESENCES][] = $presence->getUid();
-		}
-		return $this->objectRepository->findCountByFilters($this, $filters);
-	}
-
-	/**
 	 * Get Query Filter Contrains
 	 *
 	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
@@ -256,135 +105,7 @@ class ObjectService implements SingletonInterface {
 	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\Query
 	 */
 	public function getQueryFilterConstrains(Query $query, array $filters = NULL) {
-		$constrains = array();
-		if (is_null($filters)) {
-			$filters = $this->getFilters();
-		}
-		// Category
-		if ($filters[FilterUtility::FILTER_CATEGORY]) {
-			$constrains[FilterUtility::FILTER_CATEGORY] = $query->equals('category.uid', $filters[FilterUtility::FILTER_CATEGORY]);
-		}
-		// Type
-		if ($filters[FilterUtility::FILTER_TYPE]) {
-			$constrains[FilterUtility::FILTER_TYPE] = $query->equals('type', $filters[FilterUtility::FILTER_TYPE]);
-		}
-		// Lowest Price
-		if ($filters[FilterUtility::FILTER_PRICE_LOWEST]) {
-			$constrains[FilterUtility::FILTER_PRICE_LOWEST] = $query->greaterThanOrEqual('price', $filters[FilterUtility::FILTER_PRICE_LOWEST]);
-		}
-		// Highest Price
-		if ($filters[FilterUtility::FILTER_PRICE_HIGHEST]) {
-			$constrains[FilterUtility::FILTER_PRICE_HIGHEST] = $query->lessThanOrEqual('price', $filters[FilterUtility::FILTER_PRICE_HIGHEST]);
-		}
-		// Lowest Lot Size
-		if ($filters[FilterUtility::FILTER_LOT_SIZE_LOWEST]) {
-			$constrains[FilterUtility::FILTER_LOT_SIZE_LOWEST] = $query->greaterThanOrEqual('lotSize', $filters[FilterUtility::FILTER_LOT_SIZE_LOWEST]);
-		}
-		// Highest Lot Size
-		if ($filters[FilterUtility::FILTER_LOT_SIZE_HIGHEST]) {
-			$constrains[FilterUtility::FILTER_LOT_SIZE_HIGHEST] = $query->lessThanOrEqual('lotSize', $filters[FilterUtility::FILTER_LOT_SIZE_HIGHEST]);
-		}
-		// Town
-		if ($filters[FilterUtility::FILTER_TOWN]) {
-			$constrains[FilterUtility::FILTER_TOWN] = $query->equals('town', $filters[FilterUtility::FILTER_TOWN]);
-		}
-		// Towns
-		if ($filters[FilterUtility::FILTER_TOWNS]) {
-			$constrains[FilterUtility::FILTER_TOWNS] = array();
-			foreach ($filters[FilterUtility::FILTER_TOWNS] as $townId) {
-				$constrains[FilterUtility::FILTER_TOWNS][] = $query->equals('town', $townId);
-			}
-		}
-		// Presences
-		if ($filters[FilterUtility::FILTER_PRESENCES]) {
-			$constrains[FilterUtility::FILTER_PRESENCES] = array();
-			foreach ($filters[FilterUtility::FILTER_PRESENCES] as $presenceId) {
-				$constrains[FilterUtility::FILTER_PRESENCES][] = $query->contains('presences', $presenceId);
-			}
-		}
-		// Offer
-		if ($filters[FilterUtility::FILTER_OFFER]) {
-			// Filter for sale only
-			if ($filters[FilterUtility::FILTER_OFFER] == FilterUtility::FILTER_OFFER_SALE) {
-				$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
-					$query->equals('offer', Object::OFFER_BOTH),
-					$query->equals('offer', Object::OFFER_SALE)
-				);
-			} else if ($filters[FilterUtility::FILTER_OFFER] == FilterUtility::FILTER_OFFER_RENT) {
-				$constrains[FilterUtility::FILTER_OFFER] = $query->logicalOr(
-					$query->equals('offer', Object::OFFER_BOTH),
-					$query->equals('offer', Object::OFFER_RENT)
-				);
-			}
-		}
-		return $constrains;
-	}
 
-	/**
-	 * Get Filters
-	 *
-	 * @return array
-	 */
-	public function getFilters() {
-		if (is_null($this->filters)) {
-			$this->filters = array();
-			// Loops through the registred filters
-			foreach ($this->getRegistredFilters() as $filterName) {
-				switch ($filterName) {
-					case FilterUtility::FILTER_CATEGORY:
-						if (($categoryId = $this->getActiveCategoryId())) {
-							$this->filters[FilterUtility::FILTER_CATEGORY] = $categoryId;
-						}
-						break;
-					case FilterUtility::FILTER_TYPE:
-						if (($activeType = $this->getActiveType())) {
-							$this->filters[FilterUtility::FILTER_TYPE] = $activeType;
-						}
-						break;
-					case FilterUtility::FILTER_PRICE_LOWEST:
-						if (($lowestPrice = $this->getSelectedLowestPrice()) !== FALSE) {
-							$this->filters[FilterUtility::FILTER_PRICE_LOWEST] = $lowestPrice;
-						}
-						break;
-					case FilterUtility::FILTER_PRICE_HIGHEST:
-						if (($highestPrice = $this->getSelectedHighestPrice()) !== FALSE) {
-							$this->filters[FilterUtility::FILTER_PRICE_HIGHEST] = $highestPrice;
-						}
-						break;
-					case FilterUtility::FILTER_LOT_SIZE_LOWEST:
-						if (($lowestLotSize = $this->getSelectedLowestLotSize())) {
-							$this->filters[FilterUtility::FILTER_LOT_SIZE_LOWEST] = $lowestLotSize;
-						}
-						break;
-					case FilterUtility::FILTER_LOT_SIZE_HIGHEST:
-						if (($highestLotSize = $this->getSelectedHighestLotSize())) {
-							$this->filters[FilterUtility::FILTER_LOT_SIZE_HIGHEST] = $highestLotSize;
-						}
-						break;
-					case FilterUtility::FILTER_TOWN:
-						if (($townId = $this->getActiveTownId())) {
-							$this->filters[FilterUtility::FILTER_TOWN] = $townId;
-						}
-						break;
-					case FilterUtility::FILTER_TOWNS:
-						if (($activeTowns = $this->getActiveTowns())) {
-							$this->filters[FilterUtility::FILTER_TOWNS] = $activeTowns;
-						}
-						break;
-					case FilterUtility::FILTER_OFFER:
-						if (($activeOfferType = $this->getActiveOfferType())) {
-							$this->filters[FilterUtility::FILTER_OFFER] = $activeOfferType;
-						}
-						break;
-					case FilterUtility::FILTER_PRESENCES:
-						if (($activePresences = $this->getActivePresences())) {
-							$this->filters[FilterUtility::FILTER_PRESENCES] = $activePresences;
-						}
-						break;
-				}
-			}
-		}
-		return $this->filters;
 	}
 
 	/**
@@ -404,38 +125,6 @@ class ObjectService implements SingletonInterface {
 			}
 			$this->prepared = TRUE;
 		}
-	}
-
-	/**
-	 * Get Active Category
-	 *
-	 * @return int
-	 */
-	public function getActiveCategoryId() {
-		if ($this->request->hasArgument(LinkUtility::CATEGORY)) {
-			if (($categoryId = $this->request->getArgument(LinkUtility::CATEGORY))) {
-				if (ctype_digit($categoryId)) {
-					return $categoryId;
-				}
-			}
-		}
-		return FALSE;
-	}
-
-	/**
-	 * Get Active Town Id
-	 *
-	 * @return int
-	 */
-	public function getActiveTownId() {
-		if ($this->request->hasArgument(LinkUtility::TOWN)) {
-			if (($townId = $this->request->getArgument(LinkUtility::TOWN))) {
-				if (ctype_digit($townId)) {
-					return $townId;
-				}
-			}
-		}
-		return FALSE;
 	}
 
 	/**
@@ -495,241 +184,6 @@ class ObjectService implements SingletonInterface {
 			$linkArguments[LinkUtility::PRESENCES] = implode(',', $linkArguments[LinkUtility::PRESENCES]);
 		}
 		return $linkArguments;
-	}
-
-	/**
-	 * Get Registred Filters
-	 *
-	 * @return array
-	 */
-	public function getRegistredFilters() {
-		if (is_null($this->registeredFilters)) {
-			$this->registeredFilters = array();
-			// Known filters array
-			$knownFilters = FilterUtility::getKnownFilters();
-			// Gets the registred filters
-			$registeredFilters = GeneralUtility::trimExplode(',', $this->settings['filters']['registred']);
-			// Loops through all filters and collect all filters which are registred by setup
-			foreach ($knownFilters as $filter) {
-				if (in_array(strtolower($filter), $registeredFilters)) {
-					$this->registeredFilters[] = $filter;
-				}
-			}
-		}
-		return $this->registeredFilters;
-	}
-
-	/**
-	 * Get Active Type
-	 *
-	 * @return int
-	 */
-	public function getActiveType() {
-		if (is_null($this->type)) {
-			$this->type = FilterUtility::FILTER_TYPE_BOTH;
-			if ($this->request->hasArgument(LinkUtility::TYPE)) {
-				switch ($this->request->getArgument(LinkUtility::TYPE)) {
-					case FilterUtility::FILTER_TYPE_BUILDING:
-						$this->type = FilterUtility::FILTER_TYPE_BUILDING;
-						break;
-					case FilterUtility::FILTER_TYPE_LOT:
-						$this->type = FilterUtility::FILTER_TYPE_LOT;
-						break;
-					default:
-						$this->type = FilterUtility::FILTER_TYPE_BOTH;
-				}
-			}
-		}
-		return $this->type;
-	}
-
-	/**
-	 * Get Active Offer Type
-	 *
-	 * @return int
-	 */
-	public function getActiveOfferType() {
-		if (is_null($this->offerType)) {
-			$this->offerType = FilterUtility::FILTER_OFFER_BOTH;
-			if ($this->request->hasArgument(LinkUtility::OFFER)) {
-				switch ($this->request->getArgument(LinkUtility::OFFER)) {
-					case FilterUtility::FILTER_OFFER_SALE:
-						$this->offerType = FilterUtility::FILTER_OFFER_SALE;
-						break;
-					case FilterUtility::FILTER_OFFER_RENT:
-						$this->offerType = FilterUtility::FILTER_OFFER_RENT;
-						break;
-					default:
-						$this->type = FilterUtility::FILTER_OFFER_BOTH;
-				}
-			}
-		}
-		return $this->offerType;
-	}
-
-	/**
-	 * Is Filter Registred
-	 *
-	 * @return bool
-	 */
-	public function isFilterRegistred($filterName) {
-		return in_array($filterName, $this->getRegistredFilters());
-	}
-
-	/**
-	 * Is Town Active
-	 *
-	 * @param \Ucreation\Properties\Domain\Model\Town $town
-	 * @return bool
-	 */
-	public function isTownActive(Town $town) {
-		return in_array($town->getUid(), $this->getActiveTowns());
-	}
-
-	/**
-	 * Get Active Towns
-	 *
-	 * @return array
-	 */
-	public function getActiveTowns() {
-		if (is_null($this->towns)) {
-			$this->towns = array();
-			if ($this->request->hasArgument(LinkUtility::TOWNS)) {
-				$towns = GeneralUtility::trimExplode(',', $this->request->getArgument(LinkUtility::TOWNS));
-				foreach ($towns as $value) {
-					if (ctype_digit($value) && !in_array($value, $this->towns)) {
-						$this->towns[] = $value;
-					}
-				}
-			}
-		}
-		return $this->towns;
-	}
-
-	/**
-	 * Is Presence Active
-	 *
-	 * @param \Ucreation\Properties\Domain\Model\Presence $presence
-	 * @return bool
-	 */
-	public function isPresenceActive(Presence $presence) {
-		return in_array($presence->getUid(), $this->getActivePresences());
-	}
-
-	/**
-	 * Get Active Presences
-	 *
-	 * @return array
-	 */
-	public function getActivePresences() {
-		if (is_null($this->presences)) {
-			$this->presences = array();
-			if ($this->request->hasArgument(LinkUtility::PRESENCES)) {
-				$presences = GeneralUtility::trimExplode(',', $this->request->getArgument(LinkUtility::PRESENCES));
-				foreach ($presences as $value) {
-					if (ctype_digit($value) && !in_array($value, $this->presences)) {
-						$this->presences[] = $value;
-					}
-				}
-			}
-		}
-		return $this->presences;
-	}
-
-	/**
-	 * Is Category Active
-	 *
-	 * @param \Ucreation\Properties\Domain\Model\Category $category
-	 * @return bool
-	 */
-	public function isCategoryActive(Category $category) {
-		if ($this->request->hasArgument(LinkUtility::CATEGORY)) {
-			if ($this->request->getArgument(LinkUtility::CATEGORY) == $category->getUid()) {
-				return TRUE;
-			}
-		}
-		return FALSE;
-	}
-
-	/**
-	 * Get Selected Lowest Price
-	 *
-	 * @return int
-	 */
-	public function getSelectedLowestPrice() {
-		$this->processPriceSelection();
-		return $this->selectedLowestPrice;
-	}
-
-	/**
-	 * Get Selected Highest Price
-	 *
-	 * @return int
-	 */
-	public function getSelectedHighestPrice() {
-		$this->processPriceSelection();
-		return $this->selectedHighestPrice;
-	}
-
-	/**
-	 * Process Price Selection
-	 *
-	 * @return void
-	 */
-	protected function processPriceSelection() {
-		if (is_null($this->selectedLowestPrice) || is_null($this->selectedHighestPrice)) {
-			$this->selectedLowestPrice = FALSE;
-			$this->selectedHighestPrice = FALSE;
-			if ($this->request->hasArgument(LinkUtility::PRICE)) {
-				$price = $this->request->getArgument(LinkUtility::PRICE);
-				if (strpos($price, '-') !== FALSE) {
-					$price = GeneralUtility::trimExplode('-', $price);
-					$this->selectedLowestPrice = (int)$price[0];
-					$this->selectedHighestPrice = (int)$price[1];
-
-				}
-			}
-		}
-	}
-
-	/**
-	 * Get Selected Lowest Lot Size
-	 *
-	 * @return int
-	 */
-	public function getSelectedLowestLotSize() {
-		$this->processLotSizeSelection();
-		return $this->selectedLowestLotSize;
-	}
-
-	/**
-	 * Get Selected Highest Lot Size
-	 *
-	 * @return int
-	 */
-	public function getSelectedHighestLotSize() {
-		$this->processLotSizeSelection();
-		return $this->selectedHighestLotSize;
-	}
-
-	/**
-	 * Process Lot Size Selection
-	 *
-	 * @return void
-	 */
-	protected function processLotSizeSelection() {
-		if (is_null($this->selectedLowestLotSize) || is_null($this->selectedHighestLotSize)) {
-			$this->selectedLowestLotSize = FALSE;
-			$this->selectedHighestPrice = FALSE;
-			if ($this->request->hasArgument(LinkUtility::LOT_SIZE)) {
-				$lotSize = $this->request->getArgument(LinkUtility::LOT_SIZE);
-				if (strpos($lotSize, '-') !== FALSE) {
-					$lotSize = GeneralUtility::trimExplode('-', $lotSize);
-					$this->selectedLowestLotSize = (int)$lotSize[0];
-					$this->selectedHighestLotSize = (int)$lotSize[1];
-				}
-			}
-		}
 	}
 
 }

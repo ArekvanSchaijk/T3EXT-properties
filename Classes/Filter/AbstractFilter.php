@@ -1,5 +1,5 @@
 <?php
-namespace Ucreation\Properties\Domain\Model;
+namespace Ucreation\Properties\Filter;
 
 /***************************************************************
  *  Copyright notice
@@ -25,41 +25,46 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use TYPO3\CMS\Extbase\Persistence\Generic\Query;
+use Ucreation\Properties\Service\FilterService;
 
 /**
- * Class AbstractModel
+ * Class AbstractFilter
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-abstract class AbstractModel extends AbstractEntity {
-
-    // Force extending classes to have this functions
-    abstract public function getQueryConstrain(Query $query);
+abstract class AbstractFilter {
 
     /**
-     * @var \Ucreation\Properties\Service\ObjectService
+     * @var bool
      */
-    protected $objectService = NULL;
+    protected $isEliminated = FALSE;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @var \Ucreation\Properties\Service\FilterService
      * @inject
      */
-    protected $objectManager = NULL;
+    protected $filterService = NULL;
 
     /**
-     * Get Object Service
+     * Is Active
      *
-     * @return \Ucreation\Properties\Service\ObjectService
+     * @return bool
      */
-    protected function getObjectService() {
-        if (!$this->objectService) {
-            $this->objectService = $this->objectManager->get('Ucreation\\Properties\\Service\\ObjectService');
+    public function isActive() {
+        if ($this->isEliminated) {
+            return FALSE;
         }
-        return $this->objectService;
+        return TRUE;
+    }
+
+    /**
+     * Eliminate
+     *
+     * @return void
+     */
+    public function eliminate() {
+        $this->isEliminated = TRUE;
     }
 
 }
