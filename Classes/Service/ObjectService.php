@@ -64,6 +64,12 @@ class ObjectService implements SingletonInterface {
 	protected $activeCategory = FALSE;
 
 	/**
+	 * @var \Ucreation\Properties\Service\FilterService
+	 * @inject
+	 */
+	protected $filterService = NULL;
+
+	/**
 	 * @var \Ucreation\Properties\Domain\Repository\ObjectRepository
 	 * @inject
 	 */
@@ -74,12 +80,6 @@ class ObjectService implements SingletonInterface {
 	 * @inject
 	 */
 	protected $categoryRepository = NULL;
-
-	/**
-	 * @var \Ucreation\Properties\Service\FilterService
-	 * @inject
-	 */
-	private $filterService = NULL;
 
 	/**
 	 * Get Filter Service
@@ -122,12 +122,13 @@ class ObjectService implements SingletonInterface {
 	 * Get Filtered Objects
 	 *
 	 * @param array $filters
+	 * @param array $filterOverrides
 	 * @param int $limit
 	 * @param array $orderings
 	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
 	 */
-	public function getFilteredObjects(array $filters = NULL, $limit = 0, array $orderings = NULL) {
-		return $this->objectRepository->findByFilters($this, $filters, $limit, $orderings);
+	public function getFilteredObjects(array $filters = NULL, array $filterOverrides = NULL, $limit = 0, array $orderings = NULL) {
+		return $this->objectRepository->findByFilters($this, $filters, $filterOverrides, $limit, $orderings);
 	}
 
 	/**

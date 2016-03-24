@@ -25,7 +25,7 @@ namespace Ucreation\Properties\Filter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Ucreation\Properties\Service\FilterService;
+use Ucreation\Properties\Utility\FilterUtility;
 
 /**
  * Class AbstractFilter
@@ -36,26 +36,73 @@ use Ucreation\Properties\Service\FilterService;
 abstract class AbstractFilter {
 
     /**
+     * @var string
+     */
+    static protected $extensionName = 'Properties';
+
+    /**
      * @var bool
      */
     protected $isEliminated = FALSE;
 
     /**
+     * @var bool
+     */
+    protected $isForceFilter = FALSE;
+
+    /**
      * @var \Ucreation\Properties\Service\FilterService
      * @inject
      */
-    private $filterService = NULL;
+    protected $filterService = NULL;
+
+    /**
+     * Get Filter Key
+     *
+     * @return string
+     */
+    static public function getFilterKey() {
+        return array_search(get_called_class(), FilterUtility::getRegistered());
+    }
+
+    /**
+     * Get Filter Name
+     *
+     * @return string
+     */
+    static public function getFilterName() {
+        return str_replace(chr(32), NULL, ucwords(str_replace('_', chr(32), self::getFilterKey())));
+    }
 
     /**
      * Is Active
      *
      * @return bool
      */
-    public function isActive() {
+    public function getIsActive() {
         if ($this->isEliminated) {
             return FALSE;
         }
         return TRUE;
+    }
+
+    /**
+     * Get Is Force Filter
+     *
+     * @return bool
+     */
+    public function getIsForceFilter() {
+        return $this->isForceFilter;
+    }
+
+    /**
+     * Set Is Force Filter
+     *
+     * @param bool $isForceFilter
+     * @return void
+     */
+    public function setIsForceFilter($isForceFilter) {
+        $this->isForceFilter = $isForceFilter;
     }
 
     /**

@@ -1,9 +1,9 @@
 <legend>{f:translate(key: 'filter.towns')}</legend>
-<f:if condition="{towns}">
+<f:if condition="{filter.availableTowns}">
     <f:then>
         <div class="filterOption towns">
             <ul>
-                <f:for each="{towns}" as="town">
+                <f:for each="{filter.availableTowns}" as="town">
                     <f:if condition="{town.isActive}">
                         <f:then>
                             <li class="active{f:if(condition: town.isDisabled, then: ' disabled')}"><f:form.checkbox name="towns[]" id="town{town.uid}" value="{town.uid}" checked="checked" /> <label for="town{town.uid}">{town.name}</label></li>

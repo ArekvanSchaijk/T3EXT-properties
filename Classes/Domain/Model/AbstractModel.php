@@ -36,13 +36,19 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Query;
  */
 abstract class AbstractModel extends AbstractEntity {
 
-    // Force extending classes to have this functions
-    abstract public function getQueryConstrain(Query $query);
-
     /**
      * @var \Ucreation\Properties\Service\ObjectService
      * @inject
      */
     protected $objectService = NULL;
+
+    /**
+     * Get Object Service
+     *
+     * @return \Ucreation\Properties\Service\ObjectService
+     */
+    public function getObjectService() {
+        return $this->objectService;
+    }
 
 }

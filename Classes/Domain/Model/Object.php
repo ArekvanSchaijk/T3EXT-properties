@@ -198,6 +198,16 @@ class Object extends AbstractEntity {
 	protected $zipCode = '';
 
 	/**
+	 * @var string
+	 */
+	protected $district = '';
+
+	/**
+	 * @var string
+	 */
+	protected $country = '';
+
+	/**
 	 * @var bool
 	 */
 	protected $useExistingContact = FALSE;
@@ -253,9 +263,9 @@ class Object extends AbstractEntity {
 	protected $status = self::STATUS_AVAILABLE;
 
 	/**
-	 * @var float
+	 * @var int
 	 */
-	protected $price = 0.0;
+	protected $price = 0;
 
 	/**
 	 * @var int
@@ -263,9 +273,9 @@ class Object extends AbstractEntity {
 	protected $priceType = self::PRICE_TYPE_KK;
 
 	/**
-	 * @var float
+	 * @var int
 	 */
-	protected $rentPrice = 0.0;
+	protected $rentPrice = 0;
 
 	/**
 	 * @var string
@@ -703,6 +713,44 @@ class Object extends AbstractEntity {
 	}
 
 	/**
+	 * Get District
+	 *
+	 * @return string
+	 */
+	public function getDistrict() {
+		return $this->district;
+	}
+
+	/**
+	 * Set District
+	 *
+	 * @param string $district
+	 * @return void
+	 */
+	public function setDistrict($district) {
+		$this->district = $district;
+	}
+
+	/**
+	 * Get Country
+	 *
+	 * @return string
+	 */
+	public function getCountry() {
+		return $this->country;
+	}
+
+	/**
+	 * Set Country
+	 *
+	 * @param string $country
+	 * @return void
+	 */
+	public function setCountry($country) {
+		$this->country = $country;
+	}
+
+	/**
 	 * Get Use Existing Contact
 	 *
 	 * @return bool
@@ -917,7 +965,7 @@ class Object extends AbstractEntity {
 	/**
 	 * Get Price
 	 * 
-	 * @return float
+	 * @return int
 	 */
 	public function getPrice() {
 		return $this->price;
@@ -926,7 +974,7 @@ class Object extends AbstractEntity {
 	/**
 	 * Set Price
 	 * 
-	 * @param float $price
+	 * @param int $price
 	 * @return void
 	 */
 	public function setPrice($price) {
@@ -955,7 +1003,7 @@ class Object extends AbstractEntity {
 	/**
 	 * Get Rent Price
 	 * 
-	 * @return float
+	 * @return int
 	 */
 	public function getRentPrice() {
 		return $this->rentPrice;
@@ -964,7 +1012,7 @@ class Object extends AbstractEntity {
 	/**
 	 * Set Rent Price
 	 * 
-	 * @param float $rentPrice
+	 * @param int $rentPrice
 	 * @return void
 	 */
 	public function setRentPrice($rentPrice) {
@@ -1107,7 +1155,7 @@ class Object extends AbstractEntity {
 	/**
 	 * Get Price Per Square Metre
 	 * 
-	 * @return float
+	 * @return int
 	 */
 	public function getPricePerSquareMetre() {
 		return $this->pricePerSquareMetre;
@@ -1116,7 +1164,7 @@ class Object extends AbstractEntity {
 	/**
 	 * Set Price Per Square Metre
 	 * 
-	 * @param float $pricePerSquareMetre
+	 * @param int $pricePerSquareMetre
 	 * @return void
 	 */
 	public function setPricePerSquareMetre($pricePerSquareMetre) {

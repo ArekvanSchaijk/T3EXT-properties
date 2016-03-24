@@ -25,6 +25,8 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Utility\FilterUtility;
+
 /**
  * Class Town
  *
@@ -63,7 +65,17 @@ class Town extends AbstractModel {
 	 * @return bool
 	 */
 	public function getIsActive() {
-		return $this->getObjectService()->isTownActive($this);
+		if (($activeTown = $this->objectService->getFilterService()->getFilter(FilterUtility::FILTER_TOWN)->getActiveTown())) {
+			if ($this->getUid() == $activeTown) {
+				return TRUE;
+			}
+		}
+		if (($activeTowns = $this->objectService->getFilterService()->getFilter(FilterUtility::FILTER_TOWNS)->getActiveTowns())) {
+			if (in_array($this->getUid(), $activeTowns)) {
+				return TRUE;
+			}
+		}
+		return FALSE;
 	}
 
 	/**

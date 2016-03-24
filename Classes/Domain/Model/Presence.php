@@ -25,6 +25,9 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Filter\TypeFilter;
+use Ucreation\Properties\Utility\FilterUtility;
+
 /**
  * Class Presence
  *
@@ -60,6 +63,12 @@ class Presence extends AbstractModel {
 	protected $objectService = NULL;
 
 	/**
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+	 * @inject
+	 */
+	protected $objectManager = NULL;
+
+	/**
 	 * Get Name
 	 * 
 	 * @return string
@@ -84,7 +93,12 @@ class Presence extends AbstractModel {
 	 * @return bool
 	 */
 	public function getIsActive() {
-		return $this->getObjectService()->isPresenceActive($this);
+		if (($activePresences = $this->objectService->getFilterService()->getFilter(FilterUtility::FILTER_PRESENCES)->getActivePresences())) {
+			if (in_array($this->getUid(), $activePresences)) {
+				return TRUE;
+			}
+		}
+		return FALSE;
 	}
 
 	/**
@@ -94,7 +108,25 @@ class Presence extends AbstractModel {
 	 */
 	public function getFilterAvailableObjects() {
 		if (is_null($this->filterAvailableObjects)) {
-			$this->filterAvailableObjects = $this->getObjectService()->getAvailableObjectsCountByPresence($this);
+			$this->filterAvailableObjects = 0;
+			// Gets the current presence filter
+			if (($presenceFilter = $this->getObjectService()->getFilterService()->getFilter(FilterUtility::FILTER_PRESENCES))) {
+				// Checks if the current presences filter is active (otherwise we just don't do anything since this filter can't be active)
+				if ($presenceFilter->getIsActive()) {
+					// Creates a new presence filter
+					$newPresenceFilter = clone $presenceFilter;
+					$newPresenceFilter->setActivePresence($this->getUid());
+					// Creates a new type filter
+					$newTypeFilter = $this->getObjectService()->getFilterService()->createNewFilter(FilterUtility::FILTER_TYPE);
+					$newTypeFilter->setActiveType(TypeFilter::TYPE_BUILDING);
+					// Filter overrides
+					$overrides = array(
+						FilterUtility::FILTER_PRESENCES => $newPresenceFilter,
+						FilterUtility::FILTER_TYPE => $newTypeFilter,
+					);
+					$this->filterAvailableObjects = $this->getObjectService()->getFilteredObjects(NULL, $overrides)->count();
+				}
+			}
 		}
 		return $this->filterAvailableObjects;
 	}

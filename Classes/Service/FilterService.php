@@ -132,6 +132,19 @@ class FilterService implements SingletonInterface {
     }
 
     /**
+     * Create Filter
+     *
+     * @param string $filterName
+     * @return object
+     */
+    public function createNewFilter($filterName) {
+        if (($class = FilterUtility::getFilterClassName($filterName))) {
+            return $this->objectManager->get($class);
+        }
+        return NULL;
+    }
+
+    /**
      * Get Query Constrains
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
@@ -142,7 +155,7 @@ class FilterService implements SingletonInterface {
      */
     public function getQueryConstrains(Query $query, array $filters = NULL, array $overrides = NULL, array $ignored = NULL) {
         $ignored = ($ignored ? : array());
-        $filters = (is_null($filters) ? : $this->getFilters());
+        $filters = (is_null($filters) ? $this->getFilters() : $filters);
         // Merge array with overrides
         if ($overrides) {
             $filters = array_merge($filters, $overrides);
@@ -150,9 +163,9 @@ class FilterService implements SingletonInterface {
         $constrains = array();
         // Foreach through all filters now and gets the query constrain(s)
         foreach ($filters as $filterName => $filterInstance) {
-            if ($filterInstance->isActive() && !in_array($filterName, $ignored)) {
+            if (($filterInstance->getIsForceFilter() || $filterInstance->getIsActive()) && !in_array($filterName, $ignored)) {
                 if (($constrain = $filterInstance->getQueryConstrain($query))) {
-                    $constrains = $constrain;
+                    $constrains[] = $constrain;
                 }
             }
         }

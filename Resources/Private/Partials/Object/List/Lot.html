@@ -16,7 +16,7 @@
         <h2><f:link.action pageUid="{settings.object.singlePid}" arguments="{object: object}">{object.name}</f:link.action></h2>
         <p class="address">{object.zipCode} {object.town.name}</p>
         <div class="subDetails">
-            <p><f:if condition="{object.isSale}"><span class="price">&euro; {object.price} {f:if(condition: object.priceType, then: 'v.o.n.', else: 'k.k.')}</span><br /></f:if>
+            <p><f:if condition="{object.isSale}"><span class="price">&euro; <f:format.number decimals="0" thousandsSeparator=".">{object.price}</f:format.number> {f:if(condition: object.priceType, then: 'v.o.n.', else: 'k.k.')}</span><br /></f:if>
                 {ppt:surface(lotSize: object.lotSize, livingArea: object.livingArea)}<f:if condition="{object.numberOfRooms}"> &bull; {object.numberOfRooms} {f:translate(key: 'object.rooms')}</f:if> </p>
         </div>
     </div>

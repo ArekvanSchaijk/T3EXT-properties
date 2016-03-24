@@ -53,15 +53,29 @@ class FilterUtility {
      */
     static public function getRegistered() {
         return array(
-            self::FILTER_TYPE       => 'Ucreation\\Properties\\Filter\\Type',
-            self::FILTER_OFFER      => 'Ucreation\\Properties\\Filter\\Offer',
-            self::FILTER_PRICE      => 'Ucreation\\Properties\\Filter\\Price',
-            self::FILTER_LOT_SIZE   => 'Ucreation\\Properties\\Filter\\LotSize',
-            self::FILTER_TOWN       => 'Ucreation\\Properties\\Filter\\Town',
-            self::FILTER_TOWNS      => 'Ucreation\\Properties\\Filter\\Towns',
-            self::FILTER_CATEGORY   => 'Ucreation\\Properties\\Filter\\Category',
-            self::FILTER_PRESENCES  => 'Ucreation\\Properties\\Filter\\Presences',
+            self::FILTER_TYPE       => 'Ucreation\\Properties\\Filter\\TypeFilter',
+            self::FILTER_OFFER      => 'Ucreation\\Properties\\Filter\\OfferFilter',
+            self::FILTER_PRICE      => 'Ucreation\\Properties\\Filter\\PriceFilter',
+            self::FILTER_LOT_SIZE   => 'Ucreation\\Properties\\Filter\\LotSizeFilter',
+            self::FILTER_TOWN       => 'Ucreation\\Properties\\Filter\\TownFilter',
+            self::FILTER_TOWNS      => 'Ucreation\\Properties\\Filter\\TownsFilter',
+            self::FILTER_CATEGORY   => 'Ucreation\\Properties\\Filter\\CategoryFilter',
+            self::FILTER_PRESENCES  => 'Ucreation\\Properties\\Filter\\PresencesFilter',
         );
+    }
+
+    /**
+     * Get Filter Class Name
+     *
+     * @param string $filterName
+     * @return string|bool
+     */
+    static public function getFilterClassName($filterName) {
+        $registeredFilters = self::getRegistered();
+        if ($registeredFilters[$filterName]) {
+            return $registeredFilters[$filterName];
+        }
+        return FALSE;
     }
 
 }

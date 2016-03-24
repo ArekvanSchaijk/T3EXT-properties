@@ -153,6 +153,9 @@
 			<trans-unit id="tx_properties_domain_model_object.zip_code">
 				<source>Zip Code</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.district">
+				<source>District</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.country">
 				<source>Country</source>
 			</trans-unit>
@@ -390,6 +393,12 @@
 			<trans-unit id="tx_properties_domain_model_category.name">
 				<source>Name</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_type">
+				<source>Disable Filter Type</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_type.0">
+				<source>If checked, the filter 'type' will be disabled while being in this category</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_category.disable_filter_offer">
 				<source>Disable Filter Offer</source>
 			</trans-unit>
@@ -408,23 +417,23 @@
 			<trans-unit id="tx_properties_domain_model_category.disable_filter_towns.0">
 				<source>If checked, the filter 'towns' will be disabled while being in this category</source>
 			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_category.disable_filter_price">
-				<source>Disable Filter Price</source>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_price_range">
+				<source>Disable Filter Price Range</source>
 			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_category.disable_filter_price.0">
-				<source>If checked, the filter 'price' will be disabled while being in this category</source>
-			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_category.disable_filter_surface">
-				<source>Disable Filter Surface</source>
-			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_category.disable_filter_surface.0">
-				<source>If checked, the filter 'surface' will be disabled while being in this category</source>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_price_range.0">
+				<source>If checked, the filter 'price range' will be disabled while being in this category</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_category.disable_filter_presences">
 				<source>Disable Filter Presences</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_category.disable_filter_presences.0">
 				<source>If checked, the filter 'presences' will be disabled while being in this category</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_lot_size">
+				<source>Disable Filter Lot Size</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_lot_size.0">
+				<source>If checked, the filter 'lot size' will be disabled while being in this category</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_town">
 				<source>Town</source>

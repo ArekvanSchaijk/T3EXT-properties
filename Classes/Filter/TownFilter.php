@@ -25,8 +25,8 @@ namespace Ucreation\Properties\Filter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use Ucreation\Properties\Utility\LinkUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
  * Class TownFilter
@@ -37,21 +37,49 @@ use Ucreation\Properties\Utility\LinkUtility;
 class TownFilter extends AbstractFilter {
 
     /**
-     * Is Active
+     * @var int|null
+     */
+    protected $activeTown = NULL;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>
+     */
+    protected $availableTowns = FALSE;
+
+    /**
+     * @var \Ucreation\Properties\Domain\Repository\TownRepository
+     * @inject
+     */
+    protected $townRepository = NULL;
+
+    /**
+     * Get Is Active
      *
      * @return bool
      */
-    public function isActive() {
-        if (parent::isActive()) {
+    public function getIsActive() {
+        if (parent::getIsActive()) {
             // Checks if there is an active category and checks if the category has disabled this filter
             if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
                 if ($category->isDisableFilterTown()) {
                     return FALSE;
                 }
             }
-            return TRUE:
+            return TRUE;
         }
         return FALSE;
+    }
+
+    /**
+     * Get Available Towns
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>
+     */
+    public function getAvailableTowns() {
+        if ($this->availableTowns === FALSE) {
+            $this->availableTowns = $this->townRepository->findAll();
+        }
+        return $this->availableTowns;
     }
 
     /**
@@ -60,13 +88,26 @@ class TownFilter extends AbstractFilter {
      * @return int|bool
      */
     public function getActiveTown() {
-        if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::TOWN)) {
-            $townId = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::TOWN);
-            if (ctype_digit($townId)) {
-                return $townId;
+        if (is_null($this->activeTown)) {
+            $this->activeTown = FALSE;
+            if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::TOWN)) {
+                $townId = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::TOWN);
+                if (ctype_digit($townId)) {
+                    $this->setActiveTown($townId);
+                }
             }
         }
-        return FALSE;
+        return $this->activeTown;
+    }
+
+    /**
+     * Set Active Town
+     *
+     * @param int $activeTown
+     * @return void
+     */
+    public function setActiveTown($activeTown) {
+        $this->activeTown = $activeTown;
     }
 
     /**

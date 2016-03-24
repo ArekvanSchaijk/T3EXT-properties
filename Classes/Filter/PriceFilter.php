@@ -25,10 +25,11 @@ namespace Ucreation\Properties\Filter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Utility\FilterUtility;
 use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
  * Class PriceFilter
@@ -44,48 +45,47 @@ class PriceFilter extends AbstractFilter {
     protected $isPriceRangeCalculated = FALSE;
 
     /**
-     * @var bool|int
+     * @var int|bool|null
      */
-    protected $lowestPrice = FALSE;
+    protected $lowestPrice = NULL;
 
     /**
-     * @var bool|int
+     * @var int|bool|null
      */
-    protected $highestPrice = FALSE;
+    protected $highestPrice = NULL;
 
     /**
-     * @var bool|int
+     * @var int|bool|null
      */
-    protected $selectedLowestPrice = FALSE;
+    protected $selectedLowestPrice = NULL;
 
     /**
-     * @var bool|int
+     * @var int|bool|null
      */
-    protected $selectedHighestPrice = FALSE;
+    protected $selectedHighestPrice = NULL;
 
     /**
-     * Is Active
+     * Get Is Active
      *
      * @return bool
      */
-    public function isActive() {
-        if (
-            !parent::isActive() ||
-            // Filter is not active when there isn't a lowest or highest price
-            !$this->getLowestPrice() ||
-            !$this->getHighestPrice() ||
-            // The filter can't be used either when the lowest price matches the highest price
-            $this->getLowestPrice() == $this->getHighestPrice()
-        ) {
-            return FALSE;
-        }
-        // Checks if there is an active category and checks if the category has disabled this filter
-        if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
-            if ($category->isDisableFilterPrice()) {
-                return FALSE;
+    public function getIsActive() {
+        if (parent::getIsActive()) {
+            // Checks if there is an active category and checks if the category has disabled this filter
+            if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
+                if ($category->isDisableFilterPriceRange()) {
+                    return FALSE;
+                }
+            }
+            if (
+                $this->getLowestPrice() !== FALSE &&
+                $this->getHighestPrice() !== FALSE &&
+                $this->getLowestPrice() != $this->getHighestPrice()
+            ) {
+                return TRUE;
             }
         }
-        return TRUE;
+        return FALSE;
     }
 
     /**
@@ -94,13 +94,23 @@ class PriceFilter extends AbstractFilter {
      * @return int
      */
     public function getLowestPrice() {
-        if ($this->lowestPrice === FALSE) {
-            $this->lowestPrice =
-                $this->getFilterService()
-                    ->getObjectService()
-                    ->getFilteredObjects(NULL, 0, array('price' => QueryInterface::ORDER_ASCENDING))
-                    ->getFirst()
-                    ->getPrice();
+        if (is_null($this->lowestPrice)) {
+            $this->lowestPrice = FALSE;
+            $filters = array();
+            // Uses the current category filter
+            if (($categoryFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_CATEGORY))) {
+                $filters[FilterUtility::FILTER_CATEGORY] = $categoryFilter;
+            }
+            // Clones the offer filter and filters only for objects that are marked as 'sale'
+            if (($offerFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_OFFER))) {
+                $newOfferFilter = clone $offerFilter;
+                $newOfferFilter->setActiveOffer(OfferFilter::OFFER_BOTH);
+                $filters[FilterUtility::FILTER_OFFER] = $newOfferFilter;
+            }
+            // Gets the lowest object price
+            if (($object = $this->getFilterService()->getObjectService()->getFilteredObjects($filters, NULL, 1, array('price' => QueryInterface::ORDER_ASCENDING))->getFirst())) {
+                $this->setLowestPrice($object->getPrice());
+            }
         }
         return $this->lowestPrice;
     }
@@ -118,16 +128,26 @@ class PriceFilter extends AbstractFilter {
     /**
      * Get Highest Price
      *
-     * @return int
+     * @return int|bool
      */
     public function getHighestPrice() {
-        if ($this->highestPrice === FALSE) {
-            $this->highestPrice =
-                $this->getFilterService()
-                    ->getObjectService()
-                    ->getFilteredObjects(NULL, 0, array('price' => QueryInterface::ORDER_DESCENDING))
-                    ->getFirst()
-                    ->getPrice();
+        if (is_null($this->highestPrice)) {
+            $this->highestPrice = FALSE;
+            $filters = array();
+            // Uses the current category filter
+            if (($categoryFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_CATEGORY))) {
+                $filters[FilterUtility::FILTER_CATEGORY] = $categoryFilter;
+            }
+            // Clones the offer filter and filters only for objects that are marked as 'sale'
+            if (($offerFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_OFFER))) {
+                $newOfferFilter = clone $offerFilter;
+                $newOfferFilter->setActiveOffer(OfferFilter::OFFER_BOTH);
+                $filters[FilterUtility::FILTER_OFFER] = $newOfferFilter;
+            }
+            // Gets the highest object price
+            if (($object = $this->getFilterService()->getObjectService()->getFilteredObjects($filters, NULL, 1, array('price' => QueryInterface::ORDER_DESCENDING))->getFirst())) {
+                $this->setHighestPrice($object->getPrice());
+            }
         }
         return $this->highestPrice;
     }
@@ -148,9 +168,7 @@ class PriceFilter extends AbstractFilter {
      * @return int
      */
     public function getSelectedLowestPrice() {
-        if (!$this->isPriceRangeCalculated) {
-            $this->calculatePriceRange();
-        }
+        $this->calculatePriceRange();
         return $this->selectedLowestPrice;
     }
 
@@ -160,9 +178,7 @@ class PriceFilter extends AbstractFilter {
      * @return int
      */
     public function getSelectedHighestPrice() {
-        if (!$this->isPriceRangeCalculated) {
-            $this->calculatePriceRange();
-        }
+        $this->calculatePriceRange();
         return $this->selectedHighestPrice;
     }
 
@@ -172,17 +188,21 @@ class PriceFilter extends AbstractFilter {
      * @return void
      */
     protected function calculatePriceRange() {
-        $this->isPriceRangeCalculated = TRUE;
-        if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::PRICE_RANGE)) {
-            $range = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::PRICE_RANGE);
-            if (strpos($range, '-') !== FALSE) {
-                $range = GeneralUtility::trimExplode('-', $selectedPriceRange);
-                if (
-                    ctype_digit($range[0]) &&
-                    ctype_digit($range[1]) &&
-                    $range[1] >= $range[0]
-                ) {
-                    $this->setSelectedPriceRange($range[0], $range[1])
+        if (!$this->isPriceRangeCalculated) {
+            $this->isPriceRangeCalculated = TRUE;
+            $this->selectedLowestPrice = FALSE;
+            $this->selectedHighestPrice = FALSE;
+            if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::PRICE_RANGE)) {
+                $range = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::PRICE_RANGE);
+                if (strpos($range, '-') !== FALSE) {
+                    $range = GeneralUtility::trimExplode('-', $range);
+                    if (
+                        ctype_digit($range[0]) &&
+                        ctype_digit($range[1]) &&
+                        $range[1] >= $range[0]
+                    ) {
+                        $this->setSelectedPriceRange($range[0], $range[1]);
+                    }
                 }
             }
         }
@@ -209,17 +229,12 @@ class PriceFilter extends AbstractFilter {
      */
     public function getQueryConstrain(Query $query) {
         $constrains = array();
-        // Lowest price
-        $lowest = ($this->getSelectedLowestPrice() ? : $this->getLowestPrice());
-        // Highest price
-        $highest = ($this->getSelectedHighestPrice() ? : $this->getHighestPrice());
-        if (ctype_digit($lowest)) {
+        if (($lowest = $this->getSelectedLowestPrice()) !== FALSE && ($highest = $this->getSelectedHighestPrice()) !== FALSE) {
             $constrains[] = $query->greaterThanOrEqual('price', $lowest);
-        }
-        if (ctype_digit($highest)) {
             $constrains[] = $query->lessThanOrEqual('price', $highest);
+            return $constrains;
         }
-        return $constrains;
+        return FALSE;
     }
 
 }

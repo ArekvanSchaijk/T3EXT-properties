@@ -1,0 +1,10 @@
+<legend><label for="price">{f:translate(key: 'filter.price')}</label></legend>
+<div class="filterOption slider price" id="objectPrice" data-price-lowest="{filter.lowestPrice}" data-price-highest="{filter.highestPrice}" data-selected-price-lowest="{filter.selectedLowestPrice}" data-selected-price-highest="{filter.selectedHighestPrice}">
+    <f:form.hidden name="priceRange" id="price" />
+    <div id="price-slider-range" class="jquery-slider"> </div>
+    <div class="valueHolder">
+        <div class="min"> </div>
+        <div class="max"> </div>
+        <div class="clearboth"> </div>
+    </div>
+</div>

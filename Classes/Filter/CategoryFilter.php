@@ -36,12 +36,30 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 class CategoryFilter extends AbstractFilter {
 
     /**
+     * @var int|null
+     */
+    protected $activeCategory = NULL;
+
+    /**
      * Get Active Category Id
      *
      * @return int|bool
      */
     public function getActiveCategoryId() {
-        return $this->getFilterService()->getObjectService()->getActiveCategoryId();
+        if (is_null($this->activeCategory)) {
+            $this->setActiveCategoryId($this->getFilterService()->getObjectService()->getActiveCategoryId());
+        }
+        return $this->activeCategory;
+    }
+
+    /**
+     * Set Active Category Id
+     *
+     * @param int $categoryId
+     * @return void
+     */
+    public function setActiveCategoryId($categoryId) {
+        $this->activeCategory = $categoryId;
     }
 
     /**

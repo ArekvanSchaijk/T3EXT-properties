@@ -20,11 +20,11 @@ return array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => 'name,type,sort,offer,images,year,environmental_class,description,alternative_description,street,zip_code,contact,contact_name,contact_company,contact_address,contact_phone,contact_secondary_phone,contact_email,contact_website,status,price,price_type,rent_price,rent_price_type,price_per_square_metre,lot_size,living_area,garden_area,number_of_rooms,latitude,longitude,latitude_longitude_md5,category,presences,town,position,construction_type,',
+		'searchFields' => 'name,type,sort,offer,images,year,environmental_class,description,alternative_description,street,zip_code,contact,contact_name,contact_company,contact_address,contact_phone,contact_secondary_phone,contact_email,contact_website,status,price,price_type,rent_price,rent_price_type,price_per_square_metre,lot_size,living_area,garden_area,number_of_rooms,latitude,longitude,latitude_longitude_md5,category,presences,town,district,position,construction_type,',
 		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_object.gif'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, price_type, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, construction_type, garage, garage_capacity, garage_sort, images',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, district, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, price_type, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, construction_type, garage, garage_capacity, garage_sort, images',
 	),
 	'types' => array(
 		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, type, name, category, description;;;richtext:rte_transform[mode=ts_links], alternative_description;;;richtext:rte_transform[mode=ts_links],
@@ -46,7 +46,7 @@ return array(
 	),
 	'palettes' => array(
 		'address' => array(
-			'showitem' => 'street, street_number, --linebreak--, zip_code, town, --linebreak--, country',
+			'showitem' => 'street, street_number, --linebreak--, zip_code, town, --linebreak--, district, --linebreak--, country',
 			'canNotCollapse' => TRUE
 		),
 		'geodata' => array(
@@ -432,6 +432,16 @@ return array(
 				),
 			),
 		),
+		'district' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.district',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+			'config' => array(
+				'type' => 'input',
+				'size' => 15,
+				'eval' => 'trim'
+			),
+		),
 		'country' => array(
 			'exclude' => FALSE,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.country',
@@ -732,7 +742,7 @@ return array(
 			'config' => array(
 				'type' => 'input',
 				'size' => 8,
-				'eval' => 'double2'
+				'eval' => 'int'
 			)
 		),
 		'rent_price' => array(
@@ -747,7 +757,7 @@ return array(
 			'config' => array(
 				'type' => 'input',
 				'size' => 8,
-				'eval' => 'double2'
+				'eval' => 'int'
 			)
 		),
 		'rent_price_type' => array(

@@ -53,6 +53,11 @@ class Category extends AbstractModel {
 	/**
 	 * @var bool
 	 */
+	protected $disableFilterType = FALSE;
+
+	/**
+	 * @var bool
+	 */
 	protected $disableFilterOffer = FALSE;
 
 	/**
@@ -68,17 +73,17 @@ class Category extends AbstractModel {
 	/**
 	 * @var bool
 	 */
-	protected $disableFilterPrice = FALSE;
-
-	/**
-	 * @var bool
-	 */
-	protected $disableFilterSurface = FALSE;
+	protected $disableFilterPriceRange = FALSE;
 
 	/**
 	 * @var bool
 	 */
 	protected $disableFilterPresences = FALSE;
+
+	/**
+	 * @var bool
+	 */
+	protected $disableFilterLotSize = FALSE;
 
 	/**
 	 * Get Name
@@ -105,7 +110,12 @@ class Category extends AbstractModel {
 	 * @return bool
 	 */
 	public function getIsActive() {
-		return $this->getObjectService()->isCategoryActive($this);
+		if (($activeCategoryId = $this->objectService->getActiveCategoryId())) {
+			if ($activeCategoryId == $this->getUid()) {
+				return TRUE;
+			}
+		}
+		return FALSE;
 	}
 
 	/**
@@ -117,6 +127,34 @@ class Category extends AbstractModel {
 		return array(
 			LinkUtility::CATEGORY => $this->getUid()
 		);
+	}
+
+	/**
+	 * Get Disable Filter Type
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterType() {
+		return $this->disableFilterType;
+	}
+
+	/**
+	 * Is Disable Filter Type
+	 *
+	 * @return bool
+	 */
+	public function isDisableFilterType() {
+		return $this->getDisableFilterType();
+	}
+
+	/**
+	 * Set Disable Filter Type
+	 *
+	 * @param bool $disableFilterType
+	 * @return void
+	 */
+	public function setDisableFilterType($disableFilterType) {
+		$this->disableFilterType = $disableFilterType;
 	}
 
 	/**
@@ -204,31 +242,31 @@ class Category extends AbstractModel {
 	}
 
 	/**
-	 * Get Disable Filter Price
+	 * Get Disable Filter Price Range
 	 *
 	 * @return bool
 	 */
-	public function getDisableFilterPrice() {
-		return $this->disableFilterPrice;
+	public function getDisableFilterPriceRange() {
+		return $this->disableFilterPriceRange;
 	}
 
 	/**
-	 * Is Disable Filter Price
+	 * Is Disable Filter Price Range
 	 *
 	 * @return bool
 	 */
-	public function isDisableFilterPrice() {
-		return $this->getDisableFilterPrice();
+	public function isDisableFilterPriceRange() {
+		return $this->getDisableFilterPriceRange();
 	}
 
 	/**
-	 * Set Disable Filter Price
+	 * Set Disable Filter Price Range
 	 *
-	 * @param bool $disableFilterPrice
+	 * @param bool $disableFilterPriceRange
 	 * @return void
 	 */
-	public function setDisableFilterPrice($disableFilterPrice) {
-		$this->disableFilterPrice = $disableFilterPrice;
+	public function setDisableFilterPriceRange($disableFilterPriceRange) {
+		$this->disableFilterPriceRange = $disableFilterPriceRange;
 	}
 
 	/**
@@ -255,6 +293,34 @@ class Category extends AbstractModel {
 	 */
 	public function setDisableFilterPresences($disableFilterPresences) {
 		$this->disableFilterPresences = $disableFilterPresences;
+	}
+
+	/**
+	 * Get Disable Filter Lot Size
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterLotSize() {
+		return $this->disableFilterLotSize;
+	}
+
+	/**
+	 * Is Disable Filter Lot Size
+	 *
+	 * @return bool
+	 */
+	public function isDisableFilterLotSize() {
+		return $this->getDisableFilterLotSize();
+	}
+
+	/**
+	 * Set Disable Filter Lot Size
+	 *
+	 * @param bool $disableFilterLotSize
+	 * @return void
+	 */
+	public function setDisableFilterLotSize($disableFilterLotSize) {
+		$this->disableFilterLotSize = $disableFilterLotSize;
 	}
 
 }

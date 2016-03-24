@@ -27,6 +27,7 @@ namespace Ucreation\Properties\Filter;
 
 use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Utility\LinkUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
@@ -45,18 +46,67 @@ class TypeFilter extends AbstractFilter {
             TYPE_LOT = 2;
 
     /**
+     * @var int|null
+     */
+    protected $activeType = NULL;
+
+    /**
+     * Get Is Active
+     *
+     * @return bool
+     */
+    public function getIsActive() {
+        if (parent::getIsActive()) {
+            // Checks if there is an active category and checks if the category has disabled this filter
+            if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
+                if ($category->isDisableFilterType()) {
+                    return FALSE;
+                }
+            }
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    /**
      * Get Active Type
      *
      * @return int|bool
      */
     public function getActiveType() {
-        if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::TYPE)) {
-            $type = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::TYPE);
-            if (ctype_digit($type) && $type <= 2) {
-                return $type;
+        if (is_null($this->activeType)) {
+            $this->activeType = FALSE;
+            if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::TYPE)) {
+                $type = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::TYPE);
+                if (ctype_digit($type) && $type <= 2) {
+                    $this->setActiveType($type);
+                }
             }
         }
-        return FALSE;
+        return $this->activeType;
+    }
+
+    /**
+     * Set Active Type
+     *
+     * @param int $activeType
+     * @return void
+     */
+    public function setActiveType($activeType) {
+        $this->activeType = $activeType;
+    }
+
+    /**
+     * Get Types Options
+     *
+     * @return array
+     */
+    public function getTypesOptions() {
+        return array(
+            self::TYPE_BOTH => LocalizationUtility::translate('filter.type.both', self::$extensionName),
+            self::TYPE_BUILDING => LocalizationUtility::translate('filter.type.building', self::$extensionName),
+            self::TYPE_LOT => LocalizationUtility::translate('filter.type.lot', self::$extensionName),
+        );
     }
 
     /**

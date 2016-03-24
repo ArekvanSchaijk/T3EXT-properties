@@ -28,7 +28,7 @@ return array(
 	'types' => array(
 		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, name,
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.filter_settings,
-				disable_filter_offer, disable_filter_town, disable_filter_towns, disable_filter_price, disable_filter_surface, disable_filter_precenses,
+				disable_filter_type, disable_filter_offer, disable_filter_town, disable_filter_towns, disable_filter_price_range, disable_filter_presences, disable_filter_lot_size,
 			--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
@@ -121,6 +121,18 @@ return array(
 				'eval' => 'trim'
 			),
 		),
+		'disable_filter_type' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_type',
+			'config' => array(
+				'type' => 'check',
+				'items' => array(
+					1 => array(
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_type.0',
+					),
+				),
+			),
+		),
 		'disable_filter_offer' => array(
 			'exclude' => FALSE,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_offer',
@@ -157,26 +169,14 @@ return array(
 				),
 			),
 		),
-		'disable_filter_price' => array(
+		'disable_filter_price_range' => array(
 			'exclude' => FALSE,
-			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_price',
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_price_range',
 			'config' => array(
 				'type' => 'check',
 				'items' => array(
 					1 => array(
-						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_price.0',
-					),
-				),
-			),
-		),
-		'disable_filter_surface' => array(
-			'exclude' => FALSE,
-			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_surface',
-			'config' => array(
-				'type' => 'check',
-				'items' => array(
-					1 => array(
-						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_surface.0',
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_price_range.0',
 					),
 				),
 			),
@@ -189,6 +189,18 @@ return array(
 				'items' => array(
 					1 => array(
 						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_presences.0',
+					),
+				),
+			),
+		),
+		'disable_filter_lot_size' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_lot_size',
+			'config' => array(
+				'type' => 'check',
+				'items' => array(
+					1 => array(
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_lot_size.0',
 					),
 				),
 			),

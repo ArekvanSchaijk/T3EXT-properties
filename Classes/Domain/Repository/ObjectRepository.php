@@ -48,15 +48,20 @@ class ObjectRepository extends AbstractRepository {
 	 *
 	 * @param \Ucreation\Properties\Service\ObjectService $objectService
 	 * @param array $filters
+	 * @param array $filterOverrides
 	 * @param int $limit
 	 * @param array $orderings
 	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
 	 */
-	public function findByFilters(ObjectService $objectService, array $filters = NULL, $limit = 0, array $orderings = NULL) {
+	public function findByFilters(ObjectService $objectService, array $filters = NULL, array $filterOverrides = NULL, $limit = 0, array $orderings = NULL) {
 		// Creates a new query
 		$query = $this->createQuery();
+		// Sets the orderings
+		if ($orderings) {
+			$query->setOrderings($orderings);
+		}
 		// Gets the query constrains from the filter service
-		$constrains = $objectService->getFilterService()->getQueryConstrains($query, $filters);
+		$constrains = $objectService->getFilterService()->getQueryConstrains($query, $filters, $filterOverrides);
 		// Apply the query constrains
 		$query = $this->applyQueryConstrains($query, $constrains);
 		// Sets the limit

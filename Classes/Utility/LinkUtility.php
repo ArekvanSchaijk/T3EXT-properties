@@ -41,7 +41,7 @@ class LinkUtility {
 			TOWN = 'town',
 			TOWNS = 'towns',
 			PRICE_RANGE = 'priceRange',
-			LOT_SIZE = 'lotSize',
+			LOT_SIZE_RANGE = 'lotSizeRange',
 			CATEGORY = 'category',
 			PRESENCES = 'presences';
 	
@@ -54,7 +54,7 @@ class LinkUtility {
 		self::TOWN,
 		self::TOWNS,
 		self::PRICE_RANGE,
-		self::LOT_SIZE,
+		self::LOT_SIZE_RANGE,
 		self::CATEGORY,
 		self::PRESENCES
 	);

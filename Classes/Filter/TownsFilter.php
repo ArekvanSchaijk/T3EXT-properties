@@ -38,33 +38,64 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 class TownsFilter extends AbstractFilter {
 
     /**
-     * Is Active
+     * @var array|null
+     */
+    protected $activeTowns = NULL;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>
+     */
+    protected $availableTowns = FALSE;
+
+    /**
+     * @var \Ucreation\Properties\Domain\Repository\TownRepository
+     * @inject
+     */
+    protected $townRepository = NULL;
+
+    /**
+     * Get Is Active
      *
      * @return bool
      */
-    public function isActive() {
-        if (parent::isActive()) {
+    public function getIsActive() {
+        if (parent::getIsActive()) {
             // Checks if there is an active category and checks if the category has disabled this filter
             if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
                 if ($category->isDisableFilterTowns()) {
                     return FALSE;
                 }
             }
-            return TRUE:
+            return TRUE;
         }
         return FALSE;
     }
 
     /**
+     * Get Available Towns
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>
+     */
+    public function getAvailableTowns() {
+        if ($this->availableTowns === FALSE) {
+            $this->availableTowns = $this->townRepository->findAll();
+        }
+        return $this->availableTowns;
+    }
+
+    /**
      * Get Active Towns
      *
-     * @return array|bool
+     * @return array
      */
     public function getActiveTowns() {
-        if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::TOWNS)) {
-            return GeneralUtility::trimExplode(',', $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::TOWNS));
+        if (is_null($this->activeTowns)) {
+            $this->activeTowns = array();
+            if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::TOWNS)) {
+                $this->activeTowns = GeneralUtility::trimExplode(',', $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::TOWNS));
+            }
         }
-        return FALSE;
+        return $this->activeTowns;
     }
 
     /**

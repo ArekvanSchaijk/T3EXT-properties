@@ -26,7 +26,9 @@ namespace Ucreation\Properties\Filter;
  ***************************************************************/
 
 use Ucreation\Properties\Domain\Model\Object;
+use Ucreation\Properties\Utility\FilterUtility;
 use Ucreation\Properties\Utility\LinkUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
@@ -45,21 +47,48 @@ class OfferFilter extends AbstractFilter {
             OFFER_RENT = 2;
 
     /**
-     * Is Active
+     * @var int|null
+     */
+    protected $activeOffer = NULL;
+
+    /**
+     * Get Is Active
      *
      * @return bool
      */
-    public function isActive() {
-        if (parent::isActive()) {
+    public function getIsActive() {
+        if (parent::getIsActive()) {
+            // Since this filter can only be used in combination with the 'type' filter selected as 'building' we're checking it here
+            if (($typeFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_TYPE))) {
+                if (
+                    !$typeFilter->getIsActive() ||
+                    $typeFilter->getActiveType() != TypeFilter::TYPE_BUILDING
+                ) {
+                    return FALSE;
+                }
+            }
             // Checks if there is an active category and checks if the category has disabled this filter
             if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
                 if ($category->isDisableFilterOffer()) {
                     return FALSE;
                 }
             }
-            return TRUE:
+            return TRUE;
         }
         return FALSE;
+    }
+
+    /**
+     * Get Offer Options
+     *
+     * @return array
+     */
+    public function getOfferOptions() {
+        return array(
+            self::OFFER_BOTH => LocalizationUtility::translate('filter.offer.both', self::$extensionName),
+            self::OFFER_SALE => LocalizationUtility::translate('filter.offer.sale', self::$extensionName),
+            self::OFFER_RENT => LocalizationUtility::translate('filter.offer.rent', self::$extensionName),
+        );
     }
 
     /**
@@ -68,13 +97,26 @@ class OfferFilter extends AbstractFilter {
      * @return int|bool
      */
     public function getActiveOffer() {
-        if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::OFFER)) {
-            $offer = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::OFFER);
-            if (ctype_digit($offer) && $offer <= 2) {
-                return $offer;
+        if (is_null($this->activeOffer)) {
+            $this->activeOffer = FALSE;
+            if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::OFFER)) {
+                $offer = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::OFFER);
+                if (ctype_digit($offer) && $offer <= 2) {
+                    $this->setActiveOffer($offer);
+                }
             }
         }
-        return FALSE;
+        return $this->activeOffer;
+    }
+
+    /**
+     * Set Active Offer
+     *
+     * @param int $activeOffer
+     * @return void
+     */
+    public function setActiveOffer($activeOffer) {
+        $this->activeOffer = $activeOffer;
     }
 
     /**
