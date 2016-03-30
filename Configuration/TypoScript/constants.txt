@@ -18,6 +18,7 @@ plugin.tx_properties {
 		        listHeight = 180c
 		    }
 		    singlePid =
+		    showPid =
 		    defaultImage =
 		}
         categories {
