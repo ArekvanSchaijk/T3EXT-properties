@@ -14,7 +14,6 @@ plugin.tx_properties {
 		        listHeight = {$plugin.tx_properties.settings.object.cover.listHeight}
 		    }
 		    singlePid = {$plugin.tx_properties.settings.object.singlePid}
-		    showPid = {$plugin.tx_properties.settings.object.showPid}
 		    defaultImage = {$plugin.tx_properties.settings.object.defaultImage}
 		}
 		categories {
