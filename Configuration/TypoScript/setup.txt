@@ -1,8 +1,8 @@
 plugin.tx_properties {
 	view {
-		templateRootPath = {$plugin.tx_properties.view.templateRootPath}
-		partialRootPath = {$plugin.tx_properties.view.partialRootPath}
-		layoutRootPath = {$plugin.tx_properties.view.layoutRootPath}
+		templateRootPaths.0 = {$plugin.tx_properties.view.templateRootPath}
+		partialRootPaths.0 = {$plugin.tx_properties.view.partialRootPath}
+		layoutRootPaths.0 = {$plugin.tx_properties.view.layoutRootPath}
 	}
 	persistence {
 		storagePid = {$plugin.tx_properties.persistence.storagePid}
