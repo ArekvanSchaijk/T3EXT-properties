@@ -210,12 +210,16 @@ class ObjectService implements SingletonInterface {
 			unset($linkArguments[LinkUtility::OFFER]);
 		}
 		// Processes the towns
-		if ($linkArguments[LinkUtility::TOWNS]) {
-			$linkArguments[LinkUtility::TOWNS] = implode(',', $linkArguments[LinkUtility::TOWNS]);
+		if (($towns = $linkArguments[LinkUtility::TOWNS])) {
+			if (is_array($towns)) {
+				$linkArguments[LinkUtility::TOWNS] = implode(',', $towns);
+			}
 		}
 		// Processes the presences
-		if ($linkArguments[LinkUtility::PRESENCES]) {
-			$linkArguments[LinkUtility::PRESENCES] = implode(',', $linkArguments[LinkUtility::PRESENCES]);
+		if (($presences = $linkArguments[LinkUtility::PRESENCES])) {
+			if (is_array($presences)) {
+				$linkArguments[LinkUtility::PRESENCES] = implode(',', $presences);
+			}
 		}
 		return $linkArguments;
 	}
