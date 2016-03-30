@@ -123,4 +123,13 @@ abstract class AbstractFilter {
         return $this->filterService;
     }
 
+    /**
+     * Get Object Service
+     *
+     * @return \Ucreation\Properties\Service\ObjectService
+     */
+    protected function getObjectService() {
+        return $this->filterService->getObjectService();
+    }
+
 }

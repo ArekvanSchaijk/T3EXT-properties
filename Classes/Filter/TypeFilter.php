@@ -58,7 +58,7 @@ class TypeFilter extends AbstractFilter {
     public function getIsActive() {
         if (parent::getIsActive()) {
             // Checks if there is an active category and checks if the category has disabled this filter
-            if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
+            if (($category = $this->getObjectService()->getActiveCategory())) {
                 if ($category->isDisableFilterType()) {
                     return FALSE;
                 }
@@ -76,8 +76,8 @@ class TypeFilter extends AbstractFilter {
     public function getActiveType() {
         if (is_null($this->activeType)) {
             $this->activeType = FALSE;
-            if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::TYPE)) {
-                $type = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::TYPE);
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::TYPE)) {
+                $type = $this->getObjectService()->request->getArgument(LinkUtility::TYPE);
                 if (ctype_digit($type) && $type <= 2) {
                     $this->setActiveType($type);
                 }

@@ -61,7 +61,7 @@ class TownsFilter extends AbstractFilter {
     public function getIsActive() {
         if (parent::getIsActive()) {
             // Checks if there is an active category and checks if the category has disabled this filter
-            if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
+            if (($category = $this->getObjectService()->getActiveCategory())) {
                 if ($category->isDisableFilterTowns()) {
                     return FALSE;
                 }
@@ -91,8 +91,8 @@ class TownsFilter extends AbstractFilter {
     public function getActiveTowns() {
         if (is_null($this->activeTowns)) {
             $this->activeTowns = array();
-            if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::TOWNS)) {
-                $this->activeTowns = GeneralUtility::trimExplode(',', $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::TOWNS));
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::TOWNS)) {
+                $this->activeTowns = GeneralUtility::trimExplode(',', $this->getObjectService()->request->getArgument(LinkUtility::TOWNS));
             }
         }
         return $this->activeTowns;

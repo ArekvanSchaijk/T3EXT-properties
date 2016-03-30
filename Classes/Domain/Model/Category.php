@@ -86,6 +86,21 @@ class Category extends AbstractModel {
 	protected $disableFilterLotSize = FALSE;
 
 	/**
+	 * @var bool
+	 */
+	protected $disableFilterPosition = FALSE;
+
+	/**
+	 * @var bool
+	 */
+	protected $disableFilterConstructionType = FALSE;
+
+	/**
+	 * @var bool
+	 */
+	protected $disableFilterStatus = FALSE;
+
+	/**
 	 * Get Name
 	 * 
 	 * @return string
@@ -110,7 +125,7 @@ class Category extends AbstractModel {
 	 * @return bool
 	 */
 	public function getIsActive() {
-		if (($activeCategoryId = $this->objectService->getActiveCategoryId())) {
+		if (($activeCategoryId = $this->getObjectService()->getActiveCategoryId())) {
 			if ($activeCategoryId == $this->getUid()) {
 				return TRUE;
 			}
@@ -321,6 +336,90 @@ class Category extends AbstractModel {
 	 */
 	public function setDisableFilterLotSize($disableFilterLotSize) {
 		$this->disableFilterLotSize = $disableFilterLotSize;
+	}
+
+	/**
+	 * Get Disable Filter Position
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterPosition() {
+		return $this->disableFilterPosition;
+	}
+
+	/**
+	 * Is Disable Filter Position
+	 *
+	 * @return bool
+	 */
+	public function isDisableFilterPosition() {
+		return $this->getDisableFilterPosition();
+	}
+
+	/**
+	 * Set Disable Filter Position
+	 *
+	 * @param bool $disableFilterPosition
+	 * @return void
+	 */
+	public function setDisableFilterPosition($disableFilterPosition) {
+		$this->disableFilterPosition = $disableFilterPosition;
+	}
+
+	/**
+	 * Get Disable Filter Construction Type
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterConstructionType() {
+		return $this->disableFilterConstructionType;
+	}
+
+	/**
+	 * Is Disable Filter Construction Type
+	 *
+	 * @return bool
+	 */
+	public function isDisableFilterConstructionType() {
+		return $this->getDisableFilterConstructionType();
+	}
+
+	/**
+	 * Set Disable Filter Construction Type
+	 *
+	 * @param bool $disableFilterConstructionType
+	 * @return void
+	 */
+	public function setDisableFilterConstructionType($disableFilterConstructionType) {
+		$this->disableFilterConstructionType = $disableFilterConstructionType;
+	}
+
+	/**
+	 * Get Disable Filter Status
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterStatus() {
+		return $this->disableFilterStatus;
+	}
+
+	/**
+	 * Is Disable Filter Status
+	 *
+	 * @return bool
+	 */
+	public function isDisableFilterStatus() {
+		return $this->getDisableFilterStatus();
+	}
+
+	/**
+	 * Set Disable Filter Status
+	 *
+	 * @param bool $disableFilterStatus
+	 * @return void
+	 */
+	public function setDisableFilterStatus($disableFilterStatus) {
+		$this->disableFilterStatus = $disableFilterStatus;
 	}
 
 }

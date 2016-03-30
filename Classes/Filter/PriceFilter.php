@@ -72,7 +72,7 @@ class PriceFilter extends AbstractFilter {
     public function getIsActive() {
         if (parent::getIsActive()) {
             // Checks if there is an active category and checks if the category has disabled this filter
-            if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
+            if (($category = $this->getObjectService()->getActiveCategory())) {
                 if ($category->isDisableFilterPriceRange()) {
                     return FALSE;
                 }
@@ -108,7 +108,7 @@ class PriceFilter extends AbstractFilter {
                 $filters[FilterUtility::FILTER_OFFER] = $newOfferFilter;
             }
             // Gets the lowest object price
-            if (($object = $this->getFilterService()->getObjectService()->getFilteredObjects($filters, NULL, 1, array('price' => QueryInterface::ORDER_ASCENDING))->getFirst())) {
+            if (($object = $this->getObjectService()->getFilteredObjects($filters, NULL, 1, array('price' => QueryInterface::ORDER_ASCENDING))->getFirst())) {
                 $this->setLowestPrice($object->getPrice());
             }
         }
@@ -145,7 +145,7 @@ class PriceFilter extends AbstractFilter {
                 $filters[FilterUtility::FILTER_OFFER] = $newOfferFilter;
             }
             // Gets the highest object price
-            if (($object = $this->getFilterService()->getObjectService()->getFilteredObjects($filters, NULL, 1, array('price' => QueryInterface::ORDER_DESCENDING))->getFirst())) {
+            if (($object = $this->getObjectService()->getFilteredObjects($filters, NULL, 1, array('price' => QueryInterface::ORDER_DESCENDING))->getFirst())) {
                 $this->setHighestPrice($object->getPrice());
             }
         }
@@ -192,8 +192,8 @@ class PriceFilter extends AbstractFilter {
             $this->isPriceRangeCalculated = TRUE;
             $this->selectedLowestPrice = FALSE;
             $this->selectedHighestPrice = FALSE;
-            if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::PRICE_RANGE)) {
-                $range = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::PRICE_RANGE);
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::PRICE_RANGE)) {
+                $range = $this->getObjectService()->request->getArgument(LinkUtility::PRICE_RANGE);
                 if (strpos($range, '-') !== FALSE) {
                     $range = GeneralUtility::trimExplode('-', $range);
                     if (

@@ -435,6 +435,24 @@
 			<trans-unit id="tx_properties_domain_model_category.disable_filter_lot_size.0">
 				<source>If checked, the filter 'lot size' will be disabled while being in this category</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_position">
+				<source>Disable Filter Position</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_position.0">
+				<source>If checked, the filter 'position' will be disabled while being in this category</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_construction_type">
+				<source>Disable Filter Construction Type</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_construction_type.0">
+				<source>If checked, the filter 'construction type' will be disabled while being in this category</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_status">
+				<source>Disable Filter Status</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_status.0">
+				<source>If checked, the filter 'status' will be disabled while being in this category</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_town">
 				<source>Town</source>
 			</trans-unit>

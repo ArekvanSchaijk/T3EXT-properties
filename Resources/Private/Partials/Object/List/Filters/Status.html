@@ -1,0 +1,22 @@
+<legend xmlns:f="http://www.w3.org/1999/XSL/Transform">{f:translate(key: 'filter.status')}</legend>
+<f:if condition="{filter.statusOptions}">
+    <f:then>
+        <div class="filterOption status">
+            <ul>
+                <f:for each="{filter.statusOptions}" as="option">
+                    <f:if condition="{option.isActive}">
+                        <f:then>
+                            <li class="active{f:if(condition: option.isDisabled, then: ' disabled')}"><f:form.checkbox name="status[]" id="status{option.value}" value="{option.value}" checked="checked" /> <label for="status{option.value}">{option.label} <span class="filter-available-count">({option.filterAvailableObjects})</span></label></li>
+                        </f:then>
+                        <f:else>
+                            <li class="{f:if(condition: option.isDisabled, then: 'disabled')}"><f:form.checkbox name="status[]" id="status{option.value}" value="{option.value}" /> <label for="status{option.value}">{option.label} <span class="filter-available-count">({option.filterAvailableObjects})</span></label></li>
+                        </f:else>
+                    </f:if>
+                </f:for>
+            </ul>
+        </div>
+    </f:then>
+    <f:else>
+        <p class="filter-not-available">{f:translate(key: 'filter.not_available')}</p>
+    </f:else>
+</f:if>

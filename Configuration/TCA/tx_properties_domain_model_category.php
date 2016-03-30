@@ -28,7 +28,16 @@ return array(
 	'types' => array(
 		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, name,
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.filter_settings,
-				disable_filter_type, disable_filter_offer, disable_filter_town, disable_filter_towns, disable_filter_price_range, disable_filter_presences, disable_filter_lot_size,
+				disable_filter_type,
+				disable_filter_offer,
+				disable_filter_town,
+				disable_filter_towns,
+				disable_filter_price_range,
+				disable_filter_presences,
+				disable_filter_lot_size,
+				disable_filter_position,
+				disable_filter_construction_type,
+				disable_filter_status,
 			--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
@@ -201,6 +210,42 @@ return array(
 				'items' => array(
 					1 => array(
 						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_lot_size.0',
+					),
+				),
+			),
+		),
+		'disable_filter_position' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_position',
+			'config' => array(
+				'type' => 'check',
+				'items' => array(
+					1 => array(
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_position.0',
+					),
+				),
+			),
+		),
+		'disable_filter_construction_type' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_construction_type',
+			'config' => array(
+				'type' => 'check',
+				'items' => array(
+					1 => array(
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_construction_type.0',
+					),
+				),
+			),
+		),
+		'disable_filter_status' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_status',
+			'config' => array(
+				'type' => 'check',
+				'items' => array(
+					1 => array(
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_status.0',
 					),
 				),
 			),

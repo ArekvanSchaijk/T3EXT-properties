@@ -57,18 +57,6 @@ class Presence extends AbstractModel {
 	protected $filterAvailableObjects = NULL;
 
 	/**
-	 * @var \Ucreation\Properties\Service\ObjectService
-	 * @inject
-	 */
-	protected $objectService = NULL;
-
-	/**
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager = NULL;
-
-	/**
 	 * Get Name
 	 * 
 	 * @return string
@@ -93,7 +81,7 @@ class Presence extends AbstractModel {
 	 * @return bool
 	 */
 	public function getIsActive() {
-		if (($activePresences = $this->objectService->getFilterService()->getFilter(FilterUtility::FILTER_PRESENCES)->getActivePresences())) {
+		if (($activePresences = $this->getFilterService()->getFilter(FilterUtility::FILTER_PRESENCES)->getActivePresences())) {
 			if (in_array($this->getUid(), $activePresences)) {
 				return TRUE;
 			}
@@ -110,14 +98,14 @@ class Presence extends AbstractModel {
 		if (is_null($this->filterAvailableObjects)) {
 			$this->filterAvailableObjects = 0;
 			// Gets the current presence filter
-			if (($presenceFilter = $this->getObjectService()->getFilterService()->getFilter(FilterUtility::FILTER_PRESENCES))) {
+			if (($presenceFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_PRESENCES))) {
 				// Checks if the current presences filter is active (otherwise we just don't do anything since this filter can't be active)
 				if ($presenceFilter->getIsActive()) {
 					// Creates a new presence filter
 					$newPresenceFilter = clone $presenceFilter;
 					$newPresenceFilter->setActivePresence($this->getUid());
 					// Creates a new type filter
-					$newTypeFilter = $this->getObjectService()->getFilterService()->createNewFilter(FilterUtility::FILTER_TYPE);
+					$newTypeFilter = $this->getFilterService()->createNewFilter(FilterUtility::FILTER_TYPE);
 					$newTypeFilter->setActiveType(TypeFilter::TYPE_BUILDING);
 					// Filter overrides
 					$overrides = array(

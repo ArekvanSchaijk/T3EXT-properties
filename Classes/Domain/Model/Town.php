@@ -65,12 +65,12 @@ class Town extends AbstractModel {
 	 * @return bool
 	 */
 	public function getIsActive() {
-		if (($activeTown = $this->objectService->getFilterService()->getFilter(FilterUtility::FILTER_TOWN)->getActiveTown())) {
+		if (($activeTown = $this->getFilterService()->getFilter(FilterUtility::FILTER_TOWN)->getActiveTown())) {
 			if ($this->getUid() == $activeTown) {
 				return TRUE;
 			}
 		}
-		if (($activeTowns = $this->objectService->getFilterService()->getFilter(FilterUtility::FILTER_TOWNS)->getActiveTowns())) {
+		if (($activeTowns = $this->getFilterService()->getFilter(FilterUtility::FILTER_TOWNS)->getActiveTowns())) {
 			if (in_array($this->getUid(), $activeTowns)) {
 				return TRUE;
 			}

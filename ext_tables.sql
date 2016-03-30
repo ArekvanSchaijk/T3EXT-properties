@@ -92,6 +92,9 @@ CREATE TABLE tx_properties_domain_model_object (
 	KEY filter_category (category),
 	KEY filter_presences (presences),
 	KEY filter_lotsize (lot_size),
+	KEY filter_position (position),
+	KEY filter_constructiontype (construction_type),
+	KEY filter_status (status),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
 	KEY language (l10n_parent,sys_language_uid)
 );
@@ -195,6 +198,9 @@ CREATE TABLE tx_properties_domain_model_category (
   disable_filter_price_range tinyint(4) unsigned DEFAULT '0' NOT NULL,
   disable_filter_type tinyint(4) unsigned DEFAULT '0' NOT NULL,
   disable_filter_lot_size tinyint(4) unsigned DEFAULT '0' NOT NULL,
+  disable_filter_position tinyint(4) unsigned DEFAULT '0' NOT NULL,
+  disable_filter_construction_type tinyint(4) unsigned DEFAULT '0' NOT NULL,
+  disable_filter_status tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -313,6 +319,7 @@ CREATE TABLE tx_properties_domain_model_constructiontype (
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
 	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,

@@ -47,7 +47,7 @@ class CategoryFilter extends AbstractFilter {
      */
     public function getActiveCategoryId() {
         if (is_null($this->activeCategory)) {
-            $this->setActiveCategoryId($this->getFilterService()->getObjectService()->getActiveCategoryId());
+            $this->setActiveCategoryId($this->getObjectService()->getActiveCategoryId());
         }
         return $this->activeCategory;
     }

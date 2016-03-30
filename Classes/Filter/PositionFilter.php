@@ -1,5 +1,5 @@
 <?php
-namespace Ucreation\Properties\Domain\Model;
+namespace Ucreation\Properties\Filter;
 
 /***************************************************************
  *  Copyright notice
@@ -25,38 +25,44 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
- * Class AbstractModel
+ * Class PositionFilter
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-abstract class AbstractModel extends AbstractEntity {
+class PositionFilter extends AbstractFilter {
 
     /**
-     * @var \Ucreation\Properties\Service\ObjectService
-     * @inject
-     */
-    protected $objectService = NULL;
-
-    /**
-     * Get Object Service
+     * Get Is Active
      *
-     * @return \Ucreation\Properties\Service\ObjectService
+     * @return bool
      */
-    public function getObjectService() {
-        return $this->objectService;
+    public function getIsActive() {
+
+        return FALSE;
+        if (parent::getIsActive()) {
+            // Checks if there is an active category and checks if the category has disabled this filter
+            if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
+                if ($category->isDisableFilterPosition()) {
+                    return FALSE;
+                }
+            }
+            return TRUE;
+        }
+        return FALSE;
     }
 
     /**
-     * Get Filter Service
+     * Get Query Constrain
      *
-     * @return \Ucreation\Properties\Service\FilterService
+     * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+     * @return array|bool
      */
-    public function getFilterService() {
-        return $this->objectService->getFilterService();
+    public function getQueryConstrain(Query $query) {
+        return FALSE;
     }
 
 }

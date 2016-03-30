@@ -54,6 +54,21 @@
 			<trans-unit id="filter.submit">
 				<source>Vernieuw</source>
 			</trans-unit>
+			<trans-unit id="filter.status">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="filter.status.available">
+				<source>Beschikbaar</source>
+			</trans-unit>
+			<trans-unit id="filter.status.sold">
+				<source>Verkocht</source>
+			</trans-unit>
+			<trans-unit id="filter.status.leased">
+				<source>Verhuurd</source>
+			</trans-unit>
+			<trans-unit id="filter.status.unavailable">
+				<source>Niet beschikbaar</source>
+			</trans-unit>
 			<trans-unit id="objects.no_results">
 				<source>Er zijn geen objecten gevonden die voldoen aan uw zoekcriteria.</source>
 			</trans-unit>

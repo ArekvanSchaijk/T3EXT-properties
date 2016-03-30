@@ -26,6 +26,9 @@
                         <f:case value="presences">
                             <f:render partial="Object/List/Filters/Presences" arguments="{filter: filter}" />
                         </f:case>
+                        <f:case value="status">
+                            <f:render partial="Object/List/Filters/Status" arguments="{filter: filter}" />
+                        </f:case>
                     </f:switch>
                 </f:if>
             </f:for>

@@ -43,7 +43,10 @@ class FilterUtility {
             FILTER_PRICE = 'price',
             FILTER_LOT_SIZE = 'lot_size',
             FILTER_TYPE = 'type',
-            FILTER_OFFER = 'offer';
+            FILTER_OFFER = 'offer',
+            FILTER_POSITION = 'position',
+            FILTER_CONSTRUCTION_TYPE = 'construction_type',
+            FILTER_STATUS = 'status';
 
     /**
      * Get Registered
@@ -61,6 +64,9 @@ class FilterUtility {
             self::FILTER_TOWNS      => 'Ucreation\\Properties\\Filter\\TownsFilter',
             self::FILTER_CATEGORY   => 'Ucreation\\Properties\\Filter\\CategoryFilter',
             self::FILTER_PRESENCES  => 'Ucreation\\Properties\\Filter\\PresencesFilter',
+            self::FILTER_POSITION   => 'Ucreation\\Properties\\Filter\\PositionFilter',
+            self::FILTER_CONSTRUCTION_TYPE => 'Ucreation\\Properties\\Filter\\ConstructionTypeFilter',
+            self::FILTER_STATUS     => 'Ucreation\\Properties\\Filter\\StatusFilter',
         );
     }
 

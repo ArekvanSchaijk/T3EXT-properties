@@ -1,5 +1,5 @@
 <?php
-namespace Ucreation\Properties\Domain\Model;
+namespace Ucreation\Properties\Filter\Option;
 
 /***************************************************************
  *  Copyright notice
@@ -25,38 +25,36 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-
 /**
- * Class AbstractModel
+ * Class AbstractOption
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-abstract class AbstractModel extends AbstractEntity {
+abstract class AbstractOption {
 
     /**
-     * @var \Ucreation\Properties\Service\ObjectService
+     * @var \Ucreation\Properties\Service\FilterService
      * @inject
      */
-    protected $objectService = NULL;
-
-    /**
-     * Get Object Service
-     *
-     * @return \Ucreation\Properties\Service\ObjectService
-     */
-    public function getObjectService() {
-        return $this->objectService;
-    }
+    protected $filterService = NULL;
 
     /**
      * Get Filter Service
      *
      * @return \Ucreation\Properties\Service\FilterService
      */
-    public function getFilterService() {
-        return $this->objectService->getFilterService();
+    protected function getFilterService() {
+        return $this->filterService;
+    }
+
+    /**
+     * Get Object Service
+     *
+     * @return \Ucreation\Properties\Service\ObjectService
+     */
+    protected function getObjectService() {
+        return $this->filterService->getObjectService();
     }
 
 }

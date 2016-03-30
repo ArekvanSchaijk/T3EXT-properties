@@ -68,7 +68,7 @@ class OfferFilter extends AbstractFilter {
                 }
             }
             // Checks if there is an active category and checks if the category has disabled this filter
-            if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
+            if (($category = $this->getObjectService()->getActiveCategory())) {
                 if ($category->isDisableFilterOffer()) {
                     return FALSE;
                 }
@@ -99,8 +99,8 @@ class OfferFilter extends AbstractFilter {
     public function getActiveOffer() {
         if (is_null($this->activeOffer)) {
             $this->activeOffer = FALSE;
-            if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::OFFER)) {
-                $offer = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::OFFER);
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::OFFER)) {
+                $offer = $this->getObjectService()->request->getArgument(LinkUtility::OFFER);
                 if (ctype_digit($offer) && $offer <= 2) {
                     $this->setActiveOffer($offer);
                 }

@@ -43,7 +43,10 @@ class LinkUtility {
 			PRICE_RANGE = 'priceRange',
 			LOT_SIZE_RANGE = 'lotSizeRange',
 			CATEGORY = 'category',
-			PRESENCES = 'presences';
+			PRESENCES = 'presences',
+			POSITION = 'position',
+			CONSTRUCTION_TYPE = 'constructionType',
+			STATUS = 'status';
 	
 	/**
 	 * @var array
@@ -56,7 +59,10 @@ class LinkUtility {
 		self::PRICE_RANGE,
 		self::LOT_SIZE_RANGE,
 		self::CATEGORY,
-		self::PRESENCES
+		self::PRESENCES,
+		self::POSITION,
+		self::CONSTRUCTION_TYPE,
+		self::STATUS,
 	);
 	
 	/**

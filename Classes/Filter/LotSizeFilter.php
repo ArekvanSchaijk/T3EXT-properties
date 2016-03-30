@@ -180,8 +180,8 @@ class LotSizeFilter extends AbstractFilter {
             $this->isLotSizeRangeCalculated = TRUE;
             $this->selectedLowestLotSize = FALSE;
             $this->selectedHighestLotSize = FALSE;
-            if ($this->getFilterService()->getObjectService()->request->hasArgument(LinkUtility::LOT_SIZE_RANGE)) {
-                $range = $this->getFilterService()->getObjectService()->request->getArgument(LinkUtility::LOT_SIZE_RANGE);
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::LOT_SIZE_RANGE)) {
+                $range = $this->getObjectService()->request->getArgument(LinkUtility::LOT_SIZE_RANGE);
                 if (strpos($range, '-') !== FALSE) {
                     $range = GeneralUtility::trimExplode('-', $range);
                     if (
