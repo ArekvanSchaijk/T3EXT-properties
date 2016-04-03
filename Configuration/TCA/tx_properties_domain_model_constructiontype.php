@@ -23,10 +23,11 @@ return array(
 		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_constructiontype.gif'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, disable_filter_option',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, name, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, name,
+		--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.filter_settings, disable_filter_option, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, hidden, starttime, endtime'),
 	),
 	'palettes' => array(
 	),
@@ -116,6 +117,18 @@ return array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim'
+			),
+		),
+		'disable_filter_option' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_constructiontype.disable_filter_option',
+			'config' => array(
+				'type' => 'check',
+				'items' => array(
+					1 => array(
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_constructiontype.disable_filter_option.0',
+					),
+				),
 			),
 		),
 	),

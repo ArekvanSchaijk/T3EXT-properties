@@ -69,7 +69,7 @@ class OfferFilter extends AbstractFilter {
             }
             // Checks if there is an active category and checks if the category has disabled this filter
             if (($category = $this->getObjectService()->getActiveCategory())) {
-                if ($category->isDisableFilterOffer()) {
+                if ($category->getDisableFilterOffer()) {
                     return FALSE;
                 }
             }
@@ -120,12 +120,13 @@ class OfferFilter extends AbstractFilter {
     }
 
     /**
-     * Get Query Constrain
+     * Get Query Constrains
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+     * @param array $additionalConstrains
      * @return array|bool
      */
-    public function getQueryConstrain(Query $query) {
+    public function getQueryConstrains(Query $query, array $additionalConstrains = NULL) {
         if (($offer = $this->getActiveOffer())) {
             switch ($offer) {
                 case self::OFFER_BOTH:

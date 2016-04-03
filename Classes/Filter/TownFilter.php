@@ -61,9 +61,16 @@ class TownFilter extends AbstractFilter {
         if (parent::getIsActive()) {
             // Checks if there is an active category and checks if the category has disabled this filter
             if (($category = $this->getObjectService()->getActiveCategory())) {
-                if ($category->isDisableFilterTown()) {
+                if ($category->getDisableFilterTown()) {
                     return FALSE;
                 }
+            }
+            // Auto deactivates the filter by setup
+            if (
+                (bool)$this->getObjectService()->settings['filters']['autoDeactivate'] &&
+                !$this->getTowns()
+            ) {
+                return FALSE;
             }
             return TRUE;
         }
@@ -77,9 +84,27 @@ class TownFilter extends AbstractFilter {
      */
     public function getAvailableTowns() {
         if ($this->availableTowns === FALSE) {
-            $this->availableTowns = $this->townRepository->findAll();
+            $this->availableTowns = $this->townRepository->findAvailableFilterOptions();
         }
         return $this->availableTowns;
+    }
+
+    /**
+     * Get Towns
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>
+     */
+    public function getTowns() {
+        if (!(bool)$this->getObjectService()->settings['filters']['hideDisabledOptions']) {
+            return $this->getAvailableTowns();
+        }
+        $towns = array();
+        foreach ($this->getAvailableTowns() as $town) {
+            if (!$town->getIsDisabled()) {
+                $towns[] = $town;
+            }
+        }
+        return $towns;
     }
 
     /**
@@ -111,12 +136,13 @@ class TownFilter extends AbstractFilter {
     }
 
     /**
-     * Get Query Constrain
+     * Get Query Constrains
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+     * @param array $additionalConstrains
      * @return array|bool
      */
-    public function getQueryConstrain(Query $query) {
+    public function getQueryConstrains(Query $query, array $additionalConstrains = NULL) {
         if (($townId = $this->getActiveTown())) {
             return $query->equals('town', $this->getActiveTown());
         }

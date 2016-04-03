@@ -23,12 +23,13 @@ return array(
 		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_category.gif'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, disable_filter_option',
 	),
 	'types' => array(
 		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, name,
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.filter_settings,
 				disable_filter_type,
+				disable_filter_types,
 				disable_filter_offer,
 				disable_filter_town,
 				disable_filter_towns,
@@ -138,6 +139,18 @@ return array(
 				'items' => array(
 					1 => array(
 						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_type.0',
+					),
+				),
+			),
+		),
+		'disable_filter_types' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_types',
+			'config' => array(
+				'type' => 'check',
+				'items' => array(
+					1 => array(
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_types.0',
 					),
 				),
 			),

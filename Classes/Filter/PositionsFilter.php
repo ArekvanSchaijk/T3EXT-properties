@@ -30,28 +30,28 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
- * Class TownsFilter
+ * Class PositionsFilter
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class TownsFilter extends AbstractFilter {
+class PositionsFilter extends AbstractFilter {
 
     /**
      * @var array|null
      */
-    protected $activeTowns = NULL;
+    protected $activePositions = NULL;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>|bool
+     * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Position>
      */
-    protected $availableTowns = FALSE;
+    protected $availablePositions = FALSE;
 
     /**
-     * @var \Ucreation\Properties\Domain\Repository\TownRepository
+     * @var \Ucreation\Properties\Domain\Repository\PositionRepository
      * @inject
      */
-    protected $townRepository = NULL;
+    protected $positionRepository = NULL;
 
     /**
      * Get Is Active
@@ -61,15 +61,15 @@ class TownsFilter extends AbstractFilter {
     public function getIsActive() {
         if (parent::getIsActive()) {
             // Checks if there is an active category and checks if the category has disabled this filter
-            if (($category = $this->getObjectService()->getActiveCategory())) {
-                if ($category->getDisableFilterTowns()) {
+            if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
+                if ($category->getDisableFilterPosition()) {
                     return FALSE;
                 }
             }
             // Auto deactivates the filter by setup
             if (
                 (bool)$this->getObjectService()->settings['filters']['autoDeactivate'] &&
-                !$this->getTowns()
+                !$this->getPositions()
             ) {
                 return FALSE;
             }
@@ -79,48 +79,48 @@ class TownsFilter extends AbstractFilter {
     }
 
     /**
-     * Get Available Towns
+     * Get Available Positions
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Position>
      */
-    public function getAvailableTowns() {
-        if ($this->availableTowns === FALSE) {
-            $this->availableTowns = $this->townRepository->findAvailableFilterOptions();
+    public function getAvailablePositions() {
+        if ($this->availablePositions === FALSE) {
+            $this->availablePositions = $this->positionRepository->findAvailableFilterOptions();
         }
-        return $this->availableTowns;
+        return $this->availablePositions;
     }
 
     /**
-     * Get Towns
+     * Get Positions
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>
+     * @return array|\TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Position>
      */
-    public function getTowns() {
+    public function getPositions() {
         if (!(bool)$this->getObjectService()->settings['filters']['hideDisabledOptions']) {
-            return $this->getAvailableTowns();
+            return $this->getAvailablePositions();
         }
-        $towns = array();
-        foreach ($this->getAvailableTowns() as $town) {
-            if (!$town->getIsDisabled()) {
-                $towns[] = $town;
+        $positions = array();
+        foreach ($this->getAvailablePositions() as $position) {
+            if (!$position->getIsDisabled()) {
+                $positions[] = $position;
             }
         }
-        return $towns;
+        return $positions;
     }
 
     /**
-     * Get Active Towns
+     * Get Active Positions
      *
      * @return array
      */
-    public function getActiveTowns() {
-        if (is_null($this->activeTowns)) {
-            $this->activeTowns = array();
-            if ($this->getObjectService()->request->hasArgument(LinkUtility::TOWNS)) {
-                $this->activeTowns = GeneralUtility::trimExplode(',', $this->getObjectService()->request->getArgument(LinkUtility::TOWNS));
+    public function getActivePositions() {
+        if (is_null($this->activePositions)) {
+            $this->activePositions = array();
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::POSITIONS)) {
+                $this->activePositions = GeneralUtility::trimExplode(',', $this->getObjectService()->request->getArgument(LinkUtility::POSITIONS));
             }
         }
-        return $this->activeTowns;
+        return $this->activePositions;
     }
 
     /**
@@ -128,13 +128,13 @@ class TownsFilter extends AbstractFilter {
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
      * @param array $additionalConstrains
-     * @return array
+     * @return array|bool
      */
     public function getQueryConstrains(Query $query, array $additionalConstrains = NULL) {
         $constrains = array();
-        foreach ($this->getTowns() as $town) {
-            if ($town->getIsActive()) {
-                $constrains[] = $query->equals('town', $town->getUid());
+        foreach ($this->getPositions() as $position) {
+            if ($position->getIsActive()) {
+                $constrains[] = $query->equals('position', $position->getUid());
             }
         }
         if ($constrains) {

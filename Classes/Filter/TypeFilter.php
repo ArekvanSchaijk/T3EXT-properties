@@ -31,7 +31,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
- * Class OfferFilter
+ * Class TypeFilter
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
@@ -59,7 +59,7 @@ class TypeFilter extends AbstractFilter {
         if (parent::getIsActive()) {
             // Checks if there is an active category and checks if the category has disabled this filter
             if (($category = $this->getObjectService()->getActiveCategory())) {
-                if ($category->isDisableFilterType()) {
+                if ($category->getDisableFilterType()) {
                     return FALSE;
                 }
             }
@@ -110,12 +110,13 @@ class TypeFilter extends AbstractFilter {
     }
 
     /**
-     * Get Query Constrain
+     * Get Query Constrains
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+     * @param array $additionalConstrains
      * @return array
      */
-    public function getQueryConstrain(Query $query) {
+    public function getQueryConstrains(Query $query, array $additionalConstrains = NULL) {
         if (($type = $this->getActiveType())) {
             // Switch through the type
             switch ($type) {

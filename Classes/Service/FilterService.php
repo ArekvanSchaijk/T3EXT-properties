@@ -151,9 +151,10 @@ class FilterService implements SingletonInterface {
      * @param array $filters
      * @param array $overrides
      * @param array $ignored
+     * @param array $additionalConstrains
      * @return array
      */
-    public function getQueryConstrains(Query $query, array $filters = NULL, array $overrides = NULL, array $ignored = NULL) {
+    public function getQueryConstrains(Query $query, array $filters = NULL, array $overrides = NULL, array $ignored = NULL, array $additionalConstrains = NULL) {
         $ignored = ($ignored ? : array());
         $filters = (is_null($filters) ? $this->getFilters() : $filters);
         // Merge array with overrides
@@ -163,8 +164,8 @@ class FilterService implements SingletonInterface {
         $constrains = array();
         // Foreach through all filters now and gets the query constrain(s)
         foreach ($filters as $filterName => $filterInstance) {
-            if (($filterInstance->getIsForceFilter() || $filterInstance->getIsActive()) && !in_array($filterName, $ignored)) {
-                if (($constrain = $filterInstance->getQueryConstrain($query))) {
+            if ($filterInstance->getIsActive() && !in_array($filterName, $ignored)) {
+                if (($constrain = $filterInstance->getQueryConstrains($query, $additionalConstrains))) {
                     $constrains[] = $constrain;
                 }
             }

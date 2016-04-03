@@ -12,6 +12,9 @@
 			<trans-unit id="filter.type">
 				<source>Soort object</source>
 			</trans-unit>
+			<trans-unit id="filter.types">
+				<source>Type object</source>
+			</trans-unit>
 			<trans-unit id="filter.type.both">
 				<source>-- Toon Alles --</source>
 			</trans-unit>
@@ -20,6 +23,15 @@
 			</trans-unit>
 			<trans-unit id="filter.type.lot">
 				<source>Kavel</source>
+			</trans-unit>
+			<trans-unit id="filter.types.buildings_for_sale">
+				<source>Koopwoningen</source>
+			</trans-unit>
+			<trans-unit id="filter.types.buildings_for_rent">
+				<source>Huurwoningen</source>
+			</trans-unit>
+			<trans-unit id="filter.types.lots">
+				<source>Kavels</source>
 			</trans-unit>
 			<trans-unit id="filter.offer">
 				<source>Soort aanbod</source>
@@ -36,8 +48,20 @@
 			<trans-unit id="filter.price">
 				<source>Prijs</source>
 			</trans-unit>
+			<trans-unit id="filter.priceMin">
+				<source>-- Minimum --</source>
+			</trans-unit>
+			<trans-unit id="filter.priceMax">
+				<source>-- Maximum --</source>
+			</trans-unit>
 			<trans-unit id="filter.lotSize">
 				<source>Oppervlakte</source>
+			</trans-unit>
+			<trans-unit id="filter.lotSizeMin">
+				<source>-- Minimum --</source>
+			</trans-unit>
+			<trans-unit id="filter.lotSizeMax">
+				<source>-- Maximum --</source>
 			</trans-unit>
 			<trans-unit id="filter.town">
 				<source>Plaats</source>
@@ -47,6 +71,12 @@
 			</trans-unit>
 			<trans-unit id="filter.town.0">
 				<source>-- Toon Alles --</source>
+			</trans-unit>
+			<trans-unit id="filter.constructionTypes">
+				<source>Soort bouw</source>
+			</trans-unit>
+			<trans-unit id="filter.positions">
+				<source>Ligging</source>
 			</trans-unit>
 			<trans-unit id="filter.presences">
 				<source>Aanwezigheden</source>

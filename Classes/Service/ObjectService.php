@@ -123,12 +123,14 @@ class ObjectService implements SingletonInterface {
 	 *
 	 * @param array $filters
 	 * @param array $filterOverrides
+	 * @param array $ignoredFilters
 	 * @param int $limit
 	 * @param array $orderings
+	 * @param array $additionalConstrains
 	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
 	 */
-	public function getFilteredObjects(array $filters = NULL, array $filterOverrides = NULL, $limit = 0, array $orderings = NULL) {
-		return $this->objectRepository->findByFilters($this, $filters, $filterOverrides, $limit, $orderings);
+	public function getFilteredObjects(array $filters = NULL, array $filterOverrides = NULL, array $ignoredFilters = NULL, $limit = 0, array $orderings = NULL, array $additionalConstrains = NULL) {
+		return $this->objectRepository->findByFilters($this, $filters, $filterOverrides, $ignoredFilters, $limit, $orderings, $additionalConstrains);
 	}
 
 	/**
@@ -179,7 +181,10 @@ class ObjectService implements SingletonInterface {
 			foreach ($allowedParameters as $parameterName) {
 				// If the request contains a argument with $parameterName then we store it back in the $linkArguments array
 				if ($this->request->hasArgument($parameterName)) {
-					$this->linkArguments[$parameterName] = $this->request->getArgument($parameterName);
+					$parameterValue = $this->request->getArgument($parameterName);
+					if ($parameterValue != '') {
+						$this->linkArguments[$parameterName] = $parameterValue;;
+					}
 				}
 			}
 		}
@@ -201,24 +206,12 @@ class ObjectService implements SingletonInterface {
 				unset($linkArguments[$parameterName]);
 			}
 		}
-		// Removes the type argument when it's selected as 'both'
-		if (!$linkArguments[LinkUtility::TYPE]) {
-			unset($linkArguments[LinkUtility::TYPE]);
-		}
-		// Removes the offer argument when it's selected as 'both'
-		if (!$linkArguments[LinkUtility::OFFER]) {
-			unset($linkArguments[LinkUtility::OFFER]);
-		}
-		// Processes the towns
-		if (($towns = $linkArguments[LinkUtility::TOWNS])) {
-			if (is_array($towns)) {
-				$linkArguments[LinkUtility::TOWNS] = implode(',', $towns);
-			}
-		}
-		// Processes the presences
-		if (($presences = $linkArguments[LinkUtility::PRESENCES])) {
-			if (is_array($presences)) {
-				$linkArguments[LinkUtility::PRESENCES] = implode(',', $presences);
+		// Processes the implodes
+		if (($implodes = $this->settings['linkArguments']['processing']['implodes'])) {
+			foreach (GeneralUtility::trimExplode(',', $implodes) as $parameterToImplode) {
+				if ($linkArguments[$parameterToImplode] && is_array($linkArguments[$parameterToImplode])) {
+					$linkArguments[$parameterToImplode] = implode(',', $linkArguments[$parameterToImplode]);
+				}
 			}
 		}
 		return $linkArguments;

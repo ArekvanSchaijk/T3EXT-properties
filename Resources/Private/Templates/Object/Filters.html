@@ -8,6 +8,9 @@
                         <f:case value="type">
                             <f:render partial="Object/List/Filters/Type" arguments="{filter: filter}" />
                         </f:case>
+                        <f:case value="types">
+                            <f:render partial="Object/List/Filters/Types" arguments="{filter: filter}" />
+                        </f:case>
                         <f:case value="offer">
                             <f:render partial="Object/List/Filters/Offer" arguments="{filter: filter}" />
                         </f:case>
@@ -18,7 +21,7 @@
                             <f:render partial="Object/List/Filters/Towns" arguments="{filter: filter}" />
                         </f:case>
                         <f:case value="price">
-                            <f:render partial="Object/List/Filters/PriceRange" arguments="{filter: filter}" />
+                            <f:render partial="Object/List/Filters/Price" arguments="{filter: filter}" />
                         </f:case>
                         <f:case value="lot_size">
                             <f:render partial="Object/List/Filters/LotSize" arguments="{filter: filter}" />
@@ -28,6 +31,12 @@
                         </f:case>
                         <f:case value="status">
                             <f:render partial="Object/List/Filters/Status" arguments="{filter: filter}" />
+                        </f:case>
+                        <f:case value="construction_types">
+                            <f:render partial="Object/List/Filters/ConstructionTypes" arguments="{filter: filter}" />
+                        </f:case>
+                        <f:case value="positions">
+                            <f:render partial="Object/List/Filters/Positions" arguments="{filter: filter}" />
                         </f:case>
                     </f:switch>
                 </f:if>

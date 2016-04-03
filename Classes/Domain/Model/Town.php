@@ -25,6 +25,7 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Utility\AdditionalQueryConstrainsUtility;
 use Ucreation\Properties\Utility\FilterUtility;
 
 /**
@@ -39,6 +40,21 @@ class Town extends AbstractModel {
 	 * @var string
 	 */
 	protected $name = '';
+
+	/**
+	 * @var bool
+	 */
+	protected $disableFilterOption = FALSE;
+
+	/**
+	 * @var bool|null
+	 */
+	protected $isActive = NULL;
+
+	/**
+	 * @var int|null
+	 */
+	protected $filterAvailableObjects = NULL;
 
 	/**
 	 * Get Name
@@ -60,22 +76,44 @@ class Town extends AbstractModel {
 	}
 
 	/**
+	 * Get Disable Filter Option
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterOption() {
+		return $this->disableFilterOption;
+	}
+
+	/**
+	 * Set Disable Filter Option
+	 *
+	 * @param bool $disableFilterOption
+	 * @return void
+	 */
+	public function setDisableFilterOption($disableFilterOption) {
+		$this->disableFilterOption = $disableFilterOption;
+	}
+
+	/**
 	 * Get Is Active
 	 *
 	 * @return bool
 	 */
 	public function getIsActive() {
-		if (($activeTown = $this->getFilterService()->getFilter(FilterUtility::FILTER_TOWN)->getActiveTown())) {
-			if ($this->getUid() == $activeTown) {
-				return TRUE;
+		if (is_null($this->isActive)) {
+			$this->isActive = FALSE;
+			if (($activeTown = $this->getFilterService()->getFilter(FilterUtility::FILTER_TOWN)->getActiveTown())) {
+				if ($this->getUid() == $activeTown) {
+					$this->isActive = TRUE;
+				}
+			}
+			if (($activeTowns = $this->getFilterService()->getFilter(FilterUtility::FILTER_TOWNS)->getActiveTowns())) {
+				if (in_array($this->getUid(), $activeTowns)) {
+					$this->isActive = TRUE;
+				}
 			}
 		}
-		if (($activeTowns = $this->getFilterService()->getFilter(FilterUtility::FILTER_TOWNS)->getActiveTowns())) {
-			if (in_array($this->getUid(), $activeTowns)) {
-				return TRUE;
-			}
-		}
-		return FALSE;
+		return $this->isActive;
 	}
 
 	/**
@@ -84,7 +122,24 @@ class Town extends AbstractModel {
 	 * @return bool
 	 */
 	public function getIsDisabled() {
-		return FALSE;
+		return ($this->getFilterAvailableObjects() ? FALSE : TRUE);
+	}
+
+	/**
+	 * Get Filter Available Objects
+	 *
+	 * @return int
+	 */
+	public function getFilterAvailableObjects() {
+		if (is_null($this->filterAvailableObjects)) {
+			$this->filterAvailableObjects = 0;
+			// Query instructions
+			$additionalConstrains = array();
+			$additionalConstrains[] = AdditionalQueryConstrainsUtility::equals('town', $this->getUid());
+			// Get filtered objects count
+			$this->filterAvailableObjects = $this->getObjectService()->getFilteredObjects(NULL, NULL, array(FilterUtility::FILTER_TOWN, FilterUtility::FILTER_TOWNS), 0, NULL, $additionalConstrains)->count();
+		}
+		return $this->filterAvailableObjects;
 	}
 
 }

@@ -25,17 +25,15 @@ namespace Ucreation\Properties\Filter\Option;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Ucreation\Properties\Filter\StatusFilter;
-use Ucreation\Properties\Utility\AdditionalQueryConstrainsUtility;
 use Ucreation\Properties\Utility\FilterUtility;
 
 /**
- * Class StatusOption
+ * Class TypesOption
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class StatusOption extends AbstractOption {
+class TypesOption extends AbstractOption {
 
     /**
      * @var int
@@ -103,8 +101,8 @@ class StatusOption extends AbstractOption {
     public function getIsActive() {
         if (is_null($this->isActive)) {
             $this->isActive = FALSE;
-            if (($statusFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_STATUS))) {
-                if (in_array($this->getValue(), $statusFilter->getActiveStates())) {
+            if (($typesFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_TYPES))) {
+                if (in_array($this->getValue(), $typesFilter->getActiveTypes())) {
                     $this->isActive = TRUE;
                 }
             }
@@ -139,11 +137,15 @@ class StatusOption extends AbstractOption {
     public function getFilterAvailableObjects() {
         if (is_null($this->filterAvailableObjects)) {
             $this->filterAvailableObjects = 0;
-            // Query instructions
-            $additionalConstrains = array();
-            $additionalConstrains[] = AdditionalQueryConstrainsUtility::equals('status', StatusFilter::getQueryStatusValue($this->getValue()));
+            // Creates a new types filter
+            $newTypesFilter = $this->getFilterService()->createNewFilter(FilterUtility::FILTER_TYPES);
+            $newTypesFilter->setAvailableObjectsMode($this->getValue());
+            // Filter overrides
+            $overrides = array(
+                FilterUtility::FILTER_TYPES => $newTypesFilter
+            );
             // Get filtered objects count
-            $this->filterAvailableObjects = $this->getObjectService()->getFilteredObjects(NULL, NULL, array(FilterUtility::FILTER_STATUS), 0, NULL, $additionalConstrains)->count();
+            $this->filterAvailableObjects = $this->getObjectService()->getFilteredObjects(NULL, $overrides)->count();
         }
         return $this->filterAvailableObjects;
     }

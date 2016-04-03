@@ -1,0 +1,22 @@
+<legend xmlns:f="http://www.w3.org/1999/XSL/Transform">{f:translate(key: 'filter.types')}</legend>
+<f:if condition="{filter.typesOptions}">
+    <f:then>
+        <div class="filterOption types">
+            <ul>
+                <f:for each="{filter.typesOptions}" as="option">
+                    <f:if condition="{option.isActive}">
+                        <f:then>
+                            <li class="active{f:if(condition: option.isDisabled, then: ' disabled')}"><f:form.checkbox name="types[]" id="types{option.value}" value="{option.value}" checked="checked" /> <label for="types{option.value}">{option.label} <span class="filter-available-count">({option.filterAvailableObjects})</span></label></li>
+                        </f:then>
+                        <f:else>
+                            <li class="{f:if(condition: option.isDisabled, then: 'disabled')}"><f:form.checkbox name="types[]" id="types{option.value}" value="{option.value}" /> <label for="types{option.value}">{option.label} <span class="filter-available-count">({option.filterAvailableObjects})</span></label></li>
+                        </f:else>
+                    </f:if>
+                </f:for>
+            </ul>
+        </div>
+    </f:then>
+    <f:else>
+        <p class="filter-not-available">{f:translate(key: 'filter.not_available')}</p>
+    </f:else>
+</f:if>

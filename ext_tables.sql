@@ -152,6 +152,7 @@ CREATE TABLE tx_properties_domain_model_presence (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	name varchar(100) DEFAULT '' NOT NULL,
+	disable_filter_option tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -197,6 +198,7 @@ CREATE TABLE tx_properties_domain_model_category (
   disable_filter_presences tinyint(4) unsigned DEFAULT '0' NOT NULL,
   disable_filter_price_range tinyint(4) unsigned DEFAULT '0' NOT NULL,
   disable_filter_type tinyint(4) unsigned DEFAULT '0' NOT NULL,
+  disable_filter_types tinyint(4) unsigned DEFAULT '0' NOT NULL,
   disable_filter_lot_size tinyint(4) unsigned DEFAULT '0' NOT NULL,
   disable_filter_position tinyint(4) unsigned DEFAULT '0' NOT NULL,
   disable_filter_construction_type tinyint(4) unsigned DEFAULT '0' NOT NULL,
@@ -240,10 +242,12 @@ CREATE TABLE tx_properties_domain_model_town (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	name varchar(100) DEFAULT '' NOT NULL,
+	disable_filter_option tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
 	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	starttime int(11) unsigned DEFAULT '0' NOT NULL,
@@ -278,10 +282,12 @@ CREATE TABLE tx_properties_domain_model_position (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	name varchar(100) DEFAULT '' NOT NULL,
+	disable_filter_option tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
 	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	starttime int(11) unsigned DEFAULT '0' NOT NULL,
@@ -316,6 +322,7 @@ CREATE TABLE tx_properties_domain_model_constructiontype (
 	pid int(11) DEFAULT '0' NOT NULL,
 	
 	name varchar(100) DEFAULT '' NOT NULL,
+	disable_filter_option tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

@@ -387,6 +387,12 @@
 			<trans-unit id="tx_properties_domain_model_presence.name">
 				<source>Name</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_presence.disable_filter_option">
+				<source>Disable Filter Option</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_presence.disable_filter_option.0">
+				<source>If check, this presence will not appear as filter option</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_category">
 				<source>Category</source>
 			</trans-unit>
@@ -398,6 +404,12 @@
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_category.disable_filter_type.0">
 				<source>If checked, the filter 'type' will be disabled while being in this category</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_types">
+				<source>Disable Filter Types</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_types.0">
+				<source>If checked, the filter 'types' will be disabled while being in this category</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_category.disable_filter_offer">
 				<source>Disable Filter Offer</source>
@@ -459,17 +471,35 @@
 			<trans-unit id="tx_properties_domain_model_town.name">
 				<source>Name</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_town.disable_filter_option">
+				<source>Disable Filter Option</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_town.disable_filter_option.0">
+				<source>If check, this town will not appear as filter option</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_position">
 				<source>Position</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_position.name">
 				<source>Name</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_position.disable_filter_option">
+				<source>Disable Filter Option</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_position.disable_filter_option.0">
+				<source>If check, this position will not appear as filter option</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_constructiontype">
 				<source>Construction Type</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_constructiontype.name">
 				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_constructiontype.disable_filter_option">
+				<source>Disable Filter Option</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_constructiontype.disable_filter_option.0">
+				<source>If check, this construction type will not appear as filter option</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_garagesort">
 				<source>Garage Sort</source>

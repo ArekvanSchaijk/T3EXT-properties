@@ -63,12 +63,13 @@ class CategoryFilter extends AbstractFilter {
     }
 
     /**
-     * Get Query Constrain
+     * Get Query Constrains
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+     * @param array $additionalConstrains
      * @return array|bool
      */
-    public function getQueryConstrain(Query $query) {
+    public function getQueryConstrains(Query $query, array $additionalConstrains = NULL) {
         if (($categoryId = $this->getActiveCategoryId())) {
             return $query->equals('category', $categoryId);
         }

@@ -1,0 +1,24 @@
+<legend><label for="price">{f:translate(key: 'filter.price')}</label></legend>
+<f:if condition="{filter.isSlider}">
+    <f:then>
+        <div class="filterOption slider priceRange" id="objectPrice" data-price-lowest="{filter.lowestPrice}" data-price-highest="{filter.highestPrice}" data-selected-price-lowest="{filter.selectedLowestPrice}" data-selected-price-highest="{filter.selectedHighestPrice}">
+            <f:form.hidden name="priceRange" id="price" />
+            <div id="price-slider-range" class="jquery-slider"> </div>
+            <div class="valueHolder">
+                <div class="min"> </div>
+                <div class="max"> </div>
+                <div class="clearboth"> </div>
+            </div>
+        </div>
+    </f:then>
+    <f:else>
+        <div class="filterOption minMaxPrice">
+            <div class="selectRow">
+                <f:form.select name="priceMin" id="priceMin" options="{filter.priceOptions}" optionValueField="value" optionLabelField="label" prependOptionLabel="{f:translate(key: 'filter.priceMin')}" prependOptionValue="" value="{filter.selectedPriceMinimum}" />
+            </div>
+            <div class="selectRow">
+                <f:form.select name="priceMax" id="priceMax" options="{filter.priceOptions}" optionValueField="value" optionLabelField="label" prependOptionLabel="{f:translate(key: 'filter.priceMax')}" prependOptionValue="" value="{filter.selectedPriceMaximum}" />
+            </div>
+        </div>
+    </f:else>
+</f:if>

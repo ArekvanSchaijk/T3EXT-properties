@@ -36,16 +36,17 @@ class FilterUtility {
     /**
      * @const string
      */
-    const   FILTER_CATEGORY = 'category',
+    const   FILTER_TYPE = 'type',
+            FILTER_TYPES = 'types',
+            FILTER_CATEGORY = 'category',
             FILTER_TOWN = 'town',
             FILTER_TOWNS = 'towns',
             FILTER_PRESENCES = 'presences',
             FILTER_PRICE = 'price',
             FILTER_LOT_SIZE = 'lot_size',
-            FILTER_TYPE = 'type',
             FILTER_OFFER = 'offer',
-            FILTER_POSITION = 'position',
-            FILTER_CONSTRUCTION_TYPE = 'construction_type',
+            FILTER_POSITIONS = 'positions',
+            FILTER_CONSTRUCTION_TYPES = 'construction_types',
             FILTER_STATUS = 'status';
 
     /**
@@ -56,17 +57,18 @@ class FilterUtility {
      */
     static public function getRegistered() {
         return array(
-            self::FILTER_TYPE       => 'Ucreation\\Properties\\Filter\\TypeFilter',
-            self::FILTER_OFFER      => 'Ucreation\\Properties\\Filter\\OfferFilter',
-            self::FILTER_PRICE      => 'Ucreation\\Properties\\Filter\\PriceFilter',
-            self::FILTER_LOT_SIZE   => 'Ucreation\\Properties\\Filter\\LotSizeFilter',
-            self::FILTER_TOWN       => 'Ucreation\\Properties\\Filter\\TownFilter',
-            self::FILTER_TOWNS      => 'Ucreation\\Properties\\Filter\\TownsFilter',
-            self::FILTER_CATEGORY   => 'Ucreation\\Properties\\Filter\\CategoryFilter',
-            self::FILTER_PRESENCES  => 'Ucreation\\Properties\\Filter\\PresencesFilter',
-            self::FILTER_POSITION   => 'Ucreation\\Properties\\Filter\\PositionFilter',
-            self::FILTER_CONSTRUCTION_TYPE => 'Ucreation\\Properties\\Filter\\ConstructionTypeFilter',
-            self::FILTER_STATUS     => 'Ucreation\\Properties\\Filter\\StatusFilter',
+            self::FILTER_TYPE => 'Ucreation\\Properties\\Filter\\TypeFilter',
+            self::FILTER_TYPES => 'Ucreation\\Properties\\Filter\\TypesFilter',
+            self::FILTER_OFFER => 'Ucreation\\Properties\\Filter\\OfferFilter',
+            self::FILTER_PRICE => 'Ucreation\\Properties\\Filter\\PriceFilter',
+            self::FILTER_LOT_SIZE => 'Ucreation\\Properties\\Filter\\LotSizeFilter',
+            self::FILTER_TOWN => 'Ucreation\\Properties\\Filter\\TownFilter',
+            self::FILTER_TOWNS => 'Ucreation\\Properties\\Filter\\TownsFilter',
+            self::FILTER_CATEGORY => 'Ucreation\\Properties\\Filter\\CategoryFilter',
+            self::FILTER_PRESENCES => 'Ucreation\\Properties\\Filter\\PresencesFilter',
+            self::FILTER_POSITIONS => 'Ucreation\\Properties\\Filter\\PositionsFilter',
+            self::FILTER_CONSTRUCTION_TYPES => 'Ucreation\\Properties\\Filter\\ConstructionTypesFilter',
+            self::FILTER_STATUS => 'Ucreation\\Properties\\Filter\\StatusFilter',
         );
     }
 

@@ -26,6 +26,7 @@ namespace Ucreation\Properties\Filter;
  ***************************************************************/
 
 use Ucreation\Properties\Utility\FilterUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
  * Class AbstractFilter
@@ -34,6 +35,9 @@ use Ucreation\Properties\Utility\FilterUtility;
  * @author Arek van Schaijk <info@ucreation.nl>
  */
 abstract class AbstractFilter {
+
+    // Force extending classes to have atleast the following function(s)
+    abstract function getQueryConstrains(Query $query, array $additionalConstrains = NULL);
 
     /**
      * @var string
@@ -44,11 +48,6 @@ abstract class AbstractFilter {
      * @var bool
      */
     protected $isEliminated = FALSE;
-
-    /**
-     * @var bool
-     */
-    protected $isForceFilter = FALSE;
 
     /**
      * @var \Ucreation\Properties\Service\FilterService
@@ -84,25 +83,6 @@ abstract class AbstractFilter {
             return FALSE;
         }
         return TRUE;
-    }
-
-    /**
-     * Get Is Force Filter
-     *
-     * @return bool
-     */
-    public function getIsForceFilter() {
-        return $this->isForceFilter;
-    }
-
-    /**
-     * Set Is Force Filter
-     *
-     * @param bool $isForceFilter
-     * @return void
-     */
-    public function setIsForceFilter($isForceFilter) {
-        $this->isForceFilter = $isForceFilter;
     }
 
     /**

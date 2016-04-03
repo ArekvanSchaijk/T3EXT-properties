@@ -1,0 +1,22 @@
+<legend>{f:translate(key: 'filter.constructionTypes')}</legend>
+<f:if condition="{filter.constructionTypes}">
+    <f:then>
+        <div class="filterOption constructionTypes">
+            <ul>
+                <f:for each="{filter.constructionTypes}" as="constructionType">
+                    <f:if condition="{constructionType.isActive}">
+                        <f:then>
+                            <li class="active{f:if(condition: constructionType.isDisabled, then: ' disabled')}"><f:form.checkbox name="constructionTypes[]" id="constructionTypes{constructionType.uid}" value="{constructionType.uid}" checked="checked" /> <label for="constructionTypes{constructionType.uid}">{constructionType.name} <span class="filter-available-count">({constructionType.filterAvailableObjects})</span></label></li>
+                        </f:then>
+                        <f:else>
+                            <li class="{f:if(condition: constructionType.isDisabled, then: 'disabled')}"><f:form.checkbox name="constructionTypes[]" id="constructionTypes{constructionType.uid}" value="{constructionType.uid}" /> <label for="constructionTypes{constructionType.uid}">{constructionType.name} <span class="filter-available-count">({constructionType.filterAvailableObjects})</span></label></li>
+                        </f:else>
+                    </f:if>
+                </f:for>
+            </ul>
+        </div>
+    </f:then>
+    <f:else>
+        <p class="filter-not-available">{f:translate(key: 'filter.not_available')}</p>
+    </f:else>
+</f:if>

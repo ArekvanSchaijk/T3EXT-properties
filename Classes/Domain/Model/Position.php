@@ -24,8 +24,8 @@ namespace Ucreation\Properties\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use Ucreation\Properties\Utility\AdditionalQueryConstrainsUtility;
+use Ucreation\Properties\Utility\FilterUtility;
 
 /**
  * Class Position
@@ -33,12 +33,27 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class Position extends AbstractEntity {
+class Position extends AbstractModel {
 
 	/**
 	 * @var string
 	 */
 	protected $name = '';
+
+	/**
+	 * @var bool
+	 */
+	protected $disableFilterOption = FALSE;
+
+	/**
+	 * @var bool|null
+	 */
+	protected $isActive = NULL;
+
+	/**
+	 * @var int|null
+	 */
+	protected $filterAvailableObjects = NULL;
 
 	/**
 	 * Get Name
@@ -57,6 +72,68 @@ class Position extends AbstractEntity {
 	 */
 	public function setName($name) {
 		$this->name = $name;
+	}
+
+	/**
+	 * Get Disable Filter Option
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterOption() {
+		return $this->disableFilterOption;
+	}
+
+	/**
+	 * Set Disable Filter Option
+	 *
+	 * @param bool $disableFilterOption
+	 * @return void
+	 */
+	public function setDisableFilterOption($disableFilterOption) {
+		$this->disableFilterOption = $disableFilterOption;
+	}
+
+	/**
+	 * Get Is Active
+	 *
+	 * @return bool
+	 */
+	public function getIsActive() {
+		if (is_null($this->isActive)) {
+			$this->isActive = FALSE;
+			if (($positionsFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_POSITIONS))) {
+				if (in_array($this->getUid(), $positionsFilter->getActivePositions())) {
+					$this->isActive = TRUE;
+				}
+			}
+		}
+		return $this->isActive;
+	}
+
+	/**
+	 * Get Is Disabled
+	 *
+	 * @return bool
+	 */
+	public function getIsDisabled() {
+		return ($this->getFilterAvailableObjects() ? FALSE : TRUE);
+	}
+
+	/**
+	 * Get Count Available Objects
+	 *
+	 * @return int
+	 */
+	public function getFilterAvailableObjects() {
+		if (is_null($this->filterAvailableObjects)) {
+			$this->filterAvailableObjects = 0;
+			// Query instructions
+			$additionalConstrains = array();
+			$additionalConstrains[] = AdditionalQueryConstrainsUtility::equals('position', $this->getUid());
+			// Get filtered objects count
+			$this->filterAvailableObjects = $this->getObjectService()->getFilteredObjects(NULL, NULL, array(FilterUtility::FILTER_POSITIONS), 0, NULL, $additionalConstrains)->count();
+		}
+		return $this->filterAvailableObjects;
 	}
 
 }

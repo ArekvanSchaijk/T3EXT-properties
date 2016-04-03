@@ -23,9 +23,42 @@ plugin.tx_properties {
 		    ignore = {$plugin.tx_properties.settings.linkArguments.ignore}
 		    register = {$plugin.tx_properties.settings.linkArguments.register}
 		    remove = {$plugin.tx_properties.settings.linkArguments.remove}
+		    processing {
+		        implodes = {$plugin.tx_properties.settings.linkArguments.processing.implodes}
+		    }
 		}
 		filters {
             eliminated = {$plugin.tx_properties.settings.filters.eliminated}
+            hideDisabledOptions = {$plugin.tx_properties.settings.filters.hideDisabledOptions}
+            autoDeactivate = {$plugin.tx_properties.settings.filters.autoDeactivate}
+            types {
+                options {
+                    remove = {$plugin.tx_properties.settings.filters.types.options.remove}
+                }
+            }
+            price {
+                slider {
+                    enable = {$plugin.tx_properties.settings.filters.price.slider.enable}
+                }
+                options = {$plugin.tx_properties.settings.filters.price.options}
+                thousandsSeparator = {$plugin.tx_properties.settings.filters.price.thousandsSeparator}
+                prependLabel = {$plugin.tx_properties.settings.filters.price.prependLabel}
+                appendLabel = {$plugin.tx_properties.settings.filters.price.appendLabel}
+            }
+            lotSize {
+                slider {
+                    enable = {$plugin.tx_properties.settings.filters.lotSize.slider.enable}
+                }
+                options = {$plugin.tx_properties.settings.filters.lotSize.options}
+                thousandsSeparator = {$plugin.tx_properties.settings.filters.lotSize.thousandsSeparator}
+                prependLabel = {$plugin.tx_properties.settings.filters.lotSize.prependLabel}
+                appendLabel = {$plugin.tx_properties.settings.filters.lotSize.appendLabel}
+            }
+            status {
+                options {
+                    remove = {$plugin.tx_properties.settings.filters.status.options.remove}
+                }
+            }
 		}
 	}
 }

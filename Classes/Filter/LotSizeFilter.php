@@ -40,6 +40,11 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 class LotSizeFilter extends AbstractFilter {
 
     /**
+     * @var array|null
+     */
+    protected $options = NULL;
+
+    /**
      * @var bool
      */
     protected $isLotSizeRangeCalculated = FALSE;
@@ -65,6 +70,31 @@ class LotSizeFilter extends AbstractFilter {
     protected $selectedHighestLotSize = NULL;
 
     /**
+     * @var int|bool|null
+     */
+    protected $selectedLotSizeMinimum = FALSE;
+
+    /**
+     * @var int|bool|null
+     */
+    protected $selectedLotSizeMaximum = FALSE;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @inject
+     */
+    protected $objectManager = NULL;
+
+    /**
+     * Get Is Slider
+     *
+     * @return bool
+     */
+    public function getIsSlider() {
+        return (bool)$this->getObjectService()->settings['filters']['lotSize']['slider']['enable'];
+    }
+
+    /**
      * Get Is Active
      *
      * @return bool
@@ -73,19 +103,66 @@ class LotSizeFilter extends AbstractFilter {
         if (parent::getIsActive()) {
             // Checks if there is an active category and checks if the category has disabled this filter
             if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
-                if ($category->isDisableFilterLotSize()) {
+                if ($category->getDisableFilterLotSize()) {
                     return FALSE;
                 }
             }
             if (
-                $this->getLowestLotSize() !== FALSE &&
-                $this->getHighestLotSize() !== FALSE &&
-                $this->getLowestLotSize() != $this->getHighestLotSize()
+                !$this->getIsSlider() ||
+                (
+                    $this->getLowestLotSize() !== FALSE &&
+                    $this->getHighestLotSize() !== FALSE &&
+                    $this->getLowestLotSize() != $this->getHighestLotSize()
+                )
             ) {
                 return TRUE;
             }
         }
         return FALSE;
+    }
+
+    /**
+     * Get Lot Size Options Array
+     *
+     * @return array
+     */
+    protected function getLotSizeOptionsArray() {
+        return GeneralUtility::trimExplode(',', $this->getObjectService()->settings['filters']['lotSize']['options']);
+    }
+
+    /**
+     * Get Lot Size Options
+     *
+     * @return array
+     */
+    public function getLotSizeOptions() {
+        if (is_null($this->options)) {
+            $this->options = array();
+            foreach ($this->getLotSizeOptionsArray() as $lotSizeOption) {
+                if (ctype_digit($lotSizeOption)) {
+                    $option = $this->getNewLotSizeOptionObject();
+                    $option->setValue($lotSizeOption);
+                    $option->setLabel(
+                        trim(
+                            str_replace('*', chr(32), $this->getObjectService()->settings['filters']['lotSize']['prependLabel']).
+                            number_format($lotSizeOption, 0, NULL, $this->getObjectService()->settings['filters']['lotSize']['thousandsSeparator']).
+                            str_replace('*', chr(32), $this->getObjectService()->settings['filters']['lotSize']['appendLabel'])
+                        )
+                    );
+                    $this->options[$lotSizeOption] = $option;
+                }
+            }
+        }
+        return $this->options;
+    }
+
+    /**
+     * Get New Lot Size Option Object
+     *
+     * @return \Ucreation\Properties\Filter\Option\StatusOption
+     */
+    protected function getNewLotSizeOptionObject() {
+        return $this->objectManager->get('Ucreation\\Properties\\Filter\\Option\\LotSizeOption');
     }
 
     /**
@@ -102,7 +179,7 @@ class LotSizeFilter extends AbstractFilter {
                 $filters[FilterUtility::FILTER_CATEGORY] = $categoryFilter;
             }
             // Gets the lowest object price
-            if (($object = $this->getFilterService()->getObjectService()->getFilteredObjects($filters, NULL, 1, array('lot_size' => QueryInterface::ORDER_ASCENDING))->getFirst())) {
+            if (($object = $this->getFilterService()->getObjectService()->getFilteredObjects($filters, NULL, NULL, 1, array('lot_size' => QueryInterface::ORDER_ASCENDING))->getFirst())) {
                 $this->setLowestLotSize($object->getLotSize());
             }
         }
@@ -133,7 +210,7 @@ class LotSizeFilter extends AbstractFilter {
                 $filters[FilterUtility::FILTER_CATEGORY] = $categoryFilter;
             }
             // Gets the highest object price
-            if (($object = $this->getFilterService()->getObjectService()->getFilteredObjects($filters, NULL, 1, array('lot_size' => QueryInterface::ORDER_DESCENDING))->getFirst())) {
+            if (($object = $this->getFilterService()->getObjectService()->getFilteredObjects($filters, NULL, NULL, 1, array('lot_size' => QueryInterface::ORDER_DESCENDING))->getFirst())) {
                 $this->setHighestLotSize($object->getLotSize());
             }
         }
@@ -171,6 +248,44 @@ class LotSizeFilter extends AbstractFilter {
     }
 
     /**
+     * Get Selected Lot Size Minimum
+     *
+     * @return int|null
+     */
+    public function getSelectedLotSizeMinimum() {
+        if ($this->selectedLotSizeMinimum === FALSE) {
+            $this->selectedLotSizeMinimum = NULL;
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::LOT_SIZE_MIN)) {
+                $minimum = $this->getObjectService()->request->getArgument(LinkUtility::LOT_SIZE_MIN);
+                if (in_array($minimum, $this->getLotSizeOptionsArray())) {
+                    $this->selectedLotSizeMinimum = $minimum;
+                }
+            }
+        }
+        return $this->selectedLotSizeMinimum;
+    }
+
+    /**
+     * Get Selected Lot Size Maximum
+     *
+     * @return int|null
+     */
+    public function getSelectedLotSizeMaximum() {
+        if ($this->selectedLotSizeMaximum === FALSE) {
+            $this->selectedLotSizeMaximum = NULL;
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::LOT_SIZE_MAX)) {
+                $maximum = $this->getObjectService()->request->getArgument(LinkUtility::LOT_SIZE_MAX);
+                if (in_array($maximum, $this->getLotSizeOptionsArray())) {
+                    if (!$this->getSelectedLotSizeMinimum() || $maximum >= $this->getSelectedLotSizeMinimum()) {
+                        $this->selectedLotSizeMaximum = $maximum;
+                    }
+                }
+            }
+        }
+        return $this->selectedLotSizeMaximum;
+    }
+
+    /**
      * Calculate Lot Size Range
      *
      * @return void
@@ -199,8 +314,8 @@ class LotSizeFilter extends AbstractFilter {
     /**
      * Set Selected Lot Size Range
      *
-     * @param $selectedLowestLotSize
-     * @param $selectedHighestLotSize
+     * @param int $selectedLowestLotSize
+     * @param int $selectedHighestLotSize
      * @return void
      */
     public function setSelectedLotSizeRange($selectedLowestLotSize, $selectedHighestLotSize) {
@@ -210,17 +325,35 @@ class LotSizeFilter extends AbstractFilter {
     }
 
     /**
-     * Get Query Constrain
+     * Get Query Constrains
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+     * @param array $additionalConstrains
      * @return array
      */
-    public function getQueryConstrain(Query $query) {
+    public function getQueryConstrains(Query $query, array $additionalConstrains = NULL) {
         $constrains = array();
-        if (($lowest = $this->getSelectedLowestLotSize()) !== FALSE && ($highest = $this->getSelectedHighestLotSize()) !== FALSE) {
-            $constrains[] = $query->greaterThanOrEqual('lot_size', $lowest);
-            $constrains[] = $query->lessThanOrEqual('lot_size', $highest);
-            return $constrains;
+        if ($this->getIsSlider()) {
+            if (($lowest = $this->getSelectedLowestLotSize()) !== FALSE && ($highest = $this->getSelectedHighestLotSize()) !== FALSE) {
+                $constrains[] = $query->greaterThanOrEqual('lot_size', $lowest);
+                $constrains[] = $query->lessThanOrEqual('lot_size', $highest);
+                return $constrains;
+            }
+        } else {
+            // If there is a minimum lot size selected we adjust it in the query below
+            if (($minimum = $this->getSelectedLotSizeMinimum())) {
+                $constrains[] = $query->greaterThanOrEqual('lot_size', $minimum);
+            }
+            // If there is a maximum lot size selected we adjust it in the query below
+            if (($maximum = $this->getSelectedLotSizeMaximum())) {
+                $constrains[] = $query->lessThanOrEqual('lot_size', $maximum);
+            }
+            if ($constrains) {
+                if (count($constrains) == 1) {
+                    return $constrains[0];
+                }
+                return $constrains;
+            }
         }
         return FALSE;
     }

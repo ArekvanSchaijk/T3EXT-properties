@@ -42,4 +42,17 @@ class PresenceRepository extends Repository {
         'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
     );
 
+    /**
+     * Find Available Filter Options
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Presence>
+     */
+    public function findAvailableFilterOptions() {
+        $query = $this->createQuery();
+        $query->matching(
+            $query->equals('disable_filter_option', FALSE)
+        );
+        return $query->execute();
+    }
+
 }

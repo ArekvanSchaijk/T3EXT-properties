@@ -25,7 +25,8 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use Ucreation\Properties\Utility\AdditionalQueryConstrainsUtility;
+use Ucreation\Properties\Utility\FilterUtility;
 
 /**
  * Class ConstructionType
@@ -33,12 +34,27 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class ConstructionType extends AbstractEntity {
+class ConstructionType extends AbstractModel {
 	
 	/**
 	 * @var string
 	 */
 	protected $name = '';
+
+	/**
+	 * @var bool
+	 */
+	protected $disableFilterOption = FALSE;
+
+	/**
+	 * @var bool|null
+	 */
+	protected $isActive = NULL;
+
+	/**
+	 * @var int|null
+	 */
+	protected $filterAvailableObjects = NULL;
 
 	/**
 	 * Get Name
@@ -58,5 +74,69 @@ class ConstructionType extends AbstractEntity {
 	public function setName($name) {
 		$this->name = $name;
 	}
-	
+
+	/**
+	 * Get Disable Filter Option
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterOption() {
+		return $this->disableFilterOption;
+	}
+
+	/**
+	 * Set Disable Filter Option
+	 *
+	 * @param bool $disableFilterOption
+	 * @return void
+	 */
+	public function setDisableFilterOption($disableFilterOption) {
+		$this->disableFilterOption = $disableFilterOption;
+	}
+
+	/**
+	 * Get Is Active
+	 *
+	 * @return bool
+	 */
+	public function getIsActive() {
+		if (is_null($this->isActive)) {
+			$this->isActive = FALSE;
+			if (($constructionTypesFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_CONSTRUCTION_TYPES))) {
+				if (in_array($this->getUid(), $constructionTypesFilter->getActiveConstructionTypes())) {
+					$this->isActive = TRUE;
+				}
+			}
+		}
+		return $this->isActive;
+	}
+
+	/**
+	 * Get Is Disabled
+	 *
+	 * @return bool
+	 */
+	public function getIsDisabled() {
+		return ($this->getFilterAvailableObjects() ? FALSE : TRUE);
+	}
+
+	/**
+	 * Get Count Available Objects
+	 *
+	 * @return int
+	 */
+	public function getFilterAvailableObjects() {
+		if (is_null($this->filterAvailableObjects)) {
+			$this->filterAvailableObjects = 0;
+			// Query instructions
+			$additionalConstrains = array();
+			$additionalConstrains[] = AdditionalQueryConstrainsUtility::equals('construction_type', $this->getUid());
+			// Filtering for the type either since construction types can only be assigned to buildings
+			$additionalConstrains[] = AdditionalQueryConstrainsUtility::equals('type', Object::TYPE_BUILDING);
+			// Get filtered objects count
+			$this->filterAvailableObjects = $this->getObjectService()->getFilteredObjects(NULL, NULL, array(FilterUtility::FILTER_CONSTRUCTION_TYPES), 0, NULL, $additionalConstrains)->count();
+		}
+		return $this->filterAvailableObjects;
+	}
+
 }

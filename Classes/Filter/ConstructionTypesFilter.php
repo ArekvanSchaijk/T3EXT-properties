@@ -30,28 +30,28 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
- * Class TownsFilter
+ * Class ConstructionTypesFilter
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class TownsFilter extends AbstractFilter {
+class ConstructionTypesFilter extends AbstractFilter {
 
     /**
      * @var array|null
      */
-    protected $activeTowns = NULL;
+    protected $activeConstructionTypes = NULL;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>|bool
+     * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\ConstructionType>
      */
-    protected $availableTowns = FALSE;
+    protected $availableConstructionTypes = FALSE;
 
     /**
-     * @var \Ucreation\Properties\Domain\Repository\TownRepository
+     * @var \Ucreation\Properties\Domain\Repository\ConstructionTypeRepository
      * @inject
      */
-    protected $townRepository = NULL;
+    protected $constructionTypeRepository = NULL;
 
     /**
      * Get Is Active
@@ -62,14 +62,14 @@ class TownsFilter extends AbstractFilter {
         if (parent::getIsActive()) {
             // Checks if there is an active category and checks if the category has disabled this filter
             if (($category = $this->getObjectService()->getActiveCategory())) {
-                if ($category->getDisableFilterTowns()) {
+                if ($category->getDisableFilterConstructionType()) {
                     return FALSE;
                 }
             }
             // Auto deactivates the filter by setup
             if (
                 (bool)$this->getObjectService()->settings['filters']['autoDeactivate'] &&
-                !$this->getTowns()
+                !$this->getConstructionTypes()
             ) {
                 return FALSE;
             }
@@ -79,48 +79,48 @@ class TownsFilter extends AbstractFilter {
     }
 
     /**
-     * Get Available Towns
+     * Get Available Construction Types
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\ConstructionTypes>
      */
-    public function getAvailableTowns() {
-        if ($this->availableTowns === FALSE) {
-            $this->availableTowns = $this->townRepository->findAvailableFilterOptions();
+    public function getAvailableConstructionTypes() {
+        if ($this->availableConstructionTypes === FALSE) {
+            $this->availableConstructionTypes = $this->constructionTypeRepository->findAvailableFilterOptions();
         }
-        return $this->availableTowns;
+        return $this->availableConstructionTypes;
     }
 
     /**
-     * Get Towns
+     * Get Construction Types
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>
+     * @return array|\TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\ConstructionType>
      */
-    public function getTowns() {
+    public function getConstructionTypes() {
         if (!(bool)$this->getObjectService()->settings['filters']['hideDisabledOptions']) {
-            return $this->getAvailableTowns();
+            return $this->getAvailableConstructionTypes();
         }
-        $towns = array();
-        foreach ($this->getAvailableTowns() as $town) {
-            if (!$town->getIsDisabled()) {
-                $towns[] = $town;
+        $constructionTypes = array();
+        foreach ($this->getAvailableConstructionTypes() as $constructionType) {
+            if (!$constructionType->getIsDisabled()) {
+                $constructionTypes[] = $constructionType;
             }
         }
-        return $towns;
+        return $constructionTypes;
     }
 
     /**
-     * Get Active Towns
+     * Get Active Construction Types
      *
      * @return array
      */
-    public function getActiveTowns() {
-        if (is_null($this->activeTowns)) {
-            $this->activeTowns = array();
-            if ($this->getObjectService()->request->hasArgument(LinkUtility::TOWNS)) {
-                $this->activeTowns = GeneralUtility::trimExplode(',', $this->getObjectService()->request->getArgument(LinkUtility::TOWNS));
+    public function getActiveConstructionTypes() {
+        if (is_null($this->activeConstructionTypes)) {
+            $this->activeConstructionTypes = array();
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::CONSTRUCTION_TYPES)) {
+                $this->activeConstructionTypes = GeneralUtility::trimExplode(',', $this->getObjectService()->request->getArgument(LinkUtility::CONSTRUCTION_TYPES));
             }
         }
-        return $this->activeTowns;
+        return $this->activeConstructionTypes;
     }
 
     /**
@@ -128,13 +128,13 @@ class TownsFilter extends AbstractFilter {
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
      * @param array $additionalConstrains
-     * @return array
+     * @return array|bool
      */
     public function getQueryConstrains(Query $query, array $additionalConstrains = NULL) {
         $constrains = array();
-        foreach ($this->getTowns() as $town) {
-            if ($town->getIsActive()) {
-                $constrains[] = $query->equals('town', $town->getUid());
+        foreach ($this->getConstructionTypes() as $constructionType) {
+            if ($constructionType->getIsActive()) {
+                $constrains[] = $query->equals('construction_type', $constructionType->getUid());
             }
         }
         if ($constrains) {

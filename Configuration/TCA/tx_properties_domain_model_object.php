@@ -687,7 +687,7 @@ return array(
 					),
 					array(
 						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.status.3',
-						\Ucreation\Properties\Domain\Model\Object::STATUS_NOTAVAILABLE,
+						\Ucreation\Properties\Domain\Model\Object::STATUS_NOT_AVAILABLE,
 					),
 				)
 			)

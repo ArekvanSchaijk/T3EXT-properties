@@ -1,0 +1,22 @@
+<legend>{f:translate(key: 'filter.positions')}</legend>
+<f:if condition="{filter.positions}">
+    <f:then>
+        <div class="filterOption positions">
+            <ul>
+                <f:for each="{filter.positions}" as="position">
+                    <f:if condition="{position.isActive}">
+                        <f:then>
+                            <li class="active{f:if(condition: position.isDisabled, then: ' disabled')}"><f:form.checkbox name="positions[]" id="positions{position.uid}" value="{position.uid}" checked="checked" /> <label for="positions{position.uid}">{position.name} <span class="filter-available-count">({position.filterAvailableObjects})</span></label></li>
+                        </f:then>
+                        <f:else>
+                            <li class="{f:if(condition: position.isDisabled, then: 'disabled')}"><f:form.checkbox name="positions[]" id="positions{position.uid}" value="{position.uid}" /> <label for="positions{position.uid}">{position.name} <span class="filter-available-count">({position.filterAvailableObjects})</span></label></li>
+                        </f:else>
+                    </f:if>
+                </f:for>
+            </ul>
+        </div>
+    </f:then>
+    <f:else>
+        <p class="filter-not-available">{f:translate(key: 'filter.not_available')}</p>
+    </f:else>
+</f:if>

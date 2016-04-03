@@ -40,6 +40,11 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 class PriceFilter extends AbstractFilter {
 
     /**
+     * @var array|null
+     */
+    protected $options = NULL;
+
+    /**
      * @var bool
      */
     protected $isPriceRangeCalculated = FALSE;
@@ -65,6 +70,31 @@ class PriceFilter extends AbstractFilter {
     protected $selectedHighestPrice = NULL;
 
     /**
+     * @var int|bool|null
+     */
+    protected $selectedPriceMinimum = FALSE;
+
+    /**
+     * @var int|bool|null
+     */
+    protected $selectedPriceMaximum = FALSE;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @inject
+     */
+    protected $objectManager = NULL;
+
+    /**
+     * Get Is Slider
+     *
+     * @return bool
+     */
+    public function getIsSlider() {
+        return (bool)$this->getObjectService()->settings['filters']['price']['slider']['enable'];
+    }
+
+    /**
      * Get Is Active
      *
      * @return bool
@@ -73,19 +103,66 @@ class PriceFilter extends AbstractFilter {
         if (parent::getIsActive()) {
             // Checks if there is an active category and checks if the category has disabled this filter
             if (($category = $this->getObjectService()->getActiveCategory())) {
-                if ($category->isDisableFilterPriceRange()) {
+                if ($category->getDisableFilterPriceRange()) {
                     return FALSE;
                 }
             }
             if (
-                $this->getLowestPrice() !== FALSE &&
-                $this->getHighestPrice() !== FALSE &&
-                $this->getLowestPrice() != $this->getHighestPrice()
+                !$this->getIsSlider() ||
+                (
+                    $this->getLowestPrice() !== FALSE &&
+                    $this->getHighestPrice() !== FALSE &&
+                    $this->getLowestPrice() != $this->getHighestPrice()
+                )
             ) {
                 return TRUE;
             }
         }
         return FALSE;
+    }
+
+    /**
+     * Get Price Options Array
+     *
+     * @return array
+     */
+    protected function getPriceOptionsArray() {
+        return GeneralUtility::trimExplode(',', $this->getObjectService()->settings['filters']['price']['options']);
+    }
+
+    /**
+     * Get Price Options
+     *
+     * @return array
+     */
+    public function getPriceOptions() {
+        if (is_null($this->options)) {
+            $this->options = array();
+            foreach ($this->getPriceOptionsArray() as $priceOption) {
+                if (ctype_digit($priceOption)) {
+                    $option = $this->getNewPriceOptionObject();
+                    $option->setValue($priceOption);
+                    $option->setLabel(
+                        trim(
+                            str_replace('*', chr(32), $this->getObjectService()->settings['filters']['price']['prependLabel']).
+                            number_format($priceOption, 0, NULL, $this->getObjectService()->settings['filters']['price']['thousandsSeparator']).
+                            str_replace('*', chr(32), $this->getObjectService()->settings['filters']['price']['appendLabel'])
+                        )
+                    );
+                    $this->options[$priceOption] = $option;
+                }
+            }
+        }
+        return $this->options;
+    }
+
+    /**
+     * Get New Price Option Object
+     *
+     * @return \Ucreation\Properties\Filter\Option\StatusOption
+     */
+    protected function getNewPriceOptionObject() {
+        return $this->objectManager->get('Ucreation\\Properties\\Filter\\Option\\PriceOption');
     }
 
     /**
@@ -108,7 +185,7 @@ class PriceFilter extends AbstractFilter {
                 $filters[FilterUtility::FILTER_OFFER] = $newOfferFilter;
             }
             // Gets the lowest object price
-            if (($object = $this->getObjectService()->getFilteredObjects($filters, NULL, 1, array('price' => QueryInterface::ORDER_ASCENDING))->getFirst())) {
+            if (($object = $this->getObjectService()->getFilteredObjects($filters, NULL, NULL, 1, array('price' => QueryInterface::ORDER_ASCENDING))->getFirst())) {
                 $this->setLowestPrice($object->getPrice());
             }
         }
@@ -145,7 +222,7 @@ class PriceFilter extends AbstractFilter {
                 $filters[FilterUtility::FILTER_OFFER] = $newOfferFilter;
             }
             // Gets the highest object price
-            if (($object = $this->getObjectService()->getFilteredObjects($filters, NULL, 1, array('price' => QueryInterface::ORDER_DESCENDING))->getFirst())) {
+            if (($object = $this->getObjectService()->getFilteredObjects($filters, NULL, NULL, 1, array('price' => QueryInterface::ORDER_DESCENDING))->getFirst())) {
                 $this->setHighestPrice($object->getPrice());
             }
         }
@@ -180,6 +257,44 @@ class PriceFilter extends AbstractFilter {
     public function getSelectedHighestPrice() {
         $this->calculatePriceRange();
         return $this->selectedHighestPrice;
+    }
+
+    /**
+     * Get Selected Price Minimum
+     *
+     * @return int|null
+     */
+    public function getSelectedPriceMinimum() {
+        if ($this->selectedPriceMinimum === FALSE) {
+            $this->selectedPriceMinimum = NULL;
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::PRICE_MIN)) {
+                $minimum = $this->getObjectService()->request->getArgument(LinkUtility::PRICE_MIN);
+                if (in_array($minimum, $this->getPriceOptionsArray())) {
+                    $this->selectedPriceMinimum = $minimum;
+                }
+            }
+        }
+        return $this->selectedPriceMinimum;
+    }
+
+    /**
+     * Get Selected Price Maximum
+     *
+     * @return int|null
+     */
+    public function getSelectedPriceMaximum() {
+        if ($this->selectedPriceMaximum === FALSE) {
+            $this->selectedPriceMaximum = NULL;
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::PRICE_MAX)) {
+                $maximum = $this->getObjectService()->request->getArgument(LinkUtility::PRICE_MAX);
+                if (in_array($maximum, $this->getPriceOptionsArray())) {
+                    if (!$this->getSelectedPriceMinimum() || $maximum >= $this->getSelectedPriceMinimum()) {
+                        $this->selectedPriceMaximum = $maximum;
+                    }
+                }
+            }
+        }
+        return $this->selectedPriceMaximum;
     }
 
     /**
@@ -222,17 +337,35 @@ class PriceFilter extends AbstractFilter {
     }
 
     /**
-     * Get Query Constrain
+     * Get Query Constrains
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+     * @param array $additionalConstrains
      * @return array
      */
-    public function getQueryConstrain(Query $query) {
+    public function getQueryConstrains(Query $query, array $additionalConstrains = NULL) {
         $constrains = array();
-        if (($lowest = $this->getSelectedLowestPrice()) !== FALSE && ($highest = $this->getSelectedHighestPrice()) !== FALSE) {
-            $constrains[] = $query->greaterThanOrEqual('price', $lowest);
-            $constrains[] = $query->lessThanOrEqual('price', $highest);
-            return $constrains;
+        if ($this->getIsSlider()) {
+            if (($lowest = $this->getSelectedLowestPrice()) !== FALSE && ($highest = $this->getSelectedHighestPrice()) !== FALSE) {
+                $constrains[] = $query->greaterThanOrEqual('price', $lowest);
+                $constrains[] = $query->lessThanOrEqual('price', $highest);
+                return $constrains;
+            }
+        } else {
+            // If there is a minimum price selected we adjust it in the query below
+            if (($minimum = $this->getSelectedPriceMinimum())) {
+                $constrains[] = $query->greaterThanOrEqual('price', $minimum);
+            }
+            // If there is a maximum price selected we adjust it in the query below
+            if (($maximum = $this->getSelectedPriceMaximum())) {
+                $constrains[] = $query->lessThanOrEqual('price', $maximum);
+            }
+            if ($constrains) {
+                if (count($constrains) == 1) {
+                    return $constrains[0];
+                }
+                return $constrains;
+            }
         }
         return FALSE;
     }

@@ -58,6 +58,11 @@ class Category extends AbstractModel {
 	/**
 	 * @var bool
 	 */
+	protected $disableFilterTypes = FALSE;
+
+	/**
+	 * @var bool
+	 */
 	protected $disableFilterOffer = FALSE;
 
 	/**
@@ -154,15 +159,6 @@ class Category extends AbstractModel {
 	}
 
 	/**
-	 * Is Disable Filter Type
-	 *
-	 * @return bool
-	 */
-	public function isDisableFilterType() {
-		return $this->getDisableFilterType();
-	}
-
-	/**
 	 * Set Disable Filter Type
 	 *
 	 * @param bool $disableFilterType
@@ -173,21 +169,31 @@ class Category extends AbstractModel {
 	}
 
 	/**
+	 * Get Disable Filter Types
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterTypes() {
+		return $this->disableFilterTypes;
+	}
+
+	/**
+	 * Set Disable Filter Types
+	 *
+	 * @param bool $disableFilterTypes
+	 * @return void
+	 */
+	public function setDisableFilterTypes($disableFilterTypes) {
+		$this->disableFilterTypes = $disableFilterTypes;
+	}
+
+	/**
 	 * Get Disable Filter Offer
 	 *
 	 * @return bool
 	 */
 	public function getDisableFilterOffer() {
 		return $this->disableFilterOffer;
-	}
-
-	/**
-	 * Is Disable Filter Offer
-	 *
-	 * @return bool
-	 */
-	public function isDisableFilterOffer() {
-		return $this->getDisableFilterOffer();
 	}
 
 	/**
@@ -210,15 +216,6 @@ class Category extends AbstractModel {
 	}
 
 	/**
-	 * Is Disable Filter Town
-	 *
-	 * @return bool
-	 */
-	public function isDisableFilterTown() {
-		return $this->getDisableFilterTown();
-	}
-
-	/**
 	 * Disable Filter Town
 	 *
 	 * @param bool $disableFilterTown
@@ -235,15 +232,6 @@ class Category extends AbstractModel {
 	 */
 	public function getDisableFilterTowns() {
 		return $this->disableFilterTowns;
-	}
-
-	/**
-	 * Is Disable Filter Towns
-	 *
-	 * @return bool
-	 */
-	public function isDisableFilterTowns() {
-		return $this->getDisableFilterTowns();
 	}
 
 	/**
@@ -266,15 +254,6 @@ class Category extends AbstractModel {
 	}
 
 	/**
-	 * Is Disable Filter Price Range
-	 *
-	 * @return bool
-	 */
-	public function isDisableFilterPriceRange() {
-		return $this->getDisableFilterPriceRange();
-	}
-
-	/**
 	 * Set Disable Filter Price Range
 	 *
 	 * @param bool $disableFilterPriceRange
@@ -291,13 +270,6 @@ class Category extends AbstractModel {
 	 */
 	public function getDisableFilterPresences() {
 		return $this->disableFilterPresences;
-	}
-
-	/**
-	 * Is Disable Filter Presences
-	 */
-	public function isDisableFilterPresences() {
-		return $this->getDisableFilterPresences();
 	}
 
 	/**
@@ -320,15 +292,6 @@ class Category extends AbstractModel {
 	}
 
 	/**
-	 * Is Disable Filter Lot Size
-	 *
-	 * @return bool
-	 */
-	public function isDisableFilterLotSize() {
-		return $this->getDisableFilterLotSize();
-	}
-
-	/**
 	 * Set Disable Filter Lot Size
 	 *
 	 * @param bool $disableFilterLotSize
@@ -345,15 +308,6 @@ class Category extends AbstractModel {
 	 */
 	public function getDisableFilterPosition() {
 		return $this->disableFilterPosition;
-	}
-
-	/**
-	 * Is Disable Filter Position
-	 *
-	 * @return bool
-	 */
-	public function isDisableFilterPosition() {
-		return $this->getDisableFilterPosition();
 	}
 
 	/**
@@ -376,15 +330,6 @@ class Category extends AbstractModel {
 	}
 
 	/**
-	 * Is Disable Filter Construction Type
-	 *
-	 * @return bool
-	 */
-	public function isDisableFilterConstructionType() {
-		return $this->getDisableFilterConstructionType();
-	}
-
-	/**
 	 * Set Disable Filter Construction Type
 	 *
 	 * @param bool $disableFilterConstructionType
@@ -401,15 +346,6 @@ class Category extends AbstractModel {
 	 */
 	public function getDisableFilterStatus() {
 		return $this->disableFilterStatus;
-	}
-
-	/**
-	 * Is Disable Filter Status
-	 *
-	 * @return bool
-	 */
-	public function isDisableFilterStatus() {
-		return $this->getDisableFilterStatus();
 	}
 
 	/**

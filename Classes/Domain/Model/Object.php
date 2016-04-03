@@ -27,7 +27,6 @@ namespace Ucreation\Properties\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
  * Class Object
@@ -50,7 +49,7 @@ class Object extends AbstractEntity {
 	const	STATUS_AVAILABLE = 0,
 			STATUS_SOLD = 1,
 			STATUS_LEASED = 2,
-			STATUS_NOTAVAILABLE = 3;
+			STATUS_NOT_AVAILABLE = 3;
 	
 	/**
 	 * @const int
@@ -437,11 +436,11 @@ class Object extends AbstractEntity {
 	}
 	
 	/**
-	 * Is Rent
+	 * Get Is Rent
 	 *
 	 * @return boolean
 	 */
-	public function isRent() {
+	public function getIsRent() {
 		if ($this->getOffer() == self::OFFER_RENT || $this->getOffer() == self::OFFER_BOTH) {
 			return TRUE;
 		}
@@ -757,15 +756,6 @@ class Object extends AbstractEntity {
 	 */
 	public function getUseExistingContact() {
 		return $this->useExistingContact;
-	}
-
-	/**
-	 * Is Use Existing Contact
-	 *
-	 * @return bool
-	 */
-	public function isUseExistingContact() {
-		return $this->getUseExistingContact();
 	}
 
 	/**

@@ -27,9 +27,45 @@ plugin.tx_properties {
 		    ignore =
 		    register =
 		    remove =
+		    processing {
+		        implodes = types, towns, presences, constructionTypes, positions, status
+		    }
 		}
 		filters {
 		    eliminated =
+		    hideDisabledOptions = 0
+		    autoDeactivate = 0
+            types {
+                options {
+                    remove =
+                }
+            }
+		    search {
+		        fields =
+		    }
+            price {
+                slider {
+                    enable = 0
+                }
+                options = 25000, 50000, 100000, 150000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 1200000, 1500000
+                thousandsSeparator = .
+                prependLabel = €*
+                appendLabel =
+            }
+            lotSize {
+                slider {
+                    enable = 0
+                }
+                options = 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 1500, 1750, 2000, 3000, 4000, 5000
+                thousandsSeparator = .
+                prependLabel =
+                appendLabel = *m²
+            }
+            status {
+                options {
+                    remove =
+                }
+            }
 		}
 	}
 }

@@ -25,7 +25,7 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Ucreation\Properties\Filter\TypeFilter;
+use Ucreation\Properties\Utility\AdditionalQueryConstrainsUtility;
 use Ucreation\Properties\Utility\FilterUtility;
 
 /**
@@ -44,12 +44,12 @@ class Presence extends AbstractModel {
 	/**
 	 * @var bool
 	 */
-	protected $isActive = FALSE;
+	protected $disableFilterOption = FALSE;
 
 	/**
-	 * @var bool
+	 * @var bool|null
 	 */
-	protected $isDisabled = FALSE;
+	protected $isActive = NULL;
 
 	/**
 	 * @var int|null
@@ -76,17 +76,48 @@ class Presence extends AbstractModel {
 	}
 
 	/**
+	 * Get Disable Filter Option
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterOption() {
+		return $this->disableFilterOption;
+	}
+
+	/**
+	 * Set Disable Filter Option
+	 *
+	 * @param bool $disableFilterOption
+	 * @return void
+	 */
+	public function setDisableFilterOption($disableFilterOption) {
+		$this->disableFilterOption = $disableFilterOption;
+	}
+
+	/**
 	 * Get Is Active
 	 *
 	 * @return bool
 	 */
 	public function getIsActive() {
-		if (($activePresences = $this->getFilterService()->getFilter(FilterUtility::FILTER_PRESENCES)->getActivePresences())) {
-			if (in_array($this->getUid(), $activePresences)) {
-				return TRUE;
+		if (is_null($this->isActive)) {
+			$this->isActive = FALSE;
+			if (($presenceFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_PRESENCES))) {
+				if (in_array($this->getUid(), $presenceFilter->getActivePresences())) {
+					$this->isActive = TRUE;
+				}
 			}
 		}
-		return FALSE;
+		return $this->isActive;
+	}
+
+	/**
+	 * Get Is Disabled
+	 *
+	 * @return bool
+	 */
+	public function getIsDisabled() {
+		return ($this->getFilterAvailableObjects() ? FALSE : TRUE);
 	}
 
 	/**
@@ -99,33 +130,21 @@ class Presence extends AbstractModel {
 			$this->filterAvailableObjects = 0;
 			// Gets the current presence filter
 			if (($presenceFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_PRESENCES))) {
-				// Checks if the current presences filter is active (otherwise we just don't do anything since this filter can't be active)
-				if ($presenceFilter->getIsActive()) {
-					// Creates a new presence filter
-					$newPresenceFilter = clone $presenceFilter;
-					$newPresenceFilter->setActivePresence($this->getUid());
-					// Creates a new type filter
-					$newTypeFilter = $this->getFilterService()->createNewFilter(FilterUtility::FILTER_TYPE);
-					$newTypeFilter->setActiveType(TypeFilter::TYPE_BUILDING);
-					// Filter overrides
-					$overrides = array(
-						FilterUtility::FILTER_PRESENCES => $newPresenceFilter,
-						FilterUtility::FILTER_TYPE => $newTypeFilter,
-					);
-					$this->filterAvailableObjects = $this->getObjectService()->getFilteredObjects(NULL, $overrides)->count();
+				$activePresenceIds = $presenceFilter->getActivePresences();
+				if (!in_array($this->getUid(), $activePresenceIds)) {
+					$activePresenceIds[] = $this->getUid();
 				}
+				// Query instructions
+				$additionalConstrains = array();
+				foreach ($activePresenceIds as $activePresenceId) {
+					$additionalConstrains[] = AdditionalQueryConstrainsUtility::contains('presences', $activePresenceId);
+				}
+				// Filtering for the type either since presences can only be assigned to buildings
+				$additionalConstrains[] = AdditionalQueryConstrainsUtility::equals('type', Object::TYPE_BUILDING);
+				$this->filterAvailableObjects = $this->getObjectService()->getFilteredObjects(NULL, NULL, array(FilterUtility::FILTER_PRESENCES, FilterUtility::FILTER_TYPE), 0, NULL, $additionalConstrains)->count();
 			}
 		}
 		return $this->filterAvailableObjects;
-	}
-
-	/**
-	 * Get Is Disabled
-	 *
-	 * @return bool
-	 */
-	public function getIsDisabled() {
-		return ($this->getFilterAvailableObjects() ? FALSE : TRUE);
 	}
 
 }

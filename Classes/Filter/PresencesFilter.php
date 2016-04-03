@@ -44,7 +44,7 @@ class PresencesFilter extends AbstractFilter {
     protected $activePresences = NULL;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>|bool
+     * @var \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Presence>|bool
      */
     protected $availablePresences = FALSE;
 
@@ -72,9 +72,16 @@ class PresencesFilter extends AbstractFilter {
             }
             // Checks if there is an active category and checks if the category has disabled this filter
             if (($category = $this->getObjectService()->getActiveCategory())) {
-                if ($category->isDisableFilterPresences()) {
+                if ($category->getDisableFilterPresences()) {
                     return FALSE;
                 }
+            }
+            // Auto deactivates the filter by setup
+            if (
+                (bool)$this->getObjectService()->settings['filters']['autoDeactivate'] &&
+                !$this->getPresences()
+            ) {
+                return FALSE;
             }
             return TRUE;
         }
@@ -84,13 +91,31 @@ class PresencesFilter extends AbstractFilter {
     /**
      * Get Available Presences
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Presence>
      */
     public function getAvailablePresences() {
         if ($this->availablePresences === FALSE) {
-            $this->availablePresences = $this->presenceRepository->findAll();
+            $this->availablePresences = $this->presenceRepository->findAvailableFilterOptions();
         }
         return $this->availablePresences;
+    }
+
+    /**
+     * Get Presences
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Presence>
+     */
+    public function getPresences() {
+        if (!(bool)$this->getObjectService()->settings['filters']['hideDisabledOptions']) {
+            return $this->getAvailablePresences();
+        }
+        $presences = array();
+        foreach ($this->getAvailablePresences() as $presence) {
+            if (!$presence->getIsDisabled()) {
+                $presences[] = $presence;
+            }
+        }
+        return $presences;
     }
 
     /**
@@ -141,23 +166,24 @@ class PresencesFilter extends AbstractFilter {
     }
 
     /**
-     * Get Query Constrain
+     * Get Query Constrains
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+     * @param array $additionalConstrains
      * @return array|null
      */
-    public function getQueryConstrain(Query $query) {
-        if (($presences = $this->getActivePresences())) {
-            $constrains = array();
-            foreach ($presences as $presenceId) {
-                $constrains[] = $query->contains('presences', $presenceId);
+    public function getQueryConstrains(Query $query, array $additionalConstrains = NULL) {
+        $constrains = array();
+        foreach ($this->getPresences() as $presence) {
+            if ($presence->getIsActive()) {
+                $constrains[] = $query->contains('presences', (int)$presence->getUid());
             }
-            if ($constrains) {
-                if (count($constrains) == 1) {
-                    return $constrains[0];
-                }
-                return $constrains;
+        }
+        if ($constrains) {
+            if (count($constrains) == 1) {
+                return $constrains[0];
             }
+            return $constrains;
         }
         return FALSE;
     }

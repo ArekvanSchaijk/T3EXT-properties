@@ -1,10 +1,24 @@
 <legend><label for="lotSize">{f:translate(key: 'filter.lotSize')}</label></legend>
-<div class="filterOption slider lotSize" id="objectLotSize" data-lotsize-lowest="{filter.lowestLotSize}" data-lotsize-highest="{filter.highestLotSize}" data-selected-lotsize-lowest="{filter.selectedLowestLotSize}" data-selected-lotsize-highest="{filter.selectedHighestLotSize}">
-    <f:form.hidden name="lotSizeRange" id="lotSize" />
-    <div id="lotsize-slider-range" class="jquery-slider"> </div>
-    <div class="valueHolder">
-        <div class="min"> </div>
-        <div class="max"> </div>
-        <div class="clearboth"> </div>
-    </div>
-</div>
+<f:if condition="{filter.isSlider}">
+    <f:then>
+        <div class="filterOption slider lotSize" id="objectLotSize" data-lotsize-lowest="{filter.lowestLotSize}" data-lotsize-highest="{filter.highestLotSize}" data-selected-lotsize-lowest="{filter.selectedLowestLotSize}" data-selected-lotsize-highest="{filter.selectedHighestLotSize}">
+            <f:form.hidden name="lotSizeRange" id="lotSize" />
+            <div id="lotsize-slider-range" class="jquery-slider"> </div>
+            <div class="valueHolder">
+                <div class="min"> </div>
+                <div class="max"> </div>
+                <div class="clearboth"> </div>
+            </div>
+        </div>
+    </f:then>
+    <f:else>
+        <div class="filterOption minMaxLotSize">
+            <div class="selectRow">
+                <f:form.select name="lotSizeMin" id="lotSizeMin" options="{filter.lotSizeOptions}" optionValueField="value" optionLabelField="label" prependOptionLabel="{f:translate(key: 'filter.lotSizeMin')}" prependOptionValue="" value="{filter.selectedLotSizeMinimum}" />
+            </div>
+            <div class="selectRow">
+                <f:form.select name="lotSizeMax" id="lotSizeMax" options="{filter.lotSizeOptions}" optionValueField="value" optionLabelField="label" prependOptionLabel="{f:translate(key: 'filter.lotSizeMax')}" prependOptionValue="" value="{filter.selectedLotSizeMaximum}" />
+            </div>
+        </div>
+    </f:else>
+</f:if>

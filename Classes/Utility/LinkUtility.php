@@ -37,15 +37,20 @@ class LinkUtility {
 	 * @const string
 	 */	
 	const	TYPE = 'type',
+			TYPES = 'types',
 			OFFER = 'offer',
 			TOWN = 'town',
 			TOWNS = 'towns',
 			PRICE_RANGE = 'priceRange',
+			PRICE_MIN = 'priceMin',
+			PRICE_MAX = 'priceMax',
 			LOT_SIZE_RANGE = 'lotSizeRange',
+			LOT_SIZE_MIN = 'lotSizeMin',
+			LOT_SIZE_MAX = 'lotSizeMax',
 			CATEGORY = 'category',
 			PRESENCES = 'presences',
-			POSITION = 'position',
-			CONSTRUCTION_TYPE = 'constructionType',
+			POSITIONS = 'positions',
+			CONSTRUCTION_TYPES = 'constructionTypes',
 			STATUS = 'status';
 	
 	/**
@@ -53,15 +58,20 @@ class LinkUtility {
 	 */
 	static protected $availableParameterNames = array(
 		self::TYPE,
+		self::TYPES,
 		self::OFFER,
 		self::TOWN,
 		self::TOWNS,
 		self::PRICE_RANGE,
+		self::PRICE_MIN,
+		self::PRICE_MAX,
 		self::LOT_SIZE_RANGE,
+		self::LOT_SIZE_MIN,
+		self::LOT_SIZE_MAX,
 		self::CATEGORY,
 		self::PRESENCES,
-		self::POSITION,
-		self::CONSTRUCTION_TYPE,
+		self::POSITIONS,
+		self::CONSTRUCTION_TYPES,
 		self::STATUS,
 	);
 	

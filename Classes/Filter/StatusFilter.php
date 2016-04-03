@@ -25,9 +25,11 @@ namespace Ucreation\Properties\Filter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Domain\Model\Object;
+use Ucreation\Properties\Utility\LinkUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
-use Ucreation\Properties\Domain\Model\Object;
 
 /**
  * Class StatusFilter
@@ -43,12 +45,17 @@ class StatusFilter extends AbstractFilter {
     const   STATUS_AVAILABLE = 1,
             STATUS_SOLD = 2,
             STATUS_LEASED = 3,
-            STATUS_UNAVAILABLE = 4;
+            STATUS_NOT_AVAILABLE = 4;
 
     /**
      * @var array|null
      */
     protected $options = NULL;
+
+    /**
+     * @var array|null
+     */
+    protected $activeStates = NULL;
 
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
@@ -78,9 +85,16 @@ class StatusFilter extends AbstractFilter {
         if (parent::getIsActive()) {
             // Checks if there is an active category and checks if the category has disabled this filter
             if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
-                if ($category->isDisableFilterStatus()) {
+                if ($category->getDisableFilterStatus()) {
                     return FALSE;
                 }
+            }
+            // Auto deactivates the filter by setup
+            if (
+                (bool)$this->getObjectService()->settings['filters']['autoDeactivate'] &&
+                !$this->getStatusOptions()
+            ) {
+                return FALSE;
             }
             return TRUE;
         }
@@ -92,13 +106,21 @@ class StatusFilter extends AbstractFilter {
      *
      * @return array
      */
-    static protected function getStatusOptionsArray() {
-        return array(
+    protected function getStatusOptionsArray() {
+        $optionsArray = array(
             self::STATUS_AVAILABLE => LocalizationUtility::translate('filter.status.available', self::$extensionName),
             self::STATUS_SOLD => LocalizationUtility::translate('filter.status.sold', self::$extensionName),
             self::STATUS_LEASED => LocalizationUtility::translate('filter.status.leased', self::$extensionName),
-            self::STATUS_UNAVAILABLE => LocalizationUtility::translate('filter.status.unavailable', self::$extensionName),
+            self::STATUS_NOT_AVAILABLE => LocalizationUtility::translate('filter.status.unavailable', self::$extensionName),
         );
+        // Removes options by setup
+        if (((bool)$removedOptions = $this->getObjectService()->settings['filters']['status']['options']['remove'])) {
+            $removedOptions = GeneralUtility::trimExplode(',', $removedOptions);
+            foreach ($removedOptions as $removedOption) {
+                unset($optionsArray[$removedOption]);
+            }
+        }
+        return $optionsArray;
     }
 
     /**
@@ -109,24 +131,32 @@ class StatusFilter extends AbstractFilter {
     public function getStatusOptions() {
         if (is_null($this->options)) {
             $this->options = array();
-            foreach (self::getStatusOptionsArray() as $value => $label) {
+            foreach ($this->getStatusOptionsArray() as $value => $label) {
                 $option = $this->getNewStatusOptionObject();
                 $option->setLabel($label);
                 $option->setValue($value);
-                $this->options[$label] = $option;
+                // Hides disabled options by setup
+                if (!$this->getObjectService()->settings['filters']['hideDisabledOptions'] || !$option->getIsDisabled()) {
+                    $this->options[$value] = $option;
+                }
             }
         }
         return $this->options;
     }
 
     /**
-     * Set Status Options
+     * Get Active States
      *
-     * @param array $options
-     * @return void
+     * @return array
      */
-    public function setStatusOptions(array $options) {
-        $this->options = $options;
+    public function getActiveStates() {
+        if (is_null($this->activeStates)) {
+            $this->activeStates = array();
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::STATUS)) {
+                $this->activeStates = GeneralUtility::trimExplode(',', $this->getObjectService()->request->getArgument(LinkUtility::STATUS));
+            }
+        }
+        return $this->activeStates;
     }
 
     /**
@@ -139,30 +169,38 @@ class StatusFilter extends AbstractFilter {
     }
 
     /**
-     * Get Query Constrain
+     * Get Query Status Value
+     *
+     * @param int $status
+     * @return int
+     */
+    static public function getQueryStatusValue($status) {
+        switch ($status) {
+            case self::STATUS_AVAILABLE:
+                return Object::STATUS_AVAILABLE;
+            case self::STATUS_SOLD:
+                return Object::STATUS_SOLD;
+            case self::STATUS_LEASED:
+                return Object::STATUS_LEASED;
+            case self::STATUS_NOT_AVAILABLE:
+                return Object::STATUS_NOT_AVAILABLE;
+            default:
+                return FALSE;
+        }
+    }
+
+    /**
+     * Get Query Constrains
      *
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
+     * @param array $additionalConstrains
      * @return array|bool
      */
-    public function getQueryConstrain(Query $query) {
-        return FALSE;
+    public function getQueryConstrains(Query $query, array $additionalConstrains = NULL) {
         $constrains = array();
         foreach ($this->getStatusOptions() as $option) {
             if ($option->getIsActive()) {
-                switch ($option->getLabel()) {
-                    case self::STATUS_AVAILABLE:
-                        $constrains[] = $query->equals('status', Object::STATUS_AVAILABLE);
-                        break;
-                    case self::STATUS_SOLD:
-                        $constrains[] = $query->equals('status', Object::STATUS_SOLD);
-                        break;
-                    case self::STATUS_LEASED:
-                        $constrains[] = $query->equals('status', Object::STATUS_LEASED);
-                        break;
-                    case self::STATUS_UNAVAILABLE:
-                        $constrains[] = $query->equals('status', Object::STATUS_UNAVAILABLE);
-                        break;
-                }
+                $constrains[] = $query->equals('status', self::getQueryStatusValue($option->getValue()));
             }
         }
         if ($constrains) {

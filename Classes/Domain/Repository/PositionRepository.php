@@ -1,10 +1,10 @@
 <?php
-namespace Ucreation\Properties\Filter;
+namespace Ucreation\Properties\Domain\Repository;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2016 Arek van Schaijk <info@ucreation.nl>, Ucreation
+ *  (c) 20156 Arek van Schaijk <info@ucreation.nl>, Ucreation
  *
  *  All rights reserved
  *
@@ -25,44 +25,34 @@ namespace Ucreation\Properties\Filter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Persistence\Generic\Query;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- * Class PositionFilter
+ * Class PositionRepository
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class PositionFilter extends AbstractFilter {
+class PositionRepository extends Repository {
 
     /**
-     * Get Is Active
-     *
-     * @return bool
+     * @var array
      */
-    public function getIsActive() {
-
-        return FALSE;
-        if (parent::getIsActive()) {
-            // Checks if there is an active category and checks if the category has disabled this filter
-            if (($category = $this->getFilterService()->getObjectService()->getActiveCategory())) {
-                if ($category->isDisableFilterPosition()) {
-                    return FALSE;
-                }
-            }
-            return TRUE;
-        }
-        return FALSE;
-    }
+    protected $defaultOrderings = array(
+        'name' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+    );
 
     /**
-     * Get Query Constrain
+     * Find Available Filter Options
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
-     * @return array|bool
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\ConstructionType>
      */
-    public function getQueryConstrain(Query $query) {
-        return FALSE;
+    public function findAvailableFilterOptions() {
+        $query = $this->createQuery();
+        $query->matching(
+            $query->equals('disable_filter_option', FALSE)
+        );
+        return $query->execute();
     }
 
 }

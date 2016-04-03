@@ -1,10 +1,10 @@
 <?php
-namespace Ucreation\Properties\Domain\Repository;
+namespace Ucreation\Properties\Filter\Option;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 20156 Arek van Schaijk <info@ucreation.nl>, Ucreation
+ *  (c) 2016 Arek van Schaijk <info@ucreation.nl>, Ucreation
  *
  *  All rights reserved
  *
@@ -25,34 +25,60 @@ namespace Ucreation\Properties\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Persistence\Repository;
-
 /**
- * Class TownRepository
+ * Class LotSizeOption
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class TownRepository extends Repository {
+class LotSizeOption {
 
     /**
-     * @var array
+     * @var int
      */
-    protected $defaultOrderings = array(
-        'name' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
-    );
+    protected $value = '';
 
     /**
-     * Find Available Filter Options
+     * @var string
+     */
+    protected $label = '';
+
+    /**
+     * Get Value
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Town>
+     * @return int
      */
-    public function findAvailableFilterOptions() {
-        $query = $this->createQuery();
-        $query->matching(
-            $query->equals('disable_filter_option', FALSE)
-        );
-        return $query->execute();
+    public function getValue() {
+        return $this->value;
+    }
+
+    /**
+     * Set Value
+     *
+     * @param int $value
+     * @return void
+     */
+    public function setValue($value) {
+        $this->value = $value;
+    }
+
+    /**
+     * Get Label
+     *
+     * @return string
+     */
+    public function getLabel() {
+        return $this->label;
+    }
+
+    /**
+     * Set Label
+     *
+     * @param string $label
+     * @return void
+     */
+    public function setLabel($label) {
+        $this->label = $label;
     }
 
 }
