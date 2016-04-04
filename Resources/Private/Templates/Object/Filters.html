@@ -5,6 +5,9 @@
             <f:for each="{filters}" as="filter">
                 <f:if condition="{filter.isActive}">
                     <f:switch expression="{filter.filterKey}">
+                        <f:case value="search">
+                            <f:render partial="Object/List/Filters/Search" arguments="{filter: filter}" />
+                        </f:case>
                         <f:case value="type">
                             <f:render partial="Object/List/Filters/Type" arguments="{filter: filter}" />
                         </f:case>

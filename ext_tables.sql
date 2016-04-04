@@ -192,6 +192,7 @@ CREATE TABLE tx_properties_domain_model_category (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	name varchar(100) DEFAULT '' NOT NULL,
+	disable_filter_search tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	disable_filter_offer tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	disable_filter_town tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	disable_filter_towns tinyint(4) unsigned DEFAULT '0' NOT NULL,

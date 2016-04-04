@@ -53,6 +53,11 @@ class Category extends AbstractModel {
 	/**
 	 * @var bool
 	 */
+	protected $disableFilterSearch = FALSE;
+
+	/**
+	 * @var bool
+	 */
 	protected $disableFilterType = FALSE;
 
 	/**
@@ -147,6 +152,25 @@ class Category extends AbstractModel {
 		return array(
 			LinkUtility::CATEGORY => $this->getUid()
 		);
+	}
+
+	/**
+	 * Get Disable Filter Search
+	 *
+	 * @return bool
+	 */
+	public function getDisableFilterSearch() {
+		return $this->disableFilterSearch;
+	}
+
+	/**
+	 * Set Disable Filter Search
+	 *
+	 * @param bool $disableFilterSearch
+	 * @return void
+	 */
+	public function setDisableFilterSearch($disableFilterSearch) {
+		$this->disableFilterSearch = $disableFilterSearch;
 	}
 
 	/**

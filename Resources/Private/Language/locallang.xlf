@@ -9,6 +9,9 @@
 			<trans-unit id="filter.not_available">
 				<source>Deze filter is in de huidige selectie niet beschikbaar.</source>
 			</trans-unit>
+			<trans-unit id="filter.search">
+				<source>Zoekterm</source>
+			</trans-unit>
 			<trans-unit id="filter.type">
 				<source>Soort object</source>
 			</trans-unit>

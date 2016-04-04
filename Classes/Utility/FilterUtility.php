@@ -36,7 +36,8 @@ class FilterUtility {
     /**
      * @const string
      */
-    const   FILTER_TYPE = 'type',
+    const   FILTER_SEARCH = 'search',
+            FILTER_TYPE = 'type',
             FILTER_TYPES = 'types',
             FILTER_CATEGORY = 'category',
             FILTER_TOWN = 'town',
@@ -57,6 +58,7 @@ class FilterUtility {
      */
     static public function getRegistered() {
         return array(
+            self::FILTER_SEARCH => 'Ucreation\\Properties\\Filter\\SearchFilter',
             self::FILTER_TYPE => 'Ucreation\\Properties\\Filter\\TypeFilter',
             self::FILTER_TYPES => 'Ucreation\\Properties\\Filter\\TypesFilter',
             self::FILTER_OFFER => 'Ucreation\\Properties\\Filter\\OfferFilter',

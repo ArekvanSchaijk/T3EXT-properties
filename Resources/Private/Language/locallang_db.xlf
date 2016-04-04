@@ -399,6 +399,12 @@
 			<trans-unit id="tx_properties_domain_model_category.name">
 				<source>Name</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_search">
+				<source>Disable Filter Search</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_search.0">
+				<source>If checked, the filter 'search' will be disabled while being in this category</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_category.disable_filter_type">
 				<source>Disable Filter Type</source>
 			</trans-unit>

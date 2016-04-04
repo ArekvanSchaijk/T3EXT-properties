@@ -36,6 +36,10 @@ plugin.tx_properties {
                     remove = {$plugin.tx_properties.settings.filters.types.options.remove}
                 }
             }
+		    search {
+		        fields = {$plugin.tx_properties.settings.filters.search.fields}
+		        spaceCharacter = {$plugin.tx_properties.settings.filters.search.spaceCharacter}
+		    }
             price {
                 slider {
                     enable = {$plugin.tx_properties.settings.filters.price.slider.enable}

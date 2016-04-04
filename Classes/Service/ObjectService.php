@@ -214,6 +214,12 @@ class ObjectService implements SingletonInterface {
 				}
 			}
 		}
+		// Loops through the filters and checks if there are methods where we have to pass through the array with link arguments
+		foreach ($this->getFilterService()->getFilters() as $filter) {
+			if (method_exists($filter, 'processLinkArguments')) {
+				$linkArguments = $filter->processLinkArguments($linkArguments);
+			}
+		}
 		return $linkArguments;
 	}
 

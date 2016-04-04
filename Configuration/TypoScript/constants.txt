@@ -41,7 +41,8 @@ plugin.tx_properties {
                 }
             }
 		    search {
-		        fields =
+		        fields = name, description
+		        spaceCharacter = -
 		    }
             price {
                 slider {
