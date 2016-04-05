@@ -28,13 +28,13 @@
 				<source>Kavel</source>
 			</trans-unit>
 			<trans-unit id="filter.types.buildings_for_sale">
-				<source>Koopwoningen</source>
+				<source>Koopwoning</source>
 			</trans-unit>
 			<trans-unit id="filter.types.buildings_for_rent">
-				<source>Huurwoningen</source>
+				<source>Huurwoning</source>
 			</trans-unit>
 			<trans-unit id="filter.types.lots">
-				<source>Kavels</source>
+				<source>Kavel</source>
 			</trans-unit>
 			<trans-unit id="filter.offer">
 				<source>Soort aanbod</source>
