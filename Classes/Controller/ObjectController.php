@@ -56,18 +56,14 @@ class ObjectController extends BaseController {
 	 * @param \Ucreation\Properties\Domain\Model\Object $object
 	 * @return void
 	 */
-	public function showAction(Object $object = NULL) {
-
-	}
+	public function showAction(Object $object = NULL) {}
 
 	/**
 	 * Filters Action
 	 *
 	 * @return void
 	 */
-	public function filtersAction() {
-
-	}
+	public function filtersAction() {}
 
 	/**
 	 * Perform Filters Form Post
