@@ -1,10 +1,10 @@
 <?php
-namespace Ucreation\Properties\Controller;
+namespace Ucreation\Properties\ViewHelpers;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2015 Arek van Schaijk <info@ucreation.nl>, Ucreation
+ *  (c) 2016 Arek van Schaijk <info@ucreation.nl>, Ucreation
  *
  *  All rights reserved
  *
@@ -25,57 +25,32 @@ namespace Ucreation\Properties\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Ucreation\Properties\Domain\Model\Object;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * Class ObjectController
+ * Class GetFilterViewHelper
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class ObjectController extends BaseController {
+class GetFilterViewHelper extends AbstractViewHelper {
 
-	/**
-	 * List Action
-	 * 
-	 * @return void
-	 */
-	public function listAction() {
-		// Determines if the filter form is posted
-		if ($this->request->hasArgument('submitFilters')) {
-			$this->performFiltersFormPost();
-			exit;
-		}
-		$objects = $this->objectService->getFilteredObjects();
-		$this->view->assign('objects', $objects);
-	}
-	
-	/**
-	 * Show Action
-	 * 
-	 * @param \Ucreation\Properties\Domain\Model\Object $object
-	 * @return void
-	 */
-	public function showAction(Object $object = NULL) {
-		
-	}
+    /**
+     * @var \Ucreation\Properties\Service\FilterService
+     * @inject
+     */
+    protected $filterService = NULL;
 
-	/**
-	 * Filters Action
-	 *
-	 * @return void
-	 */
-	public function filtersAction() {
-
-	}
-
-	/**
-	 * Perform Filters Form Post
-	 *
-	 * @return void
-	 */
-	protected function performFiltersFormPost() {
-		$this->redirect(NULL, NULL, NULL, $this->objectService->getLinkArguments());
-	}
+    /**
+     * Render
+     *
+     * @param string $name
+     * @return mixed|null
+     */
+    public function render($name) {
+        echo 'dd';
+        exit;
+        return $this->filterService->getFilter($name);
+    }
 
 }
