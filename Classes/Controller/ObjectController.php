@@ -46,7 +46,10 @@ class ObjectController extends BaseController {
 			$this->performFiltersFormPost();
 			exit;
 		}
-		$objects = $this->objectService->getFilteredObjects();
+		echo '<pre>';
+		print_r($this->getFilterService()->getQueryOrderings());
+		echo '</pre>';
+		$objects = $this->objectService->getFilteredObjects(NULL, NULL, NULL, 0, $this->getFilterService()->getQueryOrderings());
 		$this->view->assign('objects', $objects);
 	}
 	
@@ -71,7 +74,7 @@ class ObjectController extends BaseController {
 	 * @return void
 	 */
 	protected function performFiltersFormPost() {
-		$this->redirect(NULL, NULL, NULL, $this->objectService->getLinkArguments());
+		$this->redirect(NULL, NULL, NULL, $this->getObjectService()->getLinkArguments());
 	}
 
 }

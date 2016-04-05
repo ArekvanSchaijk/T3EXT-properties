@@ -13,12 +13,17 @@ plugin.tx_properties {
 	}
 	settings {
 		object {
+		    singlePid =
+		    defaultImage =
 		    cover {
 		        listWidth = 270
 		        listHeight = 180c
 		    }
-		    singlePid =
-		    defaultImage =
+		    orderings {
+		        defaultOrder = 1
+		        defaultOrderField = crdate
+		        allowedOrderFields = uid, crdate, tstamp, name, price, lot_size, status
+		    }
 		}
         categories {
             autoActivateFirstCategory = 1

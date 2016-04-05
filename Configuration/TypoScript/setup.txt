@@ -9,12 +9,17 @@ plugin.tx_properties {
 	}
 	settings {
 		object {
+		    singlePid = {$plugin.tx_properties.settings.object.singlePid}
+		    defaultImage = {$plugin.tx_properties.settings.object.defaultImage}
 		    cover {
 		        listWidth = {$plugin.tx_properties.settings.object.cover.listWidth}
 		        listHeight = {$plugin.tx_properties.settings.object.cover.listHeight}
 		    }
-		    singlePid = {$plugin.tx_properties.settings.object.singlePid}
-		    defaultImage = {$plugin.tx_properties.settings.object.defaultImage}
+		    orderings {
+		        defaultOrder = {$plugin.tx_properties.settings.object.orderings.defaultOrder}
+		        defaultOrderField = {$plugin.tx_properties.settings.object.orderings.defaultOrderField}
+		        allowedOrderFields = {$plugin.tx_properties.settings.object.orderings.allowedOrderFields}
+		    }
 		}
 		categories {
             autoActivateFirstCategory = {$plugin.tx_properties.settings.categories.autoActivateFirstCategory}

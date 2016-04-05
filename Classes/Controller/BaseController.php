@@ -61,5 +61,23 @@ class BaseController extends ActionController {
 			$this->objectService->prepare($this->request, $this->settings);
 		}
 	}
+
+	/**
+	 * Get Object Service
+	 *
+	 * @return \Ucreation\Properties\Service\ObjectService
+	 */
+	public function getObjectService() {
+		return $this->objectService;
+	}
+
+	/**
+	 * Get Filter Service
+	 *
+	 * @return \Ucreation\Properties\Service\FilterService
+	 */
+	public function getFilterService() {
+		return $this->getObjectService()->getFilterService();
+	}
 	
 }

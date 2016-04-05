@@ -28,8 +28,10 @@ namespace Ucreation\Properties\Service;
 use Ucreation\Properties\Exception;
 use Ucreation\Properties\Filter\AbstractFilter;
 use Ucreation\Properties\Utility\FilterUtility;
+use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 
 /**
@@ -39,6 +41,12 @@ use TYPO3\CMS\Core\SingletonInterface;
  * @author Arek van Schaijk <info@ucreation.nl>
  */
 class FilterService implements SingletonInterface {
+
+    /**
+     * @const int
+     */
+    const   ORDER_ASCENDING = 1,
+            ORDER_DESCENDING = 2;
 
     /**
      * @var bool
@@ -54,6 +62,16 @@ class FilterService implements SingletonInterface {
      * @var array
      */
     protected $eliminated = array();
+
+    /**
+     * @var int|null
+     */
+    protected $order = NULL;
+
+    /**
+     * @var string|null
+     */
+    protected $orderField = NULL;
 
     /**
      * @var \Ucreation\Properties\Service\ObjectService
@@ -196,6 +214,73 @@ class FilterService implements SingletonInterface {
      */
     public function getIsAutoDeactivate() {
         return (bool)$this->getObjectService()->settings['filters']['autoDeactivate'];
+    }
+
+    /**
+     * Get Order
+     *
+     * @return int
+     */
+    public function getOrder() {
+        if (is_null($this->order)) {
+            // Default order
+            $this->order = self::ORDER_ASCENDING;
+            // Default order by setup
+            if ((int)$this->getObjectService()->settings['object']['orderings']['defaultOrder'] == self::ORDER_DESCENDING) {
+                $this->order = self::ORDER_DESCENDING;
+            }
+            // Calculates the active order
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::ORDER)) {
+                if (((int)$activeOrder = $this->getObjectService()->request->getArgument(LinkUtility::ORDER))) {
+                    if ($activeOrder == self::ORDER_ASCENDING) {
+                        $this->order = self::ORDER_ASCENDING;
+                    } else if($activeOrder == self::ORDER_DESCENDING) {
+                        $this->order = self::ORDER_DESCENDING;
+                    }
+                }
+            }
+        }
+        return $this->order;
+    }
+
+    /**
+     * Get Order Field
+     *
+     * @return string
+     */
+    public function getOrderField() {
+        if (is_null($this->orderField)) {
+            // Default order field
+            $this->orderField = 'uid';
+            // Default order field by setup
+            if ($this->getObjectService()->settings['object']['orderings']['defaultOrderField']) {
+                $this->orderField = $this->getObjectService()->settings['object']['orderings']['defaultOrderField'];
+            }
+            // Calculates the active order field
+            if ($this->getObjectService()->request->hasArgument(LinkUtility::ORDER_FIELD)) {
+                if ((string)$orderField = $this->getObjectService()->request->getArgument(LinkUtility::ORDER_FIELD)) {
+                    // Checks if the order field is allowed
+                    if (in_array($orderField, GeneralUtility::trimExplode(',', $this->getObjectService()->settings['object']['orderings']['allowedOrderFields']))) {
+                        $this->orderField = $orderField;
+                    }
+                }
+            }
+        }
+        return $this->orderField;
+    }
+
+    /**
+     * Get Query Orderings
+     *
+     * @return array
+     */
+    public function getQueryOrderings() {
+        switch($this->getOrder()) {
+            case self::ORDER_ASCENDING:
+                return array($this->getOrderField() => QueryInterface::ORDER_ASCENDING);
+            case self::ORDER_DESCENDING:
+                return array($this->getOrderField() => QueryInterface::ORDER_DESCENDING);
+        }
     }
 
 }
