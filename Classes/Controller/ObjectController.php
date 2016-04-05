@@ -56,7 +56,9 @@ class ObjectController extends BaseController {
 	 * @param \Ucreation\Properties\Domain\Model\Object $object
 	 * @return void
 	 */
-	public function showAction(Object $object = NULL) {}
+	public function showAction(Object $object = NULL) {
+		$this->view->assign('object', $object);
+	}
 
 	/**
 	 * Filters Action
