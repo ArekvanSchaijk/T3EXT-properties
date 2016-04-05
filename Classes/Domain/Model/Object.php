@@ -447,7 +447,13 @@ class Object extends AbstractEntity {
 	 * @return boolean
 	 */
 	public function getIsRent() {
-		if ($this->getOffer() == self::OFFER_RENT || $this->getOffer() == self::OFFER_BOTH) {
+		if (
+			$this->getType() == self::TYPE_BUILDING &&
+			(
+				$this->getOffer() == self::OFFER_RENT ||
+				$this->getOffer() == self::OFFER_BOTH
+			)
+		) {
 			return TRUE;
 		}
 		return FALSE;
@@ -489,6 +495,30 @@ class Object extends AbstractEntity {
 	 */
 	public function setType($type) {
 		$this->type = $type;
+	}
+
+	/**
+	 * Get Is Building
+	 *
+	 * @return bool
+	 */
+	public function getIsBuilding() {
+		if ($this->getType() == self::TYPE_BUILDING) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Get Is Lot
+	 *
+	 * @return bool
+	 */
+	public function getIsLot() {
+		if ($this->getType() == self::TYPE_LOT) {
+			return TRUE;
+		}
+		return FALSE;
 	}
 	
 	/**
