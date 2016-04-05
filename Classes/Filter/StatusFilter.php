@@ -91,7 +91,7 @@ class StatusFilter extends AbstractFilter {
             }
             // Auto deactivates the filter by setup
             if (
-                (bool)$this->getObjectService()->settings['filters']['autoDeactivate'] &&
+                $this->getFilterService()->getIsAutoDeactivate() &&
                 !$this->getStatusOptions()
             ) {
                 return FALSE;

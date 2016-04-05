@@ -189,4 +189,13 @@ class FilterService implements SingletonInterface {
         return $this->filters[$filterName]->isActive();
     }
 
+    /**
+     * Get Is Auto Deactivate
+     *
+     * @return bool
+     */
+    public function getIsAutoDeactivate() {
+        return (bool)$this->getObjectService()->settings['filters']['autoDeactivate'];
+    }
+
 }
