@@ -25,15 +25,16 @@ namespace Ucreation\Properties\ViewHelpers;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * Class LinkArgumentsViewHelper
+ * Class GetLinkArgumentsViewHelper
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class LinkArgumentsViewHelper extends AbstractViewHelper {
+class GetLinkArgumentsViewHelper extends AbstractViewHelper {
 
     /**
      * @var \Ucreation\Properties\Service\ObjectService
@@ -44,13 +45,17 @@ class LinkArgumentsViewHelper extends AbstractViewHelper {
     /**
      * Render
      *
-     * @param array|null $overrides
+     * @param int|bool $order
+     * @param string|bool $orderField
      * @return array
      */
-    public function render(array $overrides = NULL) {
+    public function render($order = FALSE, $orderField = FALSE) {
         $linkArguments = $this->objectService->getLinkArguments();
-        if ($overrides) {
-            $linkArguments = array_merge($linkArguments, $overrides);
+        if ($order) {
+            $linkArguments[LinkUtility::ORDER] = $order;
+        }
+        if ($orderField) {
+            $linkArguments[LinkUtility::ORDER_FIELD] = $orderField;
         }
         return $linkArguments;
     }

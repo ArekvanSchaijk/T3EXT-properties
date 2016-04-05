@@ -1,6 +1,6 @@
 {namespace ppt=Ucreation\Properties\ViewHelpers}
 <div class="tx_properties_filters">
-    <f:form action="list" arguments="{ppt:LinkArguments()}">
+    <f:form action="list" arguments="{ppt:getLinkArguments()}">
         <f:if condition="{ppt:isFilterActive(name: 'search')}">
             <f:render partial="Object/List/Filters/Search" arguments="{ppt:getFilterArguments(name: 'search')}" />
         </f:if>
