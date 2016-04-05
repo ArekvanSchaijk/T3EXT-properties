@@ -46,9 +46,6 @@ class ObjectController extends BaseController {
 			$this->performFiltersFormPost();
 			exit;
 		}
-		echo '<pre>';
-		print_r($this->getFilterService()->getQueryOrderings());
-		echo '</pre>';
 		$objects = $this->objectService->getFilteredObjects(NULL, NULL, NULL, 0, $this->getFilterService()->getQueryOrderings());
 		$this->view->assign('objects', $objects);
 	}
