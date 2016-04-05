@@ -946,7 +946,7 @@ class Object extends AbstractEntity {
 	 * @return bool
 	 */
 	public function getIsNotAvailable() {
-		if ($this->getStatus() == self::STATUS_NOTAVAILABLE) {
+		if ($this->getStatus() == self::STATUS_NOT_AVAILABLE) {
 			return TRUE;
 		}
 		return FALSE;
