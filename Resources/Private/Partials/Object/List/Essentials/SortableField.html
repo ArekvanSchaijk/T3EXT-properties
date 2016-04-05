@@ -1,0 +1,18 @@
+{namespace ppt=Ucreation\Properties\ViewHelpers}
+<p>
+    <f:if condition="{ppt:getOrderField()} == {field}">
+        <f:then>
+            <f:switch expression="{ppt:getOrder()}">
+                <f:case value="1">
+                    <f:link.action arguments="{ppt:getLinkArguments(order: 2, orderField: field)}">{label} <span class="fa fa-sort-down"></span></f:link.action>
+                </f:case>
+                <f:case value="2">
+                    <f:link.action arguments="{ppt:getLinkArguments(order: 1, orderField: field)}">{label} <span class="fa fa-sort-up"></span></f:link.action>
+                </f:case>
+            </f:switch>
+        </f:then>
+        <f:else>
+            <f:link.action arguments="{ppt:getLinkArguments(order: 1, orderField: field)}">{label} <span class="fa fa-sort"></span></f:link.action>
+        </f:else>
+    </f:if>
+</p>
