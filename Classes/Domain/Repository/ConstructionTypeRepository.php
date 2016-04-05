@@ -25,6 +25,7 @@ namespace Ucreation\Properties\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
@@ -39,7 +40,7 @@ class ConstructionTypeRepository extends Repository {
      * @var array
      */
     protected $defaultOrderings = array(
-        'name' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+        'name' => QueryInterface::ORDER_ASCENDING
     );
 
     /**
