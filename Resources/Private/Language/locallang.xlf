@@ -105,6 +105,15 @@
 			<trans-unit id="objects.no_results">
 				<source>Er zijn geen objecten gevonden die voldoen aan uw zoekcriteria.</source>
 			</trans-unit>
+			<trans-unit id="object.price">
+				<source>Prijs</source>
+			</trans-unit>
+			<trans-unit id="object.description">
+				<source>Beschrijving</source>
+			</trans-unit>
+			<trans-unit id="object.lot_size">
+				<source>Perceel</source>
+			</trans-unit>
 			<trans-unit id="object.rooms">
 				<source>kamers</source>
 			</trans-unit>
