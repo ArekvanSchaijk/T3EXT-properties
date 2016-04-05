@@ -57,7 +57,7 @@ class ObjectController extends BaseController {
 	 * @return void
 	 */
 	public function showAction(Object $object = NULL) {
-		
+
 	}
 
 	/**

@@ -2,48 +2,42 @@
 <div class="tx_properties_filters">
     <f:if condition="{filters}">
         <f:form action="list" arguments="{ppt:LinkArguments()}">
-            <f:for each="{filters}" as="filter">
-                <f:if condition="{filter.isActive}">
-                    <f:switch expression="{filter.filterKey}">
-                        <f:case value="search">
-                            <f:render partial="Object/List/Filters/Search" arguments="{filter: filter}" />
-                        </f:case>
-                        <f:case value="type">
-                            <f:render partial="Object/List/Filters/Type" arguments="{filter: filter}" />
-                        </f:case>
-                        <f:case value="types">
-                            <f:render partial="Object/List/Filters/Types" arguments="{filter: filter}" />
-                        </f:case>
-                        <f:case value="offer">
-                            <f:render partial="Object/List/Filters/Offer" arguments="{filter: filter}" />
-                        </f:case>
-                        <f:case value="town">
-                            <f:render partial="Object/List/Filters/Town" arguments="{filter: filter}" />
-                        </f:case>
-                        <f:case value="towns">
-                            <f:render partial="Object/List/Filters/Towns" arguments="{filter: filter}" />
-                        </f:case>
-                        <f:case value="price">
-                            <f:render partial="Object/List/Filters/Price" arguments="{filter: filter}" />
-                        </f:case>
-                        <f:case value="lot_size">
-                            <f:render partial="Object/List/Filters/LotSize" arguments="{filter: filter}" />
-                        </f:case>
-                        <f:case value="presences">
-                            <f:render partial="Object/List/Filters/Presences" arguments="{filter: filter}" />
-                        </f:case>
-                        <f:case value="status">
-                            <f:render partial="Object/List/Filters/Status" arguments="{filter: filter}" />
-                        </f:case>
-                        <f:case value="construction_types">
-                            <f:render partial="Object/List/Filters/ConstructionTypes" arguments="{filter: filter}" />
-                        </f:case>
-                        <f:case value="positions">
-                            <f:render partial="Object/List/Filters/Positions" arguments="{filter: filter}" />
-                        </f:case>
-                    </f:switch>
-                </f:if>
-            </f:for>
+            <f:if condition="{ppt:isFilterActive(name: 'search')}">
+                <f:render partial="Object/List/Filters/Search" arguments="{ppt:getFilterArguments(name: 'search')}" />
+            </f:if>
+            <f:if condition="{ppt:isFilterActive(name: 'type')}">
+                <f:render partial="Object/List/Filters/Type" arguments="{ppt:getFilterArguments(name: 'type')}" />
+            </f:if>
+            <f:if condition="{ppt:isFilterActive(name: 'types')}">
+                <f:render partial="Object/List/Filters/Types" arguments="{ppt:getFilterArguments(name: 'types')}" />
+            </f:if>
+            <f:if condition="{ppt:isFilterActive(name: 'offer')}">
+                <f:render partial="Object/List/Filters/Offer" arguments="{ppt:getFilterArguments(name: 'offer')}" />
+            </f:if>
+            <f:if condition="{ppt:isFilterActive(name: 'town')}">
+                <f:render partial="Object/List/Filters/Town" arguments="{ppt:getFilterArguments(name: 'town')}" />
+            </f:if>
+            <f:if condition="{ppt:isFilterActive(name: 'towns')}">
+                <f:render partial="Object/List/Filters/Towns" arguments="{ppt:getFilterArguments(name: 'towns')}" />
+            </f:if>
+            <f:if condition="{ppt:isFilterActive(name: 'price')}">
+                <f:render partial="Object/List/Filters/Price" arguments="{ppt:getFilterArguments(name: 'price')}" />
+            </f:if>
+            <f:if condition="{ppt:isFilterActive(name: 'lot_size')}">
+                <f:render partial="Object/List/Filters/LotSize" arguments="{ppt:getFilterArguments(name: 'lot_size')}" />
+            </f:if>
+            <f:if condition="{ppt:isFilterActive(name: 'presences')}">
+                <f:render partial="Object/List/Filters/Presences" arguments="{ppt:getFilterArguments(name: 'presences')}" />
+            </f:if>
+            <f:if condition="{ppt:isFilterActive(name: 'status')}">
+                <f:render partial="Object/List/Filters/Status" arguments="{ppt:getFilterArguments(name: 'status')}" />
+            </f:if>
+            <f:if condition="{ppt:isFilterActive(name: 'construction_types')}">
+                <f:render partial="Object/List/Filters/ConstructionTypes" arguments="{ppt:getFilterArguments(name: 'construction_types')}" />
+            </f:if>
+            <f:if condition="{ppt:isFilterActive(name: 'positions')}">
+                <f:render partial="Object/List/Filters/Positions" arguments="{ppt:getFilterArguments(name: 'positions')}" />
+            </f:if>
             <div class="postForm">
                 <f:form.submit name="submitFilters" value="{f:translate(key: 'filter.submit')}" />
             </div>
