@@ -48,8 +48,6 @@ class GetFilterViewHelper extends AbstractViewHelper {
      * @return mixed|null
      */
     public function render($name) {
-        echo 'dd';
-        exit;
         return $this->filterService->getFilter($name);
     }
 
