@@ -27,6 +27,7 @@ namespace Ucreation\Properties\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class Object
@@ -125,7 +126,12 @@ class Object extends AbstractEntity {
 			GARDEN_POSITION_WEST = 2,
 			GARDEN_POSITION_SOUTH = 3,
 			GARDEN_POSITION_EAST = 4;
-	
+
+	/**
+	 * @var string
+	 */
+	static protected $extensionName = 'Properties';
+
 	/**
 	 * @var string
 	 */
@@ -950,6 +956,25 @@ class Object extends AbstractEntity {
 			return TRUE;
 		}
 		return FALSE;
+	}
+
+	/**
+	 * Get Status Label
+	 *
+	 * @return string
+	 */
+	public function getStatusLabel() {
+		switch ($this->getStatus()) {
+			case self::STATUS_AVAILABLE:
+				return LocalizationUtility::translate('object.status.label.available', self::$extensionName);
+			case self::STATUS_SOLD:
+				return LocalizationUtility::translate('object.status.label.sold', self::$extensionName);
+			case self::STATUS_LEASED:
+				return LocalizationUtility::translate('object.status.label.leased', self::$extensionName);
+			case self::STATUS_NOT_AVAILABLE:
+				return LocalizationUtility::translate('object.status.label.not_available', self::$extensionName);
+
+		}
 	}
 
 	/**

@@ -85,7 +85,7 @@
 				<source>Aanwezigheden</source>
 			</trans-unit>
 			<trans-unit id="filter.submit">
-				<source>Vernieuw</source>
+				<source>Toon resultaten</source>
 			</trans-unit>
 			<trans-unit id="filter.status">
 				<source>Status</source>
@@ -128,6 +128,18 @@
 			</trans-unit>
 			<trans-unit id="object.contact.website">
 				<source>Website</source>
+			</trans-unit>
+			<trans-unit id="object.status.label.available">
+				<source>Beschikbaar</source>
+			</trans-unit>
+			<trans-unit id="object.status.label.sold">
+				<source>Verkocht</source>
+			</trans-unit>
+			<trans-unit id="object.status.label.leased">
+				<source>Verhuurd</source>
+			</trans-unit>
+			<trans-unit id="object.status.label.not_available">
+				<source>Niet beschikbaar</source>
 			</trans-unit>
 		</body>
 	</file>
