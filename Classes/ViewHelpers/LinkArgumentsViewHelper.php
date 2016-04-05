@@ -44,10 +44,15 @@ class LinkArgumentsViewHelper extends AbstractViewHelper {
     /**
      * Render
      *
+     * @param array|null $overrides
      * @return array
      */
-    public function render() {
-        return $this->objectService->getLinkArguments();
+    public function render(array $overrides = NULL) {
+        $linkArguments = $this->objectService->getLinkArguments();
+        if ($overrides) {
+            $linkArguments = array_merge($linkArguments, $overrides);
+        }
+        return $linkArguments;
     }
 
 }
