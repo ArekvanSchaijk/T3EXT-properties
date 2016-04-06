@@ -152,7 +152,7 @@
 			<trans-unit id="tx_properties_domain_model_object.price_per_square_metre" approved="yes">
 				<source>Price Per Square Metre</source> <target state="translated">Prijs per vierkante meter</target></trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.lot_size" approved="yes">
-				<source>Lot Size</source> <target state="translated">Oppervlakte perceelt</target></trans-unit>
+				<source>Lot Size</source> <target state="translated">Oppervlakte perceel</target></trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.living_area" approved="yes">
 				<source>Living Area</source> <target state="translated">Woongedeelte</target></trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.garden_area" approved="yes">
