@@ -47,6 +47,7 @@ class SurfaceViewHelper extends AbstractViewHelper {
      */
     public function render($lotSize = 0, $livingArea = 0, $unit = ' m&sup2;', $hyphen = ' / ', $thousandsSeparator = '.') {
         $lotSize = number_format($lotSize, 0, NULL, $thousandsSeparator);
+        $livingArea = number_format($livingArea, 0, NULL, $thousandsSeparator);
         $string = '';
         if ($lotSize) {
             $string = $lotSize.$unit;
