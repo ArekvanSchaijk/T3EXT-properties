@@ -79,5 +79,15 @@ class BaseController extends ActionController {
 	public function getFilterService() {
 		return $this->getObjectService()->getFilterService();
 	}
+
+	/**
+	 * Get TypoScript Frontend Controller
+	 *
+	 * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	 * @static
+	 */
+	static protected function getTypoScriptFrontendController() {
+		return $GLOBALS['TSFE'];
+	}
 	
 }

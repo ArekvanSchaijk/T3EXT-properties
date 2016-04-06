@@ -57,6 +57,9 @@ class ObjectController extends BaseController {
 	 * @return void
 	 */
 	public function showAction(Object $object = NULL) {
+		if (!$object) {
+			self::getTypoScriptFrontendController()->pageNotFoundAndExit();
+		}
 		$this->view->assign('object', $object);
 	}
 
