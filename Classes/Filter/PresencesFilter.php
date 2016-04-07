@@ -61,20 +61,22 @@ class PresencesFilter extends AbstractFilter {
      */
     public function getIsActive() {
         if (parent::getIsActive()) {
-            // Disables the filter when the 'type(s)' filters are only filtering for lots
-            if (($typeFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_TYPE))) {
-                if (
-                    $typeFilter->getIsActive() &&
-                    $typeFilter->getActiveType() == TypeFilter::TYPE_LOT
-                ) {
-                    return FALSE;
-                }
-            }
-            if (($typesFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_TYPES))) {
-                if ($typesFilter->getIsActive()) {
-                    $activeTypes = $typesFilter->getActiveTypes();
-                    if (count($activeTypes) == 1 && $activeTypes[0] == TypesFilter::TYPE_LOTS) {
+            if ((bool)$this->getObjectService()->settings['filters']['presences']['autoDeactivateWhenTypeIsSelectedForLotsOnly']) {
+                // Disables the filter when the 'type(s)' filters are only filtering for lots
+                if (($typeFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_TYPE))) {
+                    if (
+                        $typeFilter->getIsActive() &&
+                        $typeFilter->getActiveType() == TypeFilter::TYPE_LOT
+                    ) {
                         return FALSE;
+                    }
+                }
+                if (($typesFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_TYPES))) {
+                    if ($typesFilter->getIsActive()) {
+                        $activeTypes = $typesFilter->getActiveTypes();
+                        if (count($activeTypes) == 1 && $activeTypes[0] == TypesFilter::TYPE_LOTS) {
+                            return FALSE;
+                        }
                     }
                 }
             }
