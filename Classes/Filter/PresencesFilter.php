@@ -61,13 +61,21 @@ class PresencesFilter extends AbstractFilter {
      */
     public function getIsActive() {
         if (parent::getIsActive()) {
-            // Since 'lots' don't have presences we're de- activiting this filter when the 'type' filter is set for filtering on only 'lots'
+            // Disables the filter when the 'type(s)' filters are only filtering for lots
             if (($typeFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_TYPE))) {
                 if (
-                    !$typeFilter->getIsActive() ||
+                    $typeFilter->getIsActive() &&
                     $typeFilter->getActiveType() == TypeFilter::TYPE_LOT
                 ) {
                     return FALSE;
+                }
+            }
+            if (($typesFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_TYPES))) {
+                if ($typesFilter->getIsActive()) {
+                    $activeTypes = $typesFilter->getActiveTypes();
+                    if (count($activeTypes) == 1 && $activeTypes[0] == TypesFilter::TYPE_LOTS) {
+                        return FALSE;
+                    }
                 }
             }
             // Checks if there is an active category and checks if the category has disabled this filter
