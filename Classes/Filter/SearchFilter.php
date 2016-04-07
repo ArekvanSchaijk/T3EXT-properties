@@ -118,7 +118,7 @@ class SearchFilter extends AbstractFilter {
         if ($this->getSearchString() !== FALSE) {
             $constrains = array();
             foreach ($this->getSearchFields() as $fieldName) {
-                $constrains[] = $query->like($fieldName, $this->getSearchString());
+                $constrains[] = $query->like($fieldName, '%'.$this->getSearchString().'%');
             }
             if ($constrains) {
                 if (count($constrains) == 1) {
