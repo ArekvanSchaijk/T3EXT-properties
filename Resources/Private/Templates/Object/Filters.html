@@ -1,6 +1,7 @@
 {namespace ppt=Ucreation\Properties\ViewHelpers}
 <div class="tx_properties_filters">
     <f:form action="list" arguments="{ppt:getLinkArguments()}">
+        <input type="hidden" value="{f:uri.page(pageUid:settings.object.listPid,pageType:settings.ajax.performFiltersPostFormPageType,additionalParams:{ajax:1},noCache:1)}" data-properties-section="post-filter-ajax-url" />
         <f:if condition="{ppt:isFilterActive(name: 'search')}">
             <f:render partial="Object/List/Filters/Search" arguments="{ppt:getFilterArguments(name: 'search')}" />
         </f:if>

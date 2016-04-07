@@ -26,6 +26,7 @@ namespace Ucreation\Properties\Controller;
  ***************************************************************/
 
 use Ucreation\Properties\Domain\Model\Object;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class ObjectController
@@ -38,13 +39,17 @@ class ObjectController extends BaseController {
 	/**
 	 * List Action
 	 * 
-	 * @return void
+	 * @return string|void
 	 */
 	public function listAction() {
 		// Determines if the filter form is posted
 		if ($this->request->hasArgument('submitFilters')) {
 			$this->performFiltersFormPost();
 			exit;
+		}
+		// Determines if the filter was posted by ajax
+		if ((int)GeneralUtility::_GP('ajax') == 1) {
+			return $this->performFiltersAjaxFormPost();
 		}
 		$objects = $this->objectService->getFilteredObjects(NULL, NULL, NULL, 0, $this->getFilterService()->getQueryOrderings());
 		$this->view->assign('objects', $objects);
@@ -77,6 +82,32 @@ class ObjectController extends BaseController {
 	 */
 	protected function performFiltersFormPost() {
 		$this->redirect(NULL, NULL, NULL, $this->getObjectService()->getLinkArguments());
+	}
+
+	/**
+	 * Perform Filters Ajax Form Post
+	 *
+	 * @return string
+	 */
+	protected function performFiltersAjaxFormPost() {
+		return json_encode(
+			array(
+				'url' => $this->getFrontendUri(
+					$this->settings['object']['listPid'],
+					array(
+						'tx_properties_pi1' => $this->getObjectService()->getLinkArguments()
+					)
+				),
+				'ajaxUrl' => $this->getFrontendUri(
+					$this->settings['object']['listPid'],
+					array(
+						'tx_properties_pi1' => $this->getObjectService()->getLinkArguments()
+					),
+					FALSE,
+					$this->settings['ajax']['retrieveContentPageType']
+				)
+			)
+		);
 	}
 
 }

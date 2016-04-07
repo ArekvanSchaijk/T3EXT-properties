@@ -9,6 +9,7 @@ plugin.tx_properties {
 	}
 	settings {
 		object {
+		    listPid = {$plugin.tx_properties.settings.object.listPid}
 		    singlePid = {$plugin.tx_properties.settings.object.singlePid}
 		    defaultImage = {$plugin.tx_properties.settings.object.defaultImage}
 		    cover {
@@ -31,6 +32,10 @@ plugin.tx_properties {
 		    processing {
 		        implodes = {$plugin.tx_properties.settings.linkArguments.processing.implodes}
 		    }
+		}
+		ajax {
+		    retrieveContentPageType = {$plugin.tx_properties.settings.ajax.retrieveContentPageType}
+		    performFiltersPostFormPageType = {$plugin.tx_properties.settings.ajax.performFiltersPostFormPageType}
 		}
 		filters {
             eliminated = {$plugin.tx_properties.settings.filters.eliminated}
@@ -139,6 +144,63 @@ lib.properties.filtersAction {
 	view =< plugin.tx_properties.view
 	persistence =< plugin.tx_properties.persistence
 	settings =< plugin.tx_properties.settings
+}
+
+# Custom pages types (ajax)
+ajaxRetrieveContent = PAGE
+ajaxRetrieveContent {
+    typeNum = {$plugin.tx_properties.settings.ajax.retrieveContentPageType}
+	10 = USER_INT
+    10 {
+	    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+	    pluginName = Pi1
+	    extensionName = Properties
+	    vendorName = Ucreation
+	    controller = Object
+	    switchableControllerActions {
+		    Object {
+			    1 = list
+		    }
+	    }
+	    view =< plugin.tx_properties.view
+	    persistence =< plugin.tx_properties.persistence
+	    settings =< plugin.tx_properties.settings
+    }
+    config {
+	    disableAllHeaderCode = 1
+	    additionalHeaders = Content-type: text/plain
+	    xhtml_cleaning = 0
+	    admPanel = 0
+	    debug = 0
+    }
+}
+
+performFiltersPostForm = PAGE
+performFiltersPostForm {
+    typeNum = {$plugin.tx_properties.settings.ajax.performFiltersPostFormPageType}
+	10 = USER_INT
+    10 {
+	    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+	    pluginName = Pi1
+	    extensionName = Properties
+	    vendorName = Ucreation
+	    controller = Object
+	    switchableControllerActions {
+		    Object {
+			    1 = list
+		    }
+	    }
+	    view =< plugin.tx_properties.view
+	    persistence =< plugin.tx_properties.persistence
+	    settings =< plugin.tx_properties.settings
+    }
+    config {
+	    disableAllHeaderCode = 1
+	    additionalHeaders = Content-type: application/json
+	    xhtml_cleaning = 0
+	    admPanel = 0
+	    debug = 0
+    }
 }
 
 # module.tx_properties <.plugin.tx_properties

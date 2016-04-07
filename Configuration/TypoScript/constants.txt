@@ -13,6 +13,7 @@ plugin.tx_properties {
 	}
 	settings {
 		object {
+		    listPid =
 		    singlePid =
 		    defaultImage =
 		    cover {
@@ -35,6 +36,10 @@ plugin.tx_properties {
 		    processing {
 		        implodes = types, towns, presences, constructionTypes, positions, status
 		    }
+		}
+		ajax {
+		    retrieveContentPageType = 300100
+		    performFiltersPostFormPageType = 300101
 		}
 		filters {
 		    eliminated =

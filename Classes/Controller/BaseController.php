@@ -25,6 +25,7 @@ namespace Ucreation\Properties\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -88,6 +89,32 @@ class BaseController extends ActionController {
 	 */
 	static protected function getTypoScriptFrontendController() {
 		return $GLOBALS['TSFE'];
+	}
+
+	/**
+	 * Get Frontend Uri
+	 *
+	 * @param int $pageId
+	 * @param array $arguments
+	 * @param bool $addHost
+	 * @param int $pageType
+	 * @return string
+	 */
+	public function getFrontendUri($pageId, array $arguments = NULL, $addHost = FALSE, $pageType = NULL) {
+		$uri = $this->controllerContext->getUriBuilder();
+		$uri->setTargetPageUid($pageId);
+		$uri->setUseCacheHash(FALSE);
+		if ($pageType) {
+			$uri->setTargetPageType($pageType);
+		}
+		if ($arguments) {
+			$uri->setArguments($arguments);
+		}
+		$uri = rawurldecode($uri->build());
+		if (strpos(substr($uri, 0, 1), '/') !== FALSE) {
+			return ($addHost ? GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST') : NULL).$uri;
+		}
+		return ($addHost ? GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST') : NULL).'/'.$uri;
 	}
 	
 }
