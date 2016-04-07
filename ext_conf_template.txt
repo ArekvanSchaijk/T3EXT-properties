@@ -1,0 +1,2 @@
+# cat=basic; type=string; label=Hide Objects Columns:Comma separated list of columns that should be hided in the back-end
+hideObjectsColumns =
