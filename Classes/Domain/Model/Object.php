@@ -25,9 +25,10 @@ namespace Ucreation\Properties\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
  * Class Object
@@ -35,7 +36,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>
  */
-class Object extends AbstractEntity {
+class Object extends AbstractModel {
 	
 	/**
 	 * @const int
@@ -161,6 +162,11 @@ class Object extends AbstractEntity {
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
 	 */
 	protected $images = NULL;
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
+	 */
+	protected $backgroundImage = NULL;
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
@@ -409,6 +415,7 @@ class Object extends AbstractEntity {
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+	 * @inject
 	 */
 	protected $objectManager = NULL;
 
@@ -417,6 +424,15 @@ class Object extends AbstractEntity {
 	 */
 	public function __construct() {
 		$this->initStorageObjects();
+	}
+
+	/**
+	 * Get Image Service
+	 *
+	 * @return \Ucreation\SiteEssentials\Service\ImageService
+	 */
+	public function getImageService() {
+		return $this->objectManager->get('Ucreation\\SiteEssentials\\Service\\ImageService');
 	}
 
 	/**
@@ -612,6 +628,53 @@ class Object extends AbstractEntity {
 			}
 		}
 		return $this->cover;
+	}
+
+	/**
+	 * Get Background Image
+	 *
+	 * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
+	 */
+	public function getBackgroundImage() {
+		if (
+			(bool)$this->getObjectService()->settings['object']['backgroundImage']['useObjectCoverIfNoBackgroundImageIsSet'] &&
+			!$this->backgroundImage
+		) {
+			return $this->getCover();
+		}
+		return $this->backgroundImage;
+	}
+
+	/**
+	 * Get Background Image CSS Class
+	 *
+	 * @return string|null
+	 */
+	public function getBackgroundImageCssClass() {
+		if (($backgroundImage = $this->getBackgroundImage())) {
+			if (ExtensionManagementUtility::isLoaded('site_essentials')) {
+				$className = 'properties-object-' . $this->getUid() . '-background';
+				$this->getImageService()
+					->setImage($backgroundImage)
+					->setImageSettings(
+						$this->getObjectService()->settings['object']['backgroundImage']
+					)
+					->process()
+					->writeInCss('.'.$className);
+				return chr(32).$className;
+			}
+		}
+		return NULL;
+	}
+
+	/**
+	 * Set Background Image
+	 *
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $backgroundImage
+	 * @return void
+	 */
+	public function setBackgroundImage(FileReference $backgroundImage) {
+		$this->backgroundImage = $backgroundImage;
 	}
 
 	/**

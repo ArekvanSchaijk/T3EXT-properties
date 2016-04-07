@@ -13,6 +13,7 @@ CREATE TABLE tx_properties_domain_model_object (
 	sort tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	offer tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	images int(11) unsigned NOT NULL default '0',
+	background_image int(11) unsigned NOT NULL default '0',
 	year int(4) DEFAULT '0' NOT NULL,
 	environmental_class tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	description text NOT NULL,

@@ -16,6 +16,15 @@ plugin.tx_properties {
 		        listWidth = {$plugin.tx_properties.settings.object.cover.listWidth}
 		        listHeight = {$plugin.tx_properties.settings.object.cover.listHeight}
 		    }
+		    backgroundImage {
+		        useObjectCoverIfNoBackgroundImageIsSet = {$plugin.tx_properties.settings.object.backgroundImage.useObjectCoverIfNoBackgroundImageIsSet}
+                width = {$plugin.tx_properties.settings.object.backgroundImage.width}
+                height = {$plugin.tx_properties.settings.object.backgroundImage.height}
+                minWidth = {$plugin.tx_properties.settings.object.backgroundImage.minWidth}
+                minHeight = {$plugin.tx_properties.settings.object.backgroundImage.minHeight}
+                maxWidth = {$plugin.tx_properties.settings.object.backgroundImage.maxWidth}
+                maxHeight = {$plugin.tx_properties.settings.object.backgroundImage.maxHeight}
+		    }
 		    orderings {
 		        defaultOrder = {$plugin.tx_properties.settings.object.orderings.defaultOrder}
 		        defaultOrderField = {$plugin.tx_properties.settings.object.orderings.defaultOrderField}

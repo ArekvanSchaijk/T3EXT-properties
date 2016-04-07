@@ -20,6 +20,15 @@ plugin.tx_properties {
 		        listWidth = 270
 		        listHeight = 180c
 		    }
+		    backgroundImage {
+		        useObjectCoverIfNoBackgroundImageIsSet = 1
+                width =
+                height =
+                minWidth =
+                minHeight =
+                maxWidth =
+                maxHeight =
+		    }
 		    orderings {
 		        defaultOrder = 1
 		        defaultOrderField = crdate

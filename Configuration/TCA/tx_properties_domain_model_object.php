@@ -39,7 +39,7 @@ return array(
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.offer, offer,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.offer.sale_details;sale_details,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.offer.rent_details;rent_details,
-			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.media, images,
+			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.media, images, background_image,
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.contact, use_existing_contact,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.contact_details;contact_details,
 			--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, hidden, starttime, endtime'),
@@ -343,6 +343,33 @@ return array(
 					'maxitems' => 20
 				),
 				$GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+			),
+		),
+		'background_image' => array(
+			'exclude' => TRUE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.background_image',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+			'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig('background_image',
+				array(
+					'maxitems' => 1,
+					'appearance' => array(
+						'collapseAll'	=> 1,
+						'expandSingle'	=> 1,
+					),
+					'foreign_types' => array(
+						'0' => array(
+							'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+						),
+						\TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => array(
+							'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+						),
+					)
+				),
+				'jpg,jpeg,png'
 			),
 		),
 		'environmental_class' => array(
