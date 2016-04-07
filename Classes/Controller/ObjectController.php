@@ -76,6 +76,13 @@ class ObjectController extends BaseController {
 	public function filtersAction() {}
 
 	/**
+	 * Sub Filters Action
+	 *
+	 * @return void
+	 */
+	public function subFiltersAction() {}
+
+	/**
 	 * Perform Filters Form Post
 	 *
 	 * @return void

@@ -8,12 +8,12 @@ if (!defined('TYPO3_MODE')) {
 	'Ucreation.' . $_EXTKEY,
 	'Pi1',
 	array(
-		'Object' => 'list, show, filters',
+		'Object' => 'list, show, filters, subFilters',
 		'Category' => 'listCategories',
 
 	),
 	array(
-		'Object' => 'list, show, filters',
+		'Object' => 'list, show, filters, subFilters',
 		'Category' => 'listCategories',
 	)
 );
