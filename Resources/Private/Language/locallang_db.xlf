@@ -21,6 +21,9 @@
 			<trans-unit id="tab.filter_settings">
 				<source>Filter Settings</source>
 			</trans-unit>
+			<trans-unit id="tab.metadata">
+				<source>Metadata</source>
+			</trans-unit>
 			<trans-unit id="palettes.contact_details">
 				<source>Contact Details</source>
 			</trans-unit>
@@ -44,6 +47,9 @@
 			</trans-unit>
 			<trans-unit id="palettes.offer.rent_details">
 				<source>Rent Details</source>
+			</trans-unit>
+			<trans-unit id="palettes.metadata">
+				<source>Metadata</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object">
 				<source>Object</source>
@@ -383,6 +389,12 @@
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.garage_sort.0">
 				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.meta_description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.meta_keywords">
+				<source>Keywords</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_presence">
 				<source>Presence</source>

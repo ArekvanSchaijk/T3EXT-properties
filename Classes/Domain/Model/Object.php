@@ -414,6 +414,16 @@ class Object extends AbstractModel {
 	protected $garageSort = NULL;
 
 	/**
+	 * @var string
+	 */
+	protected $metaDescription = '';
+
+	/**
+	 * @var string
+	 */
+	protected $metaKeywords = '';
+
+	/**
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
 	 * @inject
 	 */
@@ -1620,6 +1630,44 @@ class Object extends AbstractModel {
 	 */
 	public function setGarageSort(GarageSort $garageSort) {
 		$this->garageSort = $garageSort;
+	}
+
+	/**
+	 * Get Meta Description
+	 *
+	 * @return string
+	 */
+	public function getMetaDescription() {
+		return $this->metaDescription;
+	}
+
+	/**
+	 * Set Meta Description
+	 *
+	 * @param string $metaDescription
+	 * @return void
+	 */
+	public function setMetaDescription($metaDescription) {
+		$this->metaDescription = $metaDescription;
+	}
+
+	/**
+	 * Get Meta Keywords
+	 *
+	 * @return string
+	 */
+	public function getMetaKeywords() {
+		return $this->metaKeywords;
+	}
+
+	/**
+	 * Set Meta Keywords
+	 *
+	 * @param string $metaKeywords
+	 * @return void
+	 */
+	public function setMetaKeywords($metaKeywords) {
+		$this->metaKeywords = $metaKeywords;
 	}
 
 }

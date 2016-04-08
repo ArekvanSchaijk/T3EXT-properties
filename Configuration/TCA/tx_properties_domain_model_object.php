@@ -24,7 +24,7 @@ return array(
 		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_object.gif'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, district, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, price_type, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, construction_type, garage, garage_capacity, garage_sort, images',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, district, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, price_type, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, construction_type, garage, garage_capacity, garage_sort, images, background_image, meta_description, meta_keywords',
 	),
 	'types' => array(
 		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, type, name, category, description;;;richtext:rte_transform[mode=ts_links], alternative_description;;;richtext:rte_transform[mode=ts_links],
@@ -42,6 +42,8 @@ return array(
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.media, images, background_image,
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.contact, use_existing_contact,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.contact_details;contact_details,
+			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.metadata,
+				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.metadata;metadata,
 			--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, hidden, starttime, endtime'),
 	),
 	'palettes' => array(
@@ -75,6 +77,10 @@ return array(
 		),
 		'contact_details' => array(
 			'showitem' => 'contact, contact_name, --linebreak--, contact_company, --linebreak--, contact_address, --linebreak--, contact_phone, contact_secondary_phone, --linebreak--, contact_email, --linebreak--, contact_website',
+			'canNotCollapse' => TRUE
+		),
+		'metadata' => array(
+			'showitem' => 'meta_description, --linebreak--, meta_keywords',
 			'canNotCollapse' => TRUE
 		),
 	),
@@ -1101,6 +1107,29 @@ return array(
 			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
 			'config' => array(
 				'type' => 'passthrough',
+			),
+		),
+		'meta_description' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.meta_description',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+			'config' => array(
+				'type' => 'text',
+				'rows' => 3,
+				'cols' => 30,
+				'max' => 255,
+				'eval' => 'trim'
+			),
+		),
+		'meta_keywords' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.meta_keywords',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim',
+				'max' => 100,
 			),
 		),
 	),
