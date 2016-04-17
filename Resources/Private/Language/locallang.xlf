@@ -150,6 +150,39 @@
 			<trans-unit id="object.status.label.not_available">
 				<source>Niet beschikbaar</source>
 			</trans-unit>
+			<trans-unit id="object.contact.first_name">
+				<source>Voornaam</source>
+			</trans-unit>
+			<trans-unit id="object.contact.last_name">
+				<source>Achternaam</source>
+			</trans-unit>
+			<trans-unit id="object.contact.email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="object.contact.subject">
+				<source>Onderwerp</source>
+			</trans-unit>
+			<trans-unit id="object.contact.body">
+				<source>Uw bericht</source>
+			</trans-unit>
+			<trans-unit id="error.object.contact.first_name.empty">
+				<source>U heeft geen voornaam opgegeven</source>
+			</trans-unit>
+			<trans-unit id="error.object.contact.last_name.empty">
+				<source>U heeft geen achternaam opgegeven</source>
+			</trans-unit>
+			<trans-unit id="error.object.contact.email.empty">
+				<source>U heeft geen email opgegeven</source>
+			</trans-unit>
+			<trans-unit id="error.object.contact.email.invalid">
+				<source>U heeft een ongeldig email adres opgegeven</source>
+			</trans-unit>
+			<trans-unit id="error.object.contact.subject.empty">
+				<source>U heeft geen onderwerp opgegeven</source>
+			</trans-unit>
+			<trans-unit id="error.object.contact.body.empty">
+				<source>U heeft geen bericht opgegeven</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

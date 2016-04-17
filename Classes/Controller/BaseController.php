@@ -4,7 +4,7 @@ namespace Ucreation\Properties\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2015 Arek van Schaijk <info@ucreation.nl>, Ucreation
+ *  (c) 2016 Arek van Schaijk <info@ucreation.nl>, Ucreation
  *
  *  All rights reserved
  *
@@ -27,6 +27,8 @@ namespace Ucreation\Properties\Controller;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class BaseController
@@ -116,5 +118,65 @@ class BaseController extends ActionController {
 		}
 		return ($addHost ? GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST') : NULL).'/'.$uri;
 	}
-	
+
+	/**
+	 * Frontend Message
+	 *
+	 * @param $label
+	 * @param int $severity
+	 * @return void
+	 */
+	protected function frontendMessage($label, $severity = AbstractMessage::ERROR) {
+		$this->addFlashMessage(
+			LocalizationUtility::translate($label, self::$extName),
+			'',
+			$severity
+		);
+	}
+
+	/**
+	 * Email
+	 *
+	 * @param string $html
+	 * @param array $sender
+	 * @param array $receiver
+	 * @param string $subject
+	 * @param array|NULL $cc
+	 * @param array|NULL $bcc
+	 * @return bool
+	 */
+	protected function email($html, array $sender, array $receiver, $subject, array $cc = NULL, array $bcc = NULL) {
+		$mail = $this->getMailMessageInstance();
+		$mail->setFrom($sender);
+		$mail->setTo($receiver);
+		$mail->setSubject($subject);
+		if ($cc) {
+			$mail->setCc($cc);
+		}
+		if ($bcc) {
+			$mail->setBcc($bcc);
+		}
+		$mail->setBody($html, 'text/html');
+		$mail->send();
+		return $mail->isSent();
+	}
+
+	/**
+	 * Get Template Service Instance
+	 *
+	 * @return \Ucreation\Properties\Service\TemplateService
+	 */
+	protected function getTemplateServiceInstance() {
+		return $this->objectManager->get('Ucreation\\Properties\\Service\\TemplateService');
+	}
+
+	/**
+	 * Get Mail Message Instance
+	 *
+	 * @return \TYPO3\CMS\Core\Mail\MailMessage
+	 */
+	protected function getMailMessageInstance() {
+		return $this->objectManager->get('TYPO3\\CMS\\Core\\Mail\\MailMessage');
+	}
+
 }

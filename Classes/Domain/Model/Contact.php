@@ -28,7 +28,7 @@ namespace Ucreation\Properties\Domain\Model;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * Class FilterOption
+ * Class Contact
  *
  * @package Ucreation\Properties
  * @author Arek van Schaijk <info@ucreation.nl>

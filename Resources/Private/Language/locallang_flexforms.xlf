@@ -3,6 +3,33 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2015-09-01T15:22:45Z" product-name="properties">
 		<header/>
 		<body>
+			<trans-unit id="pi1.general">
+				<source>General</source>
+			</trans-unit>
+			<trans-unit id="pi1.general.switchableControllerActions">
+				<source>Select an action to show</source>
+			</trans-unit>
+			<trans-unit id="pi1.general.switchableControllerActions.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="pi1.general.switchableControllerActions.1">
+				<source>Object List</source>
+			</trans-unit>
+			<trans-unit id="pi1.general.switchableControllerActions.2">
+				<source>Object Detail</source>
+			</trans-unit>
+			<trans-unit id="pi1.general.switchableControllerActions.3">
+				<source>Object Filters</source>
+			</trans-unit>
+			<trans-unit id="pi1.general.switchableControllerActions.4">
+				<source>Object Subfilters</source>
+			</trans-unit>
+			<trans-unit id="pi1.general.switchableControllerActions.5">
+				<source>Object (Contact Request) Thank You</source>
+			</trans-unit>
+			<trans-unit id="pi1.general.switchableControllerActions.6">
+				<source>Category List</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

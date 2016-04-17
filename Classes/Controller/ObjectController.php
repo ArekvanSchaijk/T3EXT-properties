@@ -4,7 +4,7 @@ namespace Ucreation\Properties\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2015 Arek van Schaijk <info@ucreation.nl>, Ucreation
+ *  (c) 2016 Arek van Schaijk <info@ucreation.nl>, Ucreation
  *
  *  All rights reserved
  *
@@ -26,7 +26,10 @@ namespace Ucreation\Properties\Controller;
  ***************************************************************/
 
 use Ucreation\Properties\Domain\Model\Object;
+use Ucreation\Properties\Domain\Model\ContactRequest;
+use Ucreation\Properties\Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Ucreation\Properties\Utility\LinkUtility;
 
 /**
  * Class ObjectController
@@ -35,6 +38,23 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @author Arek van Schaijk <info@ucreation.nl>
  */
 class ObjectController extends BaseController {
+
+	/**
+	 * @var array
+	 */
+	protected $contactRequestErrors = array();
+
+	/**
+	 * @var \Ucreation\Properties\Domain\Repository\ContactRequestRepository
+	 * @inject
+	 */
+	protected $contactRequestRepository = NULL;
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
+	 * @inject
+	 */
+	protected $persistenceManager = NULL;
 
 	/**
 	 * List Action
@@ -58,14 +78,19 @@ class ObjectController extends BaseController {
 	/**
 	 * Show Action
 	 * 
-	 * @param \Ucreation\Properties\Domain\Model\Object $object
+	 * @param \Ucreation\Properties\Domain\Model\Object|null $object
+	 * @param \Ucreation\Properties\Domain\Model\ContactRequest|null $contactRequest
 	 * @return void
 	 */
-	public function showAction(Object $object = NULL) {
+	public function showAction(Object $object = NULL, ContactRequest $contactRequest = NULL) {
 		if (!$object) {
 			self::getTypoScriptFrontendController()->pageNotFoundAndExit();
 		}
 		$this->view->assign('object', $object);
+		// If the contact form is used
+		if ((bool)$this->settings['object']['contact']['useContactForm']) {
+			$this->processContactForm($object, $contactRequest);
+		}
 	}
 
 	/**
@@ -115,6 +140,183 @@ class ObjectController extends BaseController {
 				)
 			)
 		);
+	}
+
+	/**
+	 * Process Contact Form
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $object
+	 * @param \Ucreation\Properties\Domain\Model\ContactRequest|null $contactRequest
+	 * @return void
+	 * @throws \Ucreation\Properties\Exception
+	 */
+	protected function processContactForm(Object $object, ContactRequest $contactRequest = NULL) {
+		if (!$contactRequest) {
+			$this->view->assign(
+				'contactRequest',
+				$this->objectManager->get('Ucreation\\Properties\\Domain\\Model\\ContactRequest')
+			);
+		} else {
+			// The contact request object has validation errors
+			if ($contactRequest->getValidationErrors()) {
+				foreach ($contactRequest->getValidationErrors() as $error) {
+					$this->frontendMessage($error);
+				}
+				$this->view->assign('contactRequest', $contactRequest);
+			} else {
+				// Calculates the receiver
+				if ((bool)$this->settings['object']['contact']['receiver']['useObjectContactDetails']) {
+					if ($object->getContactDetails()) {
+						$name = $object->getContactDetails()->getName();
+						$email = $object->getContactDetails()->getEmail();
+						if ($name && $email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+							$contactRequest->setReceiverName($name);
+							$contactRequest->setReceiverEmail($email);
+						}
+					}
+				}
+				if (is_null($contactRequest->getMailReceiver())) {
+					$name = $this->settings['object']['contact']['receiver']['name'];
+					$email = $this->settings['object']['contact']['receiver']['email'];
+					if ($name && $email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+						$contactRequest->setReceiverName($name);
+						$contactRequest->setReceiverEmail($email);
+					} else {
+						throw new Exception('Invalid contact form receiver details given in the TypoScript setup');
+					}
+				}
+				// Calculates the CC
+				if (
+					$this->settings['object']['contact']['receiver']['cc']['name'] &&
+					$this->settings['object']['contact']['receiver']['cc']['email'] &&
+					filter_var($this->settings['object']['contact']['receiver']['cc']['email'], FILTER_VALIDATE_EMAIL)
+				) {
+					$contactRequest->setCcName($this->settings['object']['contact']['receiver']['cc']['name']);
+					$contactRequest->setCcEmail($this->settings['object']['contact']['receiver']['cc']['email']);
+				}
+				// Calculates the BCC
+				if (
+					$this->settings['object']['contact']['receiver']['bcc']['name'] &&
+					$this->settings['object']['contact']['receiver']['bcc']['email'] &&
+					filter_var($this->settings['object']['contact']['receiver']['bcc']['email'], FILTER_VALIDATE_EMAIL)
+				) {
+					$contactRequest->setBccName($this->settings['object']['contact']['receiver']['bcc']['name']);
+					$contactRequest->setBccEmail($this->settings['object']['contact']['receiver']['bcc']['email']);
+				}
+				// Caldulates the storage pid
+				$storagePid = ($this->settings['object']['contact']['contactRequestStoragePid'] ? : $this->settings['storagePid']);
+				if ($storagePid) {
+					$contactRequest->setPid($storagePid);
+				}
+				// Generates an security hash
+				$contactRequest->generateHash();
+				// Sets the object
+				$contactRequest->setObject($object);
+				// Adds the new contact rquest
+				$this->contactRequestRepository->add($contactRequest);
+				$this->persistenceManager->persistAll();
+				// Sends the contact request email
+				if ((bool)$this->settings['object']['contact']['receiver']['enableReceiverEmail']) {
+					$this->sendContactRequestEmail($object, $contactRequest);
+				}
+				// Sends the contact request
+				if ((bool)$this->settings['object']['contact']['thankYou']['confirmation']['enable']) {
+					$this->sendContactRequestConfirmationEmail($object, $contactRequest);
+				}
+				// Thank you handling
+				if ($this->settings['object']['contact']['thankYou']['pageId']) {
+					$linkArguments = array();
+					if ($this->settings['object']['contact']['thankYou']['arguments']['useObjectDetails']) {
+						$linkArguments[LinkUtility::OBJECT] = $object->getUid();
+					}
+					if ($this->settings['object']['contact']['thankYou']['arguments']['useContactRequestDetails']) {
+						$linkArguments[LinkUtility::CONTACT_REQUEST_HASH] = $contactRequest->getHash();
+					}
+					$this->redirect(NULL, NULL, NULL, $linkArguments, $this->settings['object']['contact']['thankYou']['pageId']);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Send Contact Request Email
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $object
+	 * @param \Ucreation\Properties\Domain\Model\ContactRequest $contactRequest
+	 * @return void
+	 * @throws \Ucreation\Properties\Exception
+	 */
+	protected function sendContactRequestEmail(Object $object, ContactRequest $contactRequest) {
+		$templateInstance = $this->getTemplateServiceInstance();
+		$templateInstance->setTemplateFilePath($this->settings['object']['contact']['templateFilePath']);
+		$templateInstance->setVariables(
+			array(
+				'contactRequest' => $contactRequest,
+				'objectUrl' => $this->getFrontendUri(
+					$this->settings['object']['singlePid'],
+					array(
+						'tx_properties_pi1' => array(
+							'object' => $object->getUid(),
+						),
+					),
+					TRUE
+				),
+				'settings' => $this->settings,
+			)
+		);
+		if (!$this->email(
+			$templateInstance->render(),
+			$contactRequest->getMailSender(),
+			$contactRequest->getMailReceiver(),
+			($this->settings['object']['contact']['receiver']['subject'] ? : $contactRequest->getSubject()),
+			$contactRequest->getMailCc(),
+			$contactRequest->getMailBcc()
+		)) {
+			throw new Exception('Email was not sent successfully');
+		}
+	}
+
+	/**
+	 * Send Contact Request Email Confirmation
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $object
+	 * @param \Ucreation\Properties\Domain\Model\ContactRequest $contactRequest
+	 * @return void
+	 * @throws \Ucreation\Properties\Exception
+	 */
+	protected function sendContactRequestConfirmationEmail(Object $object, ContactRequest $contactRequest) {
+		$templateInstance = $this->getTemplateServiceInstance();
+		$templateInstance->setTemplateFilePath($this->settings['object']['contact']['thankYou']['confirmation']['templateFilePath']);
+		$templateInstance->setVariables(
+			array(
+				'contactRequest' => $contactRequest,
+				'objectUrl' => $this->getFrontendUri(
+					$this->settings['object']['singlePid'],
+					array(
+						'tx_properties_pi1' => array(
+							'object' => $object->getUid(),
+						),
+					),
+					TRUE
+				),
+				'settings' => $this->settings,
+			)
+		);
+		$sender = array($this->settings['object']['contact']['thankYou']['confirmation']['from']['email'] => $this->settings['object']['contact']['thankYou']['confirmation']['from']['name']);
+		if (
+			(bool)$this->settings['object']['contact']['thankYou']['confirmation']['from']['useObjectDetails'] &&
+			(bool)$this->settings['object']['contact']['receiver']['useObjectContactDetails']
+		) {
+			$sender = $contactRequest->getMailReceiver();
+		}
+		if (!$this->email(
+			$templateInstance->render(),
+			$sender,
+			$contactRequest->getMailSender(),
+			$this->settings['object']['contact']['thankYou']['confirmation']['subject']
+		)) {
+			throw new Exception('Confirmation email was not sent successfully');
+		}
 	}
 
 }

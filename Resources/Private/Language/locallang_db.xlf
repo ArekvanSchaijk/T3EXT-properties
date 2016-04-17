@@ -24,6 +24,21 @@
 			<trans-unit id="tab.metadata">
 				<source>Metadata</source>
 			</trans-unit>
+			<trans-unit id="tab.receiver">
+				<source>Receiver</source>
+			</trans-unit>
+			<trans-unit id="palettes.message">
+				<source>Message</source>
+			</trans-unit>
+			<trans-unit id="palettes.receiver">
+				<source>Receiver</source>
+			</trans-unit>
+			<trans-unit id="palettes.cc">
+				<source>CC</source>
+			</trans-unit>
+			<trans-unit id="palettes.bcc">
+				<source>BCC</source>
+			</trans-unit>
 			<trans-unit id="palettes.contact_details">
 				<source>Contact Details</source>
 			</trans-unit>
@@ -552,6 +567,49 @@
 			<trans-unit id="tx_properties_domain_model_contact.website">
 				<source>Website</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest">
+				<source>Contact Request</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.hash">
+				<source>Security Hash</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.object">
+				<source>Object</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.first_name">
+				<source>First Name</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.last_name">
+				<source>Last Name</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.subject">
+				<source>Subject</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.body">
+				<source>Body</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.receiver_name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.receiver_email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.cc_name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.cc_email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.bcc_name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_contactrequest.bcc_email">
+				<source>Email</source>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>

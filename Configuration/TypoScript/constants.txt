@@ -34,6 +34,43 @@ plugin.tx_properties {
 		        defaultOrderField = crdate
 		        allowedOrderFields = uid, crdate, tstamp, name, price, lot_size, status
 		    }
+		    contact {
+		        useContactForm = 1
+		        contactRequestStoragePid =
+		        templateFilePath = EXT:properties/Resources/Private/Templates/Email/ContactRequest/Receiver.html
+		        thankYou {
+		            pageId =
+		            arguments {
+		                useObjectDetails = 0
+		                useContactRequestDetails = 1
+		            }
+		            confirmation {
+		                enable = 1
+		                templateFilePath = EXT:properties/Resources/Private/Templates/Email/ContactRequest/Confirmation.html
+		                from {
+		                    useObjectDetails = 1
+		                    name = Company name
+		                    email = email@company.com
+		                }
+		                subject = Confirmation contact request
+                    }
+		        }
+		        receiver {
+		            enableReceiverEmail = 1
+		            useObjectContactDetails = 1
+		            name =
+		            email =
+		            subject = Contact request website
+		            cc {
+		                name =
+		                email =
+		            }
+		            bcc {
+		                name =
+		                email =
+		            }
+		        }
+		    }
 		}
         categories {
             autoActivateFirstCategory = 1

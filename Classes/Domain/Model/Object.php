@@ -903,7 +903,7 @@ class Object extends AbstractModel {
 	 */
 	public function getContactDetails() {
 		if ($this->contactDetails === FALSE) {
-			if ($this->isUseExistingContact()) {
+			if ($this->getUseExistingContact()) {
 				$this->contactDetails = $this->getContact();
 			} else {
 				$contact = NULL;

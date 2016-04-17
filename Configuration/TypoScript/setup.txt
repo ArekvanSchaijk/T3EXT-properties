@@ -30,6 +30,43 @@ plugin.tx_properties {
 		        defaultOrderField = {$plugin.tx_properties.settings.object.orderings.defaultOrderField}
 		        allowedOrderFields = {$plugin.tx_properties.settings.object.orderings.allowedOrderFields}
 		    }
+		    contact {
+		        useContactForm = {$plugin.tx_properties.settings.object.contact.useContactForm}
+		        contactRequestStoragePid = {$plugin.tx_properties.settings.object.contact.contactRequestStoragePid}
+		        templateFilePath = {$plugin.tx_properties.settings.object.contact.templateFilePath}
+		        thankYou {
+		            pageId = {$plugin.tx_properties.settings.object.contact.thankYou.pageId}
+		            arguments {
+		                useObjectDetails = {$plugin.tx_properties.settings.object.contact.thankYou.arguments.useObjectDetails}
+		                useContactRequestDetails = {$plugin.tx_properties.settings.object.contact.thankYou.arguments.useContactRequestDetails}
+		            }
+		            confirmation {
+		                enable = {$plugin.tx_properties.settings.object.contact.thankYou.confirmation.enable}
+		                templateFilePath = {$plugin.tx_properties.settings.object.contact.thankYou.confirmation.templateFilePath}
+		                from {
+		                    useObjectDetails = {$plugin.tx_properties.settings.object.contact.thankYou.confirmation.from.useObjectDetails}
+		                    name = {$plugin.tx_properties.settings.object.contact.thankYou.confirmation.from.name}
+		                    email = {$plugin.tx_properties.settings.object.contact.thankYou.confirmation.from.email}
+		                }
+		                subject = {$plugin.tx_properties.settings.object.contact.thankYou.confirmation.subject}
+                    }
+		        }
+		        receiver {
+		            enableReceiverEmail = {$plugin.tx_properties.settings.object.contact.receiver.enableReceiverEmail}
+		            useObjectContactDetails = {$plugin.tx_properties.settings.object.contact.receiver.useObjectContactDetails}
+		            name = {$plugin.tx_properties.settings.object.contact.receiver.name}
+		            email = {$plugin.tx_properties.settings.object.contact.receiver.email}
+		            subject = {$plugin.tx_properties.settings.object.contact.receiver.subject}
+		            cc {
+		                name = {$plugin.tx_properties.settings.object.contact.receiver.cc.name}
+		                email = {$plugin.tx_properties.settings.object.contact.receiver.cc.email}
+		            }
+		            bcc {
+		                name = {$plugin.tx_properties.settings.object.contact.receiver.bcc.name}
+		                email = {$plugin.tx_properties.settings.object.contact.receiver.bcc.email}
+		            }
+		        }
+		    }
 		}
 		categories {
             autoActivateFirstCategory = {$plugin.tx_properties.settings.categories.autoActivateFirstCategory}
@@ -86,6 +123,7 @@ plugin.tx_properties {
                 }
             }
 		}
+		storagePid = {$plugin.tx_properties.persistence.storagePid}
 	}
 }
 

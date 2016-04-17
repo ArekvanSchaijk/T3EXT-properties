@@ -9,11 +9,13 @@ if (!defined('TYPO3_MODE')) {
 	'Pi1',
 	array(
 		'Object' => 'list, show, filters, subFilters',
+		'ContactRequest' => 'thankYou',
 		'Category' => 'listCategories',
 
 	),
 	array(
-		'Object' => 'list, show, filters, subFilters',
+		'Object' => 'list, show, filters, subFilters, contactRequestThankYou',
+		'ContactRequest' => 'thankYou',
 		'Category' => 'listCategories',
 	)
 );

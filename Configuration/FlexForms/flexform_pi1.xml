@@ -1,0 +1,56 @@
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+        <langChildren>0</langChildren>
+    </meta>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:properties/Resources/Private/Language/locallang_flexforms.xlf:pi1.general</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <switchableControllerActions>
+                        <TCEforms>
+                            <label>LLL:EXT:properties/Resources/Private/Language/locallang_flexforms.xlf:pi1.general.switchableControllerActions</label>
+                            <config>
+                                <type>select</type>
+                                <items>
+                                    <numIndex index="0">
+                                        <numIndex index="0">LLL:EXT:properties/Resources/Private/Language/locallang_flexforms.xlf:pi1.general.switchableControllerActions.0</numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                    <numIndex index="1">
+                                        <numIndex index="0">LLL:EXT:properties/Resources/Private/Language/locallang_flexforms.xlf:pi1.general.switchableControllerActions.1</numIndex>
+                                        <numIndex index="1">Object->list</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2">
+                                        <numIndex index="0">LLL:EXT:properties/Resources/Private/Language/locallang_flexforms.xlf:pi1.general.switchableControllerActions.2</numIndex>
+                                        <numIndex index="1">Object->show</numIndex>
+                                    </numIndex>
+                                    <numIndex index="3">
+                                        <numIndex index="0">LLL:EXT:properties/Resources/Private/Language/locallang_flexforms.xlf:pi1.general.switchableControllerActions.3</numIndex>
+                                        <numIndex index="1">Object->filters</numIndex>
+                                    </numIndex>
+                                    <numIndex index="4">
+                                        <numIndex index="0">LLL:EXT:properties/Resources/Private/Language/locallang_flexforms.xlf:pi1.general.switchableControllerActions.4</numIndex>
+                                        <numIndex index="1">Object->subFilters</numIndex>
+                                    </numIndex>
+                                    <numIndex index="5">
+                                        <numIndex index="0">LLL:EXT:properties/Resources/Private/Language/locallang_flexforms.xlf:pi1.general.switchableControllerActions.5</numIndex>
+                                        <numIndex index="1">ContactRequest->thankYou</numIndex>
+                                    </numIndex>
+                                    <numIndex index="6">
+                                        <numIndex index="0">LLL:EXT:properties/Resources/Private/Language/locallang_flexforms.xlf:pi1.general.switchableControllerActions.6</numIndex>
+                                        <numIndex index="1">Category->listCategories</numIndex>
+                                    </numIndex>
+                                </items>
+                            </config>
+                        </TCEforms>
+                    </switchableControllerActions>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>
