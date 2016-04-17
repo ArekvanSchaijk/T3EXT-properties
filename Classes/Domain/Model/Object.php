@@ -171,6 +171,11 @@ class Object extends AbstractModel {
 	/**
 	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
 	 */
+	protected $download = NULL;
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
+	 */
 	protected $cover = NULL;
 
 	/**
@@ -685,6 +690,25 @@ class Object extends AbstractModel {
 	 */
 	public function setBackgroundImage(FileReference $backgroundImage) {
 		$this->backgroundImage = $backgroundImage;
+	}
+
+	/**
+	 * Get Download
+	 *
+	 * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
+	 */
+	public function getDownload() {
+		return $this->download;
+	}
+
+	/**
+	 * Set Download
+	 *
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $download
+	 * @return void
+	 */
+	public function setDownload(FileReference $download) {
+		$this->download = $download;
 	}
 
 	/**

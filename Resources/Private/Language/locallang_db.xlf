@@ -132,6 +132,9 @@
 			<trans-unit id="tx_properties_domain_model_object.background_image">
 				<source>Background Image</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.download">
+				<source>Download</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.year">
 				<source>Year</source>
 			</trans-unit>

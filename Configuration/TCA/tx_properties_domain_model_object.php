@@ -24,7 +24,7 @@ return array(
 		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_object.gif'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, district, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, price_type, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, construction_type, garage, garage_capacity, garage_sort, images, background_image, meta_description, meta_keywords',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, district, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, price_type, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, construction_type, garage, garage_capacity, garage_sort, images, background_image, download, meta_description, meta_keywords',
 	),
 	'types' => array(
 		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, type, name, category, description;;;richtext:rte_transform[mode=ts_links], alternative_description;;;richtext:rte_transform[mode=ts_links],
@@ -39,7 +39,7 @@ return array(
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.offer, offer,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.offer.sale_details;sale_details,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.offer.rent_details;rent_details,
-			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.media, images, background_image,
+			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.media, images, background_image, download,
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.contact, use_existing_contact,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.contact_details;contact_details,
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.metadata,
@@ -376,6 +376,32 @@ return array(
 					)
 				),
 				'jpg,jpeg,png'
+			),
+		),
+		'download' => array(
+			'exclude' => TRUE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.download',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+			'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig('download',
+				array(
+					'maxitems' => 1,
+					'appearance' => array(
+						'collapseAll'	=> 1,
+						'expandSingle'	=> 1,
+					),
+					'foreign_types' => array(
+						'0' => array(
+							'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+						),
+						\TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => array(
+							'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+						),
+					)
+				)
 			),
 		),
 		'environmental_class' => array(
