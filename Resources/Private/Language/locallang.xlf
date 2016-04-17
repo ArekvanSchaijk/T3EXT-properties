@@ -153,6 +153,9 @@
 			<trans-unit id="object.status.label.not_available">
 				<source>Niet beschikbaar</source>
 			</trans-unit>
+			<trans-unit id="object.status.label.reserved">
+				<source>Gereserveerd</source>
+			</trans-unit>
 			<trans-unit id="object.contact.first_name">
 				<source>Voornaam</source>
 			</trans-unit>

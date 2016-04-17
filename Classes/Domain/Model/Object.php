@@ -1113,6 +1113,8 @@ class Object extends AbstractModel {
 				return LocalizationUtility::translate('object.status.label.leased', self::$extensionName);
 			case self::STATUS_NOT_AVAILABLE:
 				return LocalizationUtility::translate('object.status.label.not_available', self::$extensionName);
+			case self::STATUS_RESERVED:
+				return LocalizationUtility::translate('object.status.label.reserved', self::$extensionName);
 
 		}
 	}
