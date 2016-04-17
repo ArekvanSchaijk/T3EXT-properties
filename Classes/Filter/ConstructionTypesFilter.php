@@ -25,6 +25,7 @@ namespace Ucreation\Properties\Filter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Utility\FilterUtility;
 use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
@@ -72,6 +73,16 @@ class ConstructionTypesFilter extends AbstractFilter {
                 !$this->getConstructionTypes()
             ) {
                 return FALSE;
+            }
+            // Turns off the complete filter when the types filter is selecting for showing lots only
+            // We're doing this because lots doesn't have any construction types
+            if (($typesFilter = $this->getFilterService()->getFilter(FilterUtility::FILTER_TYPES))) {
+                if ($typesFilter->getIsActive()) {
+                    $activeTypes = $typesFilter->getActiveTypes();
+                    if (count($activeTypes) == 1 && $activeTypes[0] == TypesFilter::TYPE_LOTS) {
+                        return FALSE;
+                    }
+                }
             }
             return TRUE;
         }
