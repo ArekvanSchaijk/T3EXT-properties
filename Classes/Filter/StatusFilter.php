@@ -45,7 +45,8 @@ class StatusFilter extends AbstractFilter {
     const   STATUS_AVAILABLE = 1,
             STATUS_SOLD = 2,
             STATUS_LEASED = 3,
-            STATUS_NOT_AVAILABLE = 4;
+            STATUS_NOT_AVAILABLE = 4,
+            STATUS_RESERVED = 5;
 
     /**
      * @var array|null
@@ -112,6 +113,7 @@ class StatusFilter extends AbstractFilter {
             self::STATUS_SOLD => LocalizationUtility::translate('filter.status.sold', self::$extensionName),
             self::STATUS_LEASED => LocalizationUtility::translate('filter.status.leased', self::$extensionName),
             self::STATUS_NOT_AVAILABLE => LocalizationUtility::translate('filter.status.unavailable', self::$extensionName),
+            self::STATUS_RESERVED => LocalizationUtility::translate('filter.status.reserved', self::$extensionName)
         );
         // Removes options by setup
         if (((bool)$removedOptions = $this->getObjectService()->settings['filters']['status']['options']['remove'])) {
@@ -184,6 +186,8 @@ class StatusFilter extends AbstractFilter {
                 return Object::STATUS_LEASED;
             case self::STATUS_NOT_AVAILABLE:
                 return Object::STATUS_NOT_AVAILABLE;
+            case self::STATUS_RESERVED:
+                return Object::STATUS_RESERVED;
             default:
                 return FALSE;
         }

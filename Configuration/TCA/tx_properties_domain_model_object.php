@@ -748,6 +748,10 @@ return array(
 						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.status.3',
 						\Ucreation\Properties\Domain\Model\Object::STATUS_NOT_AVAILABLE,
 					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.status.4',
+						\Ucreation\Properties\Domain\Model\Object::STATUS_RESERVED,
+					),
 				)
 			)
 		),

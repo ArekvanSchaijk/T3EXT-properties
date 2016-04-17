@@ -51,7 +51,8 @@ class Object extends AbstractModel {
 	const	STATUS_AVAILABLE = 0,
 			STATUS_SOLD = 1,
 			STATUS_LEASED = 2,
-			STATUS_NOT_AVAILABLE = 3;
+			STATUS_NOT_AVAILABLE = 3,
+			STATUS_RESERVED = 4;
 	
 	/**
 	 * @const int
@@ -1080,6 +1081,18 @@ class Object extends AbstractModel {
 	 */
 	public function getIsNotAvailable() {
 		if ($this->getStatus() == self::STATUS_NOT_AVAILABLE) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Get Is Reserved
+	 *
+	 * @return bool
+	 */
+	public function getIsReserved() {
+		if ($this->getStatus() == self::STATUS_RESERVED) {
 			return TRUE;
 		}
 		return FALSE;

@@ -111,6 +111,9 @@
 			<trans-unit id="tx_properties_domain_model_object.status.3">
 				<source>Not Available</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.status.4">
+				<source>Reserved</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.sort">
 				<source>Sort</source>
 			</trans-unit>
