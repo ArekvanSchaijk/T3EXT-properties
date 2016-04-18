@@ -40,7 +40,7 @@ class ConstructionTypeRepository extends Repository {
      * @var array
      */
     protected $defaultOrderings = array(
-        'name' => QueryInterface::ORDER_ASCENDING
+        'sorting' => QueryInterface::ORDER_ASCENDING
     );
 
     /**
