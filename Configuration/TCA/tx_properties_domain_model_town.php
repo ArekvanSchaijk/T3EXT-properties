@@ -23,10 +23,10 @@ return array(
 		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_town.gif'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, disable_filter_option',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, description, disable_filter_option',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, name,
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, name, description;;;richtext:rte_transform[mode=ts_links],
 		--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.filter_settings, disable_filter_option, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, hidden, starttime, endtime'),
 	),
 	'palettes' => array(
@@ -117,6 +117,28 @@ return array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim'
+			),
+		),
+		'description' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_town.description',
+			'config' => array(
+				'type' => 'text',
+				'cols' => '48',
+				'rows' => '5',
+				'eval' => 'trim',
+				'wizards' => array(
+					'RTE' => array(
+						'notNewRecords' => 1,
+						'RTEonly' => 1,
+						'type' => 'script',
+						'title' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:bodytext.W.RTE',
+						'icon' => 'EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_rte.gif',
+						'module' => array(
+							'name' => 'wizard_rte'
+						)
+					)
+				)
 			),
 		),
 		'disable_filter_option' => array(

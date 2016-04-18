@@ -760,6 +760,16 @@ class Object extends AbstractModel {
 	}
 
 	/**
+	 * Set Description
+	 *
+	 * @param string $description
+	 * @return void
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+	}
+
+	/**
 	 * Get Alternative Description
 	 *
 	 * @return string
@@ -776,16 +786,6 @@ class Object extends AbstractModel {
 	 */
 	public function setAlternativeDescription($alternativeDescription) {
 		$this->alternativeDescription = $alternativeDescription;
-	}
-
-	/**
-	 * Set Description
-	 * 
-	 * @param string $description
-	 * @return void
-	 */
-	public function setDescription($description) {
-		$this->description = $description;
 	}
 
 	/**

@@ -42,6 +42,11 @@ class Town extends AbstractModel {
 	protected $name = '';
 
 	/**
+	 * @var string
+	 */
+	protected $description = '';
+
+	/**
 	 * @var bool
 	 */
 	protected $disableFilterOption = FALSE;
@@ -73,6 +78,25 @@ class Town extends AbstractModel {
 	 */
 	public function setName($name) {
 		$this->name = $name;
+	}
+
+	/**
+	 * Get Description
+	 *
+	 * @return string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+
+	/**
+	 * Set Description
+	 *
+	 * @param string $description
+	 * @return void
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
 	}
 
 	/**
