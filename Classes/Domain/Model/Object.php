@@ -1169,7 +1169,10 @@ class Object extends AbstractModel {
 	 * @return int
 	 */
 	public function getRentPrice() {
-		return $this->rentPrice;
+		if ($this->getIsRent()) {
+			return $this->rentPrice;
+		}
+		return NULL;
 	}
 
 	/**
@@ -1188,7 +1191,10 @@ class Object extends AbstractModel {
 	 * @return string
 	 */
 	public function getRentPriceType() {
-		return $this->rentPriceType;
+		if ($this->getIsRent()) {
+			return $this->rentPriceType;
+		}
+		return NULL;
 	}
 
 	/**
@@ -1207,7 +1213,10 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getRentAvailability() {
-		return $this->rentAvailability;
+		if ($this->getIsRent()) {
+			return $this->rentAvailability;
+		}
+		return NULL;
 	}
 	
 	/**
@@ -1226,7 +1235,10 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getRentWait() {
-		return $this->rentWait;	
+		if ($this->getIsRent()) {
+			return $this->rentWait;
+		}
+		return NULL;
 	}
 	
 	/**
@@ -1245,7 +1257,10 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getRentAvailableDate() {
-		return $this->rentAvailableDate;	
+		if ($this->getIsRent()) {
+			return $this->rentAvailableDate;
+		}
+		return NULL;
 	}
 	
 	/**
@@ -1264,7 +1279,10 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getRentalAgreement() {
-		return $this->rentalAgreement;	
+		if ($this->getIsRent()) {
+			return $this->rentalAgreement;
+		}
+		return NULL;
 	}
 	
 	/**
@@ -1283,7 +1301,10 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getLeaseConditions() {
-		return $this->leaseConditions;	
+		if ($this->getIsRent()) {
+			return $this->leaseConditions;
+		}
+		return NULL;
 	}
 	
 	/**
