@@ -385,6 +385,11 @@ class Object extends AbstractModel {
 	protected $presences = NULL;
 
 	/**
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ucreation\Properties\Domain\Model\Object>
+	 */
+	protected $relatedObjects = NULL;
+
+	/**
 	 * @var \Ucreation\Properties\Domain\Model\Town
 	 */
 	protected $town = NULL;
@@ -458,6 +463,7 @@ class Object extends AbstractModel {
 	 */
 	protected function initStorageObjects() {
 		$this->presences = new ObjectStorage();
+		$this->relatedObjects = new ObjectStorage();
 		$this->images = new ObjectStorage();
 	}
 	
@@ -1536,6 +1542,45 @@ class Object extends AbstractModel {
 	 */
 	public function setPresences(ObjectStorage $presences) {
 		$this->presences = $presences;
+	}
+
+	/**
+	 * Add Related Object
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $relatedObject
+	 * @return void
+	 */
+	public function addRelatedObject(Object $relatedObject) {
+		$this->relatedObjects->attach($relatedObject);
+	}
+
+	/**
+	 * Remove Related Object
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $relatedObject
+	 * @return void
+	 */
+	public function removeRelatedObject(Object $relatedObject) {
+		$this->relatedObjects->detach($relatedObject);
+	}
+
+	/**
+	 * Get Related Objects
+	 *
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ucreation\Properties\Domain\Model\Object>
+	 */
+	public function getRelatedObjects() {
+		return $this->relatedObjects;
+	}
+
+	/**
+	 * Set Related Objects
+	 *
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ucreation\Properties\Domain\Model\Object> $relatedObjects
+	 * @return void
+	 */
+	public function setRelatedObjects(ObjectStorage $relatedObjects) {
+		$this->relatedObjects = $relatedObjects;
 	}
 
 	/**

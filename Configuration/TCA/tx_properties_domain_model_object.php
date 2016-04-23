@@ -20,11 +20,11 @@ return array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => 'name,type,sort,offer,images,year,environmental_class,description,alternative_description,street,zip_code,contact,contact_name,contact_company,contact_address,contact_phone,contact_secondary_phone,contact_email,contact_website,status,price,price_type,rent_price,rent_price_type,price_per_square_metre,lot_size,living_area,garden_area,number_of_rooms,latitude,longitude,latitude_longitude_md5,category,presences,town,district,position,construction_type,',
+		'searchFields' => 'name,type,sort,offer,images,year,environmental_class,description,alternative_description,street,zip_code,contact,contact_name,contact_company,contact_address,contact_phone,contact_secondary_phone,contact_email,contact_website,status,price,price_type,rent_price,rent_price_type,price_per_square_metre,lot_size,living_area,garden_area,number_of_rooms,latitude,longitude,latitude_longitude_md5,category,presences,related_objects,town,district,position,construction_type,',
 		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_object.gif'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, district, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, price_type, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, construction_type, garage, garage_capacity, garage_sort, images, background_image, download, meta_description, meta_keywords',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, district, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, price_type, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, related_objects, construction_type, garage, garage_capacity, garage_sort, images, background_image, download, meta_description, meta_keywords',
 	),
 	'types' => array(
 		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, type, name, category, description;;;richtext:rte_transform[mode=ts_links], alternative_description;;;richtext:rte_transform[mode=ts_links],
@@ -35,7 +35,7 @@ return array(
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.object.surfaces;surfaces,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.object.property_details;property_details,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.object.garage_details;garage_details,
-				presences,
+				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.object.relations;relations,
 			--div--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tab.offer, offer,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.offer.sale_details;sale_details,
 				--palette--;LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:palettes.offer.rent_details;rent_details,
@@ -81,6 +81,10 @@ return array(
 		),
 		'metadata' => array(
 			'showitem' => 'meta_description, --linebreak--, meta_keywords',
+			'canNotCollapse' => TRUE
+		),
+		'relations' => array(
+			'showitem' => 'presences, --linebreak--, related_objects',
 			'canNotCollapse' => TRUE
 		),
 	),
@@ -1125,6 +1129,20 @@ return array(
 				'type' => 'select',
 				'foreign_table' => 'tx_properties_domain_model_presence',
 				'MM' => 'tx_properties_object_presence_mm',
+				'size' => 6,
+				'autoSizeMax' => 12,
+				'maxitems' => 9999,
+				'multiple' => 0,
+			),
+		),
+		'related_objects' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.related_objects',
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
+			'config' => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_properties_domain_model_object',
+				'MM' => 'tx_properties_object_object_mm',
 				'size' => 6,
 				'autoSizeMax' => 12,
 				'maxitems' => 9999,

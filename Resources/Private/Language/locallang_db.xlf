@@ -57,6 +57,9 @@
 			<trans-unit id="palettes.object.garage_details">
 				<source>Garage Details</source>
 			</trans-unit>
+			<trans-unit id="palettes.object.relations">
+				<source>Relations</source>
+			</trans-unit>
 			<trans-unit id="palettes.offer.sale_details">
 				<source>Sale Details</source>
 			</trans-unit>
@@ -359,6 +362,9 @@
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.presences">
 				<source>Presences</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.related_objects">
+				<source>Related Objects</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.town">
 				<source>Town</source>

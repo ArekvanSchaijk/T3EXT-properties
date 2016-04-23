@@ -55,6 +55,7 @@ CREATE TABLE tx_properties_domain_model_object (
 	latitude_longitude_md5 varchar(32) DEFAULT '' NOT NULL,
 	category int(11) unsigned DEFAULT '0',
 	presences int(11) unsigned DEFAULT '0' NOT NULL,
+	related_objects int(11) unsigned DEFAULT '0' NOT NULL,
 	town int(11) unsigned DEFAULT '0',
 	position int(11) unsigned DEFAULT '0',
 	garden_position tinyint(4) unsigned DEFAULT '0' NOT NULL,
@@ -451,6 +452,20 @@ CREATE TABLE tx_properties_domain_model_contactrequest (
 # Table structure for table 'tx_properties_object_presence_mm'
 #
 CREATE TABLE tx_properties_object_presence_mm (
+
+	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+
+	KEY uid_local (uid_local),
+	KEY uid_foreign (uid_foreign)
+);
+
+#
+# Table structure for table 'tx_properties_object_object_mm'
+#
+CREATE TABLE tx_properties_object_object_mm (
 
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
