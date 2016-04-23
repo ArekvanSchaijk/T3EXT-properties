@@ -186,9 +186,6 @@
 			<trans-unit id="tx_properties_domain_model_object.zip_code">
 				<source>Zip Code</source>
 			</trans-unit>
-			<trans-unit id="tx_properties_domain_model_object.district">
-				<source>District</source>
-			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.country">
 				<source>Country</source>
 			</trans-unit>
@@ -372,6 +369,12 @@
 			<trans-unit id="tx_properties_domain_model_object.town.0">
 				<source>-- select --</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.district">
+				<source>District</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.district.0">
+				<source>-- select --</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.position">
 				<source>Position</source>
 			</trans-unit>
@@ -477,6 +480,18 @@
 			<trans-unit id="tx_properties_domain_model_category.disable_filter_towns.0">
 				<source>If checked, the filter 'towns' will be disabled while being in this category</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_district">
+				<source>Disable Filter District</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_district.0">
+				<source>If checked, the filter 'district' will be disabled while being in this category</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_districts">
+				<source>Disable Filter Districts</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_category.disable_filter_districts.0">
+				<source>If checked, the filter 'districts' will be disabled while being in this category</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_category.disable_filter_price_range">
 				<source>Disable Filter Price Range</source>
 			</trans-unit>
@@ -527,6 +542,21 @@
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_town.disable_filter_option.0">
 				<source>If check, this town will not appear as filter option</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_district">
+				<source>District</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_district.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_district.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_district.disable_filter_option">
+				<source>Disable Filter Option</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_district.disable_filter_option.0">
+				<source>If check, this district will not appear as filter option</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_position">
 				<source>Position</source>

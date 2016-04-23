@@ -34,6 +34,8 @@ return array(
 				disable_filter_offer,
 				disable_filter_town,
 				disable_filter_towns,
+				disable_filter_district,
+				disable_filter_districts,
 				disable_filter_price_range,
 				disable_filter_presences,
 				disable_filter_lot_size,
@@ -200,6 +202,30 @@ return array(
 				'items' => array(
 					1 => array(
 						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_towns.0',
+					),
+				),
+			),
+		),
+		'disable_filter_district' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_district',
+			'config' => array(
+				'type' => 'check',
+				'items' => array(
+					1 => array(
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_district.0',
+					),
+				),
+			),
+		),
+		'disable_filter_districts' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_districts',
+			'config' => array(
+				'type' => 'check',
+				'items' => array(
+					1 => array(
+						0 => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_category.disable_filter_districts.0',
 					),
 				),
 			),

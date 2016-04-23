@@ -48,7 +48,7 @@ return array(
 	),
 	'palettes' => array(
 		'address' => array(
-			'showitem' => 'street, street_number, --linebreak--, zip_code, town, --linebreak--, district, --linebreak--, country',
+			'showitem' => 'street, street_number, --linebreak--, zip_code, town, district, --linebreak--, country',
 			'canNotCollapse' => TRUE
 		),
 		'geodata' => array(
@@ -491,7 +491,7 @@ return array(
 				'maxitems' => 1,
 				'eval' => 'required',
 				'items' => array(
-					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.town.0', NULL),
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.town.0', 0),
 				),
 			),
 		),
@@ -500,9 +500,13 @@ return array(
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.district',
 			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
 			'config' => array(
-				'type' => 'input',
-				'size' => 15,
-				'eval' => 'trim'
+				'type' => 'select',
+				'foreign_table' => 'tx_properties_domain_model_district',
+				'minitems' => 1,
+				'maxitems' => 1,
+				'items' => array(
+					array('LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.district.0', 0),
+				),
 			),
 		),
 		'country' => array(

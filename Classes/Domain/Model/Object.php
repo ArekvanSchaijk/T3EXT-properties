@@ -217,11 +217,6 @@ class Object extends AbstractModel {
 	/**
 	 * @var string
 	 */
-	protected $district = '';
-
-	/**
-	 * @var string
-	 */
 	protected $country = '';
 
 	/**
@@ -393,6 +388,11 @@ class Object extends AbstractModel {
 	 * @var \Ucreation\Properties\Domain\Model\Town
 	 */
 	protected $town = NULL;
+
+	/**
+	 * @var \Ucreation\Properties\Domain\Model\District
+	 */
+	protected $district = NULL;
 
 	/**
 	 * @var \Ucreation\Properties\Domain\Model\Position
@@ -849,25 +849,6 @@ class Object extends AbstractModel {
 	 */
 	public function setZipCode($zipCode) {
 		$this->zipCode = $zipCode;
-	}
-
-	/**
-	 * Get District
-	 *
-	 * @return string
-	 */
-	public function getDistrict() {
-		return $this->district;
-	}
-
-	/**
-	 * Set District
-	 *
-	 * @param string $district
-	 * @return void
-	 */
-	public function setDistrict($district) {
-		$this->district = $district;
 	}
 
 	/**
@@ -1624,7 +1605,7 @@ class Object extends AbstractModel {
 
 	/**
 	 * Get Town
-	 * 
+	 *
 	 * @return \Ucreation\Properties\Domain\Model\Town
 	 */
 	public function getTown() {
@@ -1633,12 +1614,31 @@ class Object extends AbstractModel {
 
 	/**
 	 * Set Town
-	 * 
+	 *
 	 * @param \Ucreation\Properties\Domain\Model\Town $town
 	 * @return void
 	 */
 	public function setTown(Town $town) {
 		$this->town = $town;
+	}
+
+	/**
+	 * Get District
+	 *
+	 * @return \Ucreation\Properties\Domain\Model\District
+	 */
+	public function getDistrict() {
+		return $this->district;
+	}
+
+	/**
+	 * Set District
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\District $district
+	 * @return void
+	 */
+	public function setDistrict(District $district) {
+		$this->district = $district;
 	}
 
 	/**
