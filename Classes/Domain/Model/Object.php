@@ -1684,7 +1684,10 @@ class Object extends AbstractModel {
 	 * @return boolean
 	 */
 	public function getGarageCapacity() {
-		return $this->garageCapacity;
+		if ($this->getGarage()) {
+			return $this->garageCapacity;
+		}
+		return NULL;
 	}
 
 	/**
@@ -1703,7 +1706,10 @@ class Object extends AbstractModel {
 	 * @return \Ucreation\Properties\Domain\Model\GarageSort
 	 */
 	public function getGarageSort() {
-		return $this->garageSort;
+		if ($this->getGarage()) {
+			return $this->garageSort;
+		}
+		return NULL;
 	}
 
 	/**
