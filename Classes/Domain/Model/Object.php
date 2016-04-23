@@ -1323,7 +1323,10 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getAccessibility() {
-		return $this->accessibility;	
+		if ($this->getIsBuilding()) {
+			return $this->accessibility;
+		}
+		return NULL;
 	}
 	
 	/**
@@ -1380,7 +1383,10 @@ class Object extends AbstractModel {
 	 * @return string
 	 */
 	public function getLivingArea() {
-		return $this->livingArea;
+		if ($this->getIsBuilding()) {
+			return $this->livingArea;
+		}
+		return NULL;
 	}
 
 	/**
@@ -1399,7 +1405,10 @@ class Object extends AbstractModel {
 	 * @return string
 	 */
 	public function getGardenArea() {
-		return $this->gardenArea;
+		if ($this->getIsBuilding()) {
+			return $this->gardenArea;
+		}
+		return NULL;
 	}
 
 	/**
@@ -1418,7 +1427,10 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getNumberOfRooms() {
-		return $this->numberOfRooms;
+		if ($this->getIsBuilding()) {
+			return $this->numberOfRooms;
+		}
+		return NULL;
 	}
 
 	/**
@@ -1437,7 +1449,10 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getNumberOfBedrooms() {
-		return $this->numberOfBedrooms;
+		if ($this->getIsBuilding()) {
+			return $this->numberOfBedrooms;
+		}
+		return NULL;
 	}
 
 	/**
@@ -1552,7 +1567,10 @@ class Object extends AbstractModel {
 	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ucreation\Properties\Domain\Model\Presence>
 	 */
 	public function getPresences() {
-		return $this->presences;
+		if ($this->getIsBuilding()) {
+			return $this->presences;
+		}
+		return NULL;
 	}
 
 	/**
