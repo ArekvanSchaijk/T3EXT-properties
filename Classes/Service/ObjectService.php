@@ -164,6 +164,18 @@ class ObjectService implements SingletonInterface {
 	}
 
 	/**
+	 * Get Active Tab
+	 *
+	 * @return string|null
+	 */
+	public function getActiveTab() {
+		if ($this->request->hasArgument(LinkUtility::TAB)) {
+			return $this->request->getArgument(LinkUtility::TAB);
+		}
+		return NULL;
+	}
+
+	/**
 	 * Set Link Arguments
 	 *
 	 * @param array $linkArguments

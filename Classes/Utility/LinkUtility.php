@@ -37,6 +37,7 @@ class LinkUtility {
 	 * @const string
 	 */	
 	const	OBJECT = 'object',
+			TAB = 'tab',
 			CONTACT_REQUEST_HASH = 'contactRequestHash',
 			ORDER = 'order',
 			ORDER_FIELD = 'orderField',
@@ -63,6 +64,7 @@ class LinkUtility {
 	 */
 	static protected $availableParameterNames = array(
 		self::OBJECT,
+		self::TAB,
 		self::CONTACT_REQUEST_HASH,
 		self::ORDER,
 		self::ORDER_FIELD,
