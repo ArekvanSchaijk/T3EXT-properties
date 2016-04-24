@@ -28,8 +28,8 @@ namespace Ucreation\Properties\Controller;
 use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Domain\Model\ContactRequest;
 use Ucreation\Properties\Exception;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Ucreation\Properties\Utility\LinkUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class ObjectController

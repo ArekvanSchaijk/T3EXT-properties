@@ -25,8 +25,8 @@ namespace Ucreation\Properties\Filter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Ucreation\Properties\Utility\LinkUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
