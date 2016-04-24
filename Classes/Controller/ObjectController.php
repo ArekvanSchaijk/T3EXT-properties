@@ -91,6 +91,10 @@ class ObjectController extends BaseController {
 		if ((bool)$this->settings['object']['contact']['useContactForm']) {
 			$this->processContactForm($object, $contactRequest);
 		}
+		// Get the filter arguments
+		if (($filterArguments = self::getTypoScriptFrontendController()->fe_user->getKey('ses', 'tx_properties_filter_arguments'))) {
+			$this->view->assign('filterArguments', $filterArguments);
+		}
 	}
 
 	/**
@@ -113,7 +117,12 @@ class ObjectController extends BaseController {
 	 * @return void
 	 */
 	protected function performFiltersFormPost() {
-		$this->redirect(NULL, NULL, NULL, $this->getObjectService()->getLinkArguments());
+		// Gets the link arguments
+		$linkArguments = $this->getObjectService()->getLinkArguments();
+		// Stores it in an session
+		self::getTypoScriptFrontendController()->fe_user->setKey('ses', 'tx_properties_filter_arguments', $linkArguments);
+		self::getTypoScriptFrontendController()->fe_user->storeSessionData();
+		$this->redirect(NULL, NULL, NULL, $linkArguments);
 	}
 
 	/**
@@ -122,18 +131,23 @@ class ObjectController extends BaseController {
 	 * @return string
 	 */
 	protected function performFiltersAjaxFormPost() {
+		// Gets the link arguments
+		$linkArguments = $this->getObjectService()->getLinkArguments();
+		// Stores it in an session
+		self::getTypoScriptFrontendController()->fe_user->setKey('ses', 'tx_properties_filter_arguments', $linkArguments);
+		self::getTypoScriptFrontendController()->fe_user->storeSessionData();
 		return json_encode(
 			array(
 				'url' => $this->getFrontendUri(
 					$this->settings['object']['listPid'],
 					array(
-						'tx_properties_pi1' => $this->getObjectService()->getLinkArguments()
+						'tx_properties_pi1' => $linkArguments
 					)
 				),
 				'ajaxUrl' => $this->getFrontendUri(
 					$this->settings['object']['listPid'],
 					array(
-						'tx_properties_pi1' => $this->getObjectService()->getLinkArguments()
+						'tx_properties_pi1' => $linkArguments
 					),
 					FALSE,
 					$this->settings['ajax']['retrieveContentPageType']
