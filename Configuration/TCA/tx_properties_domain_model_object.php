@@ -535,7 +535,7 @@ return array(
 		'country' => array(
 			'exclude' => FALSE,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.country',
-			'displayCond' => 'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
+			'displayCond' => 'FIELD:type:>:'.\Ucreation\Properties\Domain\Model\Object::TYPE_NONE,
 			'config' => array(
 				'type' => 'input',
 				'size' => 15,

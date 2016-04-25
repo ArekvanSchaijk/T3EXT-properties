@@ -357,7 +357,7 @@ class Object extends AbstractModel {
 	/**
 	 * @var integer
 	 */
-	protected $numberOfBedooms = 0;
+	protected $numberOfBedrooms = 0;
 
 	/**
 	 * @var string
@@ -497,6 +497,18 @@ class Object extends AbstractModel {
 				$this->getOffer() == self::OFFER_BOTH
 			)
 		) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Get Is Sale And Rent
+	 *
+	 * @return void
+	 */
+	public function getIsSaleAndRent() {
+		if ($this->getIsSale() && $this->getIsRent()) {
 			return TRUE;
 		}
 		return FALSE;
@@ -729,7 +741,10 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getYear() {
-		return $this->year;
+		if ($this->getIsBuilding()) {
+			return $this->year;
+		}
+		return NULL;
 	}
 
 	/**
@@ -748,7 +763,10 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getEnvironmentalClass() {
-		return $this->environmentalClass;
+		if ($this->getIsBuilding()) {
+			return $this->environmentalClass;
+		}
+		return NULL;
 	}
 
 	/**
@@ -824,7 +842,10 @@ class Object extends AbstractModel {
 	 * @return string
 	 */
 	public function getStreet() {
-		return $this->street;
+		if ($this->getIsBuilding()) {
+			return $this->street;
+		}
+		return NULL;
 	}
 
 	/**
@@ -843,7 +864,10 @@ class Object extends AbstractModel {
 	 * @return string
 	 */
 	public function getStreetNumber() {
-		return $this->street;
+		if ($this->getIsBuilding()) {
+			return $this->streetNumber;
+		}
+		return NULL;
 	}
 
 	/**
@@ -862,7 +886,10 @@ class Object extends AbstractModel {
 	 * @return string
 	 */
 	public function getZipCode() {
-		return $this->zipCode;
+		if ($this->getIsBuilding()) {
+			return $this->zipCode;
+		}
+		return NULL;
 	}
 
 	/**
@@ -1136,7 +1163,10 @@ class Object extends AbstractModel {
 	 * @return int
 	 */
 	public function getPrice() {
-		return $this->price;
+		if ($this->getIsSale()) {
+			return $this->price;
+		}
+		return NULL;
 	}
 
 	/**
@@ -1240,7 +1270,7 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getRentWait() {
-		if ($this->getIsRent()) {
+		if ($this->getIsRent() && $this->getRentAvailability() == self::RENT_AVAILABILITY_WAIT) {
 			return $this->rentWait;
 		}
 		return NULL;
@@ -1253,7 +1283,7 @@ class Object extends AbstractModel {
 	 * @return void
 	 */
 	public function setRentWait($rentWait) {
-		$this->rentWait = $rentWait;	
+		$this->rentWait = $rentWait;
 	}
 	
 	/**
@@ -1262,7 +1292,7 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getRentAvailableDate() {
-		if ($this->getIsRent()) {
+		if ($this->getIsRent() && $this->getRentAvailability() == self::RENT_AVAILABILITY_BYDATE) {
 			return $this->rentAvailableDate;
 		}
 		return NULL;
@@ -1350,7 +1380,10 @@ class Object extends AbstractModel {
 	 * @return int
 	 */
 	public function getPricePerSquareMetre() {
-		return $this->pricePerSquareMetre;
+		if ($this->getIsSale()) {
+			return $this->pricePerSquareMetre;
+		}
+		return NULL;
 	}
 
 	/**
@@ -1690,17 +1723,41 @@ class Object extends AbstractModel {
 	 * @return integer
 	 */
 	public function getGardenPosition() {
-		return $this->gardenPosition;
+		if ($this->getIsBuilding()) {
+			return $this->gardenPosition;
+		}
+		return NULL;
 	}
 
 	/**
 	 * Set Garden Position
 	 * 
-	 * @param integer $gardenPosition
+	 * @param int $gardenPosition
 	 * @return void
 	 */
 	public function setGardenPosition($gardenPosition) {
 		$this->gardenPosition = $gardenPosition;
+	}
+
+	/**
+	 * Get Garden Position Label
+	 *
+	 * @return string
+	 */
+	public function getGardenPositionLabel() {
+		if (($position = $this->getGardenPosition())) {
+			switch ($position) {
+				case self::GARDEN_POSITION_NORTH:
+					return LocalizationUtility::translate('object.garden_position.label.north', self::$extensionName);
+				case self::GARDEN_POSITION_WEST:
+					return LocalizationUtility::translate('object.garden_position.label.west', self::$extensionName);
+				case self::GARDEN_POSITION_SOUTH:
+					return LocalizationUtility::translate('object.garden_position.label.south', self::$extensionName);
+				case self::GARDEN_POSITION_EAST:
+					return LocalizationUtility::translate('object.garden_position.label.east', self::$extensionName);
+			}
+		}
+		return NULL;
 	}
 
 	/**
@@ -1709,7 +1766,10 @@ class Object extends AbstractModel {
 	 * @return \Ucreation\Properties\Domain\Model\ConstructionType
 	 */
 	public function getConstructionType() {
-		return $this->constructionType;
+		if ($this->getIsBuilding()) {
+			return $this->constructionType;
+		}
+		return NULL;
 	}
 
 	/**

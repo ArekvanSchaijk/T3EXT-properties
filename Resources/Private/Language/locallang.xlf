@@ -156,6 +156,18 @@
 			<trans-unit id="object.status.label.reserved">
 				<source>Gereserveerd</source>
 			</trans-unit>
+			<trans-unit id="object.garden_position.label.north">
+				<source>Noord</source>
+			</trans-unit>
+			<trans-unit id="object.garden_position.label.west">
+				<source>West</source>
+			</trans-unit>
+			<trans-unit id="object.garden_position.label.south">
+				<source>Zuid</source>
+			</trans-unit>
+			<trans-unit id="object.garden_position.label.east">
+				<source>Oost</source>
+			</trans-unit>
 			<trans-unit id="object.contact.first_name">
 				<source>Voornaam</source>
 			</trans-unit>
