@@ -98,6 +98,44 @@ class ObjectController extends BaseController {
 	}
 
 	/**
+	 * Related Action
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $object
+	 * @return void
+	 */
+	public function relatedAction(Object $object) {
+		$this->view->assign('object', $object);
+		if ($object->getRelatedObjects()->count()) {
+			$this->view->assign('type', 'related');
+			$this->view->assign('relatedObjects', $object->getRelatedObjects());
+		} else if ((bool)$this->settings['object']['related']['automaticallyCalculate']) {
+			$limit = (int)$this->settings['object']['related']['limit'];
+			$findBy = GeneralUtility::trimExplode(',', $this->settings['object']['related']['findBy']);
+			$type = NULL;
+			$relatedObjects = NULL;
+			foreach ($findBy as $property) {
+				switch ($property) {
+					case 'category':
+						if ($object->getCategory()) {
+							$type = 'category';
+							$relatedObjects = $this->objectService->getRelatedObjectsByCategory($object, $limit);
+						}
+						break;
+					case 'town':
+						$type = 'town';
+						$relatedObjects = $this->objectService->getRelatedObjectsByTown($object, $limit);
+						break;
+				}
+				if ($relatedObjects && $relatedObjects->count()) {
+					break;
+				}
+			}
+			$this->view->assign('type', $type);
+			$this->view->assign('relatedObjects', $relatedObjects);
+		}
+	}
+
+	/**
 	 * Filters Action
 	 *
 	 * @return void

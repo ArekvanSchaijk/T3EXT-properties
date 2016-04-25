@@ -71,6 +71,11 @@ plugin.tx_properties {
 		            }
 		        }
 		    }
+		    related {
+		        automaticallyCalculate = 1
+		        limit = 3
+		        findBy = category, town
+		    }
 		}
         categories {
             autoActivateFirstCategory = 1

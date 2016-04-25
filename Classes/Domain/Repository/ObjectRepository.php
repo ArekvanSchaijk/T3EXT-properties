@@ -25,6 +25,7 @@ namespace Ucreation\Properties\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Service\ObjectService;
 use Ucreation\Properties\Utility\AdditionalQueryConstrainsUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
@@ -71,6 +72,62 @@ class ObjectRepository extends AbstractRepository {
 		}
 		// Apply the query constrains
 		$query = $this->applyQueryConstrains($query, $constrains);
+		// Sets the limit
+		if ($limit) {
+			$query->setLimit($limit);
+		}
+		// Executes the query
+		return $query->execute();
+	}
+
+	/**
+	 * Find Related Objects By Category
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $object
+	 * @param int $limit
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
+	 */
+	public function findRelatedObjectsByCategory(Object $object, $limit = 0) {
+		$query = $this->createQuery();
+		$constrains = array();
+		// Excludes the current object
+		$constrains[] = $query->logicalNot($query->equals('uid', $object->getUid()));
+		if (($category = $object->getCategory())) {
+			$constrains[] = $query->equals('category', $category->getUid());
+		}
+		if (count($constrains) > 1) {
+			$query->matching($query->logicalAnd($constrains));
+		} else {
+			$query->matching($constrains[0]);
+		}
+		// Sets the limit
+		if ($limit) {
+			$query->setLimit($limit);
+		}
+		// Executes the query
+		return $query->execute();
+	}
+
+	/**
+	 * Find Related Objects By Category
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $object
+	 * @param int $limit
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
+	 */
+	public function findRelatedObjectsByTown(Object $object, $limit = 0) {
+		$query = $this->createQuery();
+		$constrains = array();
+		// Excludes the current object
+		$constrains[] = $query->logicalNot($query->equals('uid', $object->getUid()));
+		if (($town = $object->getTown())) {
+			$constrains[] = $query->equals('town', $town->getUid());
+		}
+		if (count($constrains) > 1) {
+			$query->matching($query->logicalAnd($constrains));
+		} else {
+			$query->matching($constrains[0]);
+		}
 		// Sets the limit
 		if ($limit) {
 			$query->setLimit($limit);

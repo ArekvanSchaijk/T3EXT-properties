@@ -25,6 +25,7 @@ namespace Ucreation\Properties\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Ucreation\Properties\Domain\Model\Object;
 use Ucreation\Properties\Utility\LinkUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -131,6 +132,28 @@ class ObjectService implements SingletonInterface {
 	 */
 	public function getFilteredObjects(array $filters = NULL, array $filterOverrides = NULL, array $ignoredFilters = NULL, $limit = 0, array $orderings = NULL, array $additionalConstrains = NULL) {
 		return $this->objectRepository->findByFilters($this, $filters, $filterOverrides, $ignoredFilters, $limit, $orderings, $additionalConstrains);
+	}
+
+	/**
+	 * Get Related Objects By Category
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $object
+	 * @param int $limit
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
+	 */
+	public function getRelatedObjectsByCategory(Object $object, $limit = 0) {
+		return $this->objectRepository->findRelatedObjectsByCategory($object, $limit);
+	}
+
+	/**
+	 * Get Related Objects By Category
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $object
+	 * @param int $limit
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult<\Ucreation\Properties\Domain\Model\Object>
+	 */
+	public function getRelatedObjectsByTown(Object $object, $limit = 0) {
+		return $this->objectRepository->findRelatedObjectsByTown($object, $limit);
 	}
 
 	/**

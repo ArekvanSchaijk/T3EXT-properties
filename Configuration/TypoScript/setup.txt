@@ -67,6 +67,11 @@ plugin.tx_properties {
 		            }
 		        }
 		    }
+		    related {
+		        automaticallyCalculate = {$plugin.tx_properties.settings.object.related.automaticallyCalculate}
+		        limit = {$plugin.tx_properties.settings.object.related.limit}
+		        findBy = {$plugin.tx_properties.settings.object.related.findBy}
+		    }
 		}
 		categories {
             autoActivateFirstCategory = {$plugin.tx_properties.settings.categories.autoActivateFirstCategory}
@@ -155,6 +160,23 @@ lib.properties.showAction {
 	switchableControllerActions {
 		Object {
 			1 = show
+		}
+	}
+	view =< plugin.tx_properties.view
+	persistence =< plugin.tx_properties.persistence
+	settings =< plugin.tx_properties.settings
+}
+
+lib.properties.relatedAction = USER
+lib.properties.relatedAction {
+	userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+	pluginName = Pi1
+	extensionName = Properties
+	vendorName = Ucreation
+	controller = Object
+	switchableControllerActions {
+		Object {
+			1 = related
 		}
 	}
 	view =< plugin.tx_properties.view
