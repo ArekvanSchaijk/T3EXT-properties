@@ -19,6 +19,7 @@ CREATE TABLE tx_properties_domain_model_object (
 	environmental_class tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	description text NOT NULL,
 	alternative_description text NOT NULL,
+	possibilities text NOT NULL,
 	street varchar(100) DEFAULT '' NOT NULL,
 	street_number varchar(10) DEFAULT '' NOT NULL,
 	zip_code varchar(10) DEFAULT '' NOT NULL,

@@ -202,6 +202,11 @@ class Object extends AbstractModel {
 	/**
 	 * @var string
 	 */
+	protected $possibilities = '';
+
+	/**
+	 * @var string
+	 */
 	protected $street = '';
 	
 	/**
@@ -792,6 +797,25 @@ class Object extends AbstractModel {
 	 */
 	public function setAlternativeDescription($alternativeDescription) {
 		$this->alternativeDescription = $alternativeDescription;
+	}
+
+	/**
+	 * Get Possibilities
+	 *
+	 * @return string
+	 */
+	public function getPossibilities() {
+		return $this->possibilities;
+	}
+
+	/**
+	 * Set Possibilities
+	 *
+	 * @param string $possibilities
+	 * @return void
+	 */
+	public function setPossibilities($possibilities) {
+		$this->possibilities = $possibilities;
 	}
 
 	/**
