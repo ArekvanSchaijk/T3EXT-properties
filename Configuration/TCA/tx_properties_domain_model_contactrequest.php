@@ -36,7 +36,7 @@ return array(
     ),
     'palettes' => array(
         'message' => array(
-            'showitem' => 'first_name, --linebreak--, last_name, --linebreak--, email. --linebreak--, subject, --linebreak--, body',
+            'showitem' => 'first_name, --linebreak--, last_name, --linebreak--, email, --linebreak--, subject, --linebreak--, body',
             'canNotCollapse' => TRUE
         ),
         'receiver' => array(
