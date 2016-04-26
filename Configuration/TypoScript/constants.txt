@@ -76,6 +76,16 @@ plugin.tx_properties {
 		        limit = 3
 		        findBy = category, town
 		    }
+		    map {
+                default {
+                    latitude =
+                    longitude =
+                    zoom = 12
+                    scrollwheel = 0
+                    disableDefaultUI = 1
+                    zoomControl = 1
+                }
+		    }
 		}
         categories {
             autoActivateFirstCategory = 1

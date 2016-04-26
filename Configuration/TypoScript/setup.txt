@@ -72,6 +72,16 @@ plugin.tx_properties {
 		        limit = {$plugin.tx_properties.settings.object.related.limit}
 		        findBy = {$plugin.tx_properties.settings.object.related.findBy}
 		    }
+		    map {
+                default {
+                    latitude = {$plugin.tx_properties.settings.object.map.default.latitude}
+                    longitude = {$plugin.tx_properties.settings.object.map.default.longitude}
+                    zoom = {$plugin.tx_properties.settings.object.map.default.zoom}
+                    scrollwheel = {$plugin.tx_properties.settings.object.map.default.scrollwheel}
+                    disableDefaultUI = {$plugin.tx_properties.settings.object.map.default.disableDefaultUI}
+                    zoomControl = {$plugin.tx_properties.settings.object.map.default.zoomControl}
+                }
+		    }
 		}
 		categories {
             autoActivateFirstCategory = {$plugin.tx_properties.settings.categories.autoActivateFirstCategory}
