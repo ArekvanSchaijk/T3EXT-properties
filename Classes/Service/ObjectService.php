@@ -83,6 +83,12 @@ class ObjectService implements SingletonInterface {
 	protected $categoryRepository = NULL;
 
 	/**
+	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
+	 * @inject
+	 */
+	protected $persistenceManager = NULL;
+
+	/**
 	 * Get Filter Service
 	 *
 	 * @return \Ucreation\Properties\Service\FilterService
@@ -256,6 +262,17 @@ class ObjectService implements SingletonInterface {
 			}
 		}
 		return $linkArguments;
+	}
+
+	/**
+	 * Update
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $object
+	 * @return void
+	 */
+	public function update(Object $object) {
+		$this->objectRepository->update($object);
+		$this->persistenceManager->persistAll();
 	}
 
 }

@@ -8,13 +8,13 @@ if (!defined('TYPO3_MODE')) {
 	'Ucreation.' . $_EXTKEY,
 	'Pi1',
 	array(
-		'Object' => 'list, show, filters, subFilters, contactRequestThankYou, related',
+		'Object' => 'list, show, filters, subFilters, mapData, showMapInfoWindow, contactRequestThankYou, related',
 		'ContactRequest' => 'thankYou',
 		'Category' => 'listCategories',
 
 	),
 	array(
-		'Object' => 'list, show, filters, subFilters, contactRequestThankYou, related',
+		'Object' => 'list, show, filters, subFilters, mapData, showMapInfoWindow, contactRequestThankYou, related',
 		'ContactRequest' => 'thankYou',
 		'Category' => 'listCategories',
 	)

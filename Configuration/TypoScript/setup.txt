@@ -97,6 +97,8 @@ plugin.tx_properties {
 		ajax {
 		    retrieveContentPageType = {$plugin.tx_properties.settings.ajax.retrieveContentPageType}
 		    performFiltersPostFormPageType = {$plugin.tx_properties.settings.ajax.performFiltersPostFormPageType}
+		    retrieveMapDataPageType = {$plugin.tx_properties.settings.ajax.retrieveMapDataPageType}
+		    retrieveMapInfoWindowObjectDetail = {$plugin.tx_properties.settings.ajax.retrieveMapInfoWindowObjectDetail}
 		}
 		filters {
             eliminated = {$plugin.tx_properties.settings.filters.eliminated}
@@ -296,6 +298,62 @@ performFiltersPostForm {
     config {
 	    disableAllHeaderCode = 1
 	    additionalHeaders = Content-type: application/json
+	    xhtml_cleaning = 0
+	    admPanel = 0
+	    debug = 0
+    }
+}
+
+retrieveMapDataPageType = PAGE
+retrieveMapDataPageType {
+    typeNum = {$plugin.tx_properties.settings.ajax.retrieveMapDataPageType}
+	10 = USER_INT
+    10 {
+	    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+	    pluginName = Pi1
+	    extensionName = Properties
+	    vendorName = Ucreation
+	    controller = Object
+	    switchableControllerActions {
+		    Object {
+			    1 = mapData
+		    }
+	    }
+	    view =< plugin.tx_properties.view
+	    persistence =< plugin.tx_properties.persistence
+	    settings =< plugin.tx_properties.settings
+    }
+    config {
+	    disableAllHeaderCode = 1
+	    additionalHeaders = Content-type: application/json
+	    xhtml_cleaning = 0
+	    admPanel = 0
+	    debug = 0
+    }
+}
+
+retrieveMapInfoWindowObjectDetail = PAGE
+retrieveMapInfoWindowObjectDetail {
+    typeNum = {$plugin.tx_properties.settings.ajax.retrieveMapInfoWindowObjectDetail}
+	10 = USER_INT
+    10 {
+	    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+	    pluginName = Pi1
+	    extensionName = Properties
+	    vendorName = Ucreation
+	    controller = Object
+	    switchableControllerActions {
+		    Object {
+			    1 = showMapInfoWindow
+		    }
+	    }
+	    view =< plugin.tx_properties.view
+	    persistence =< plugin.tx_properties.persistence
+	    settings =< plugin.tx_properties.settings
+    }
+    config {
+	    disableAllHeaderCode = 1
+	    additionalHeaders = Content-type: Content-type: text/plain
 	    xhtml_cleaning = 0
 	    admPanel = 0
 	    debug = 0

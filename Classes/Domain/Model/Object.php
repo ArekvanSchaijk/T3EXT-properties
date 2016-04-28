@@ -360,6 +360,11 @@ class Object extends AbstractModel {
 	protected $numberOfBedrooms = 0;
 
 	/**
+	 * @var bool
+	 */
+	protected $determineLatlongAutomatic = FALSE;
+
+	/**
 	 * @var string
 	 */
 	protected $latitude = '';
@@ -919,6 +924,21 @@ class Object extends AbstractModel {
 	 */
 	public function setCountry($country) {
 		$this->country = $country;
+	}
+
+	/**
+	 * Get Full Address
+	 *
+	 * @return string
+	 */
+	public function getFullAddress() {
+		$address = ($this->getStreet() ? $this->getStreet().chr(32) : NULL);
+		$address .= ($this->getStreetNumber() ? $this->getStreetNumber().chr(32) : NULL);
+		if ($this->getTown()) {
+			$address .= ($this->getTown()->getName() ? $this->getTown()->getName().chr(32) : NULL);
+		}
+		$address .= ($this->getCountry() ? $this->getCountry().chr(32) : NULL);
+		return trim($address);
 	}
 
 	/**
@@ -1504,12 +1524,34 @@ class Object extends AbstractModel {
 	}
 
 	/**
+	 * Get Determine Latlong Automatic
+	 *
+	 * @return bool
+	 */
+	public function getDetermineLatlongAutomatic() {
+		return $this->determineLatlongAutomatic;
+	}
+
+	/**
+	 * Set Determine Latlong Automatic
+	 *
+	 * @param bool $determineLatlongAutomatic
+	 * @return void
+	 */
+	public function setDetermineLatlongAutomatic($determineLatlongAutomatic) {
+		$this->determineLatlongAutomatic = $determineLatlongAutomatic;
+	}
+
+	/**
 	 * Get Latitude
 	 * 
 	 * @return string
 	 */
 	public function getLatitude() {
-		return $this->latitude;
+		if ($this->latitude && $this->longitude) {
+			return $this->latitude;
+		}
+		return NULL;
 	}
 
 	/**
@@ -1528,7 +1570,10 @@ class Object extends AbstractModel {
 	 * @return string
 	 */
 	public function getLongitude() {
-		return $this->longitude;
+		if ($this->latitude && $this->longitude) {
+			return $this->longitude;
+		}
+		return NULL;
 	}
 
 	/**
@@ -1881,6 +1926,21 @@ class Object extends AbstractModel {
 	 */
 	public function setMetaKeywords($metaKeywords) {
 		$this->metaKeywords = $metaKeywords;
+	}
+
+	/**
+	 * Get Map Data
+	 *
+	 * @return array
+	 */
+	public function getMapData() {
+		return array(
+			'uid' => $this->getUid(),
+			'type' => $this->getType(),
+			'name' => $this->getName(),
+			'latitude' => $this->getLatitude(),
+			'longitude' => $this->getLongitude()
+		);
 	}
 
 }

@@ -150,6 +150,80 @@ class ObjectController extends BaseController {
 	public function subFiltersAction() {}
 
 	/**
+	 * Map Data Action
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object|null $object
+	 * @return string
+	 */
+	public function mapDataAction(Object $object = NULL) {
+		$mapData = array(
+			'objects' => array()
+		);
+		$objects = $this->objectService->getFilteredObjects(NULL, NULL, NULL, 0, NULL);
+		foreach ($objects as $curObject) {
+			// Processes the latitude/longitude
+			$this->processObjectLatitudeLongitude($curObject);
+			// Gets the map data
+			$mapData['objects'][$curObject->getUid()] = $curObject->getMapData();
+			$mapData['objects'][$curObject->getUid()]['current'] = FALSE;
+			if ($object && $curObject->getUid() == $object->getUid()) {
+				$mapData['objects'][$curObject->getUid()]['current'] = TRUE;
+			}
+			$mapData['objects'][$curObject->getUid()]['retrieveContentUrl'] =
+				$this->getFrontendUri(
+					$this->settings['object']['singlePid'],
+					array(
+						'tx_properties_pi1' => array(
+							'object' => $curObject->getUid()
+						)
+					),
+					FALSE,
+					$this->settings['ajax']['retrieveMapInfoWindowObjectDetail']
+				);
+
+		}
+		return json_encode($mapData);
+	}
+
+	/**
+	 * Show Map Info Window Action
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $object
+	 * @return void
+	 */
+	public function showMapInfoWindowAction(Object $object = NULL) {
+		if ($object) {
+			$this->view->assign('object', $object);
+		}
+	}
+
+	/**
+	 * Process Object Latitude Longitude
+	 *
+	 * @param \Ucreation\Properties\Domain\Model\Object $object
+	 * @return void
+	 */
+	protected function processObjectLatitudeLongitude(Object $object) {
+		if (
+			$object->getDetermineLatlongAutomatic() &&
+			(
+				!$object->getLatitudeLongitudeMd5() ||
+				md5($object->getLatitude().$object->getLongitude()) != $object->getLatitudeLongitudeMd5()
+			)
+		) {
+			if (($output = GeneralUtility::getUrl('http://maps.google.com/maps/api/geocode/json?address='.rawurlencode($object->getFullAddress()).'&sensor=false'))) {
+				$output = json_decode($output);
+				if ($output->status == 'OK') {
+					$object->setLatitude($output->results[0]->geometry->location->lat);
+					$object->setLongitude($output->results[0]->geometry->location->lng);
+					$object->setLatitudeLongitudeMd5(md5($output->results[0]->geometry->location->lat.$output->results[0]->geometry->location->lng));
+					$this->getObjectService()->update($object);
+				}
+			}
+		}
+	}
+
+	/**
 	 * Perform Filters Form Post
 	 *
 	 * @return void

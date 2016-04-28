@@ -101,6 +101,8 @@ plugin.tx_properties {
 		ajax {
 		    retrieveContentPageType = 300100
 		    performFiltersPostFormPageType = 300101
+		    retrieveMapDataPageType = 300102
+		    retrieveMapInfoWindowObjectDetail = 300103
 		}
 		filters {
 		    eliminated =
