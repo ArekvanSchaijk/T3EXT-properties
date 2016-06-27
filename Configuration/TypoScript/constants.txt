@@ -13,60 +13,96 @@ plugin.tx_properties {
 	}
 	settings {
 		object {
+		    # cat=plugin.tx_properties_object/a/010; type=int; label=List Page ID
 		    listPid =
+		    # cat=plugin.tx_properties_object/a/020; type=int; label=Single Page ID
 		    singlePid =
+		    # cat=plugin.tx_properties_object/a/030; type=string; label=Default Image Path
 		    defaultImage =
 		    cover {
+		        # cat=plugin.tx_properties_object/a/040; type=string; label=Cover:List Width
 		        listWidth = 270
+		        # cat=plugin.tx_properties_object/a/050; type=string; label=Cover:List Height
 		        listHeight = 180c
 		    }
 		    backgroundImage {
+		        # cat=plugin.tx_properties_object/a/060; type=boolean; label=Background Image:If set, the cover is used as an background image
 		        useObjectCoverIfNoBackgroundImageIsSet = 1
+		        # cat=plugin.tx_properties_object/a/070; type=string; label=Background Image:Width
                 width =
+                # cat=plugin.tx_properties_object/a/080; type=string; label=Background Image:Height
                 height =
+                # cat=plugin.tx_properties_object/a/090; type=string; label=Background Image:Min Width
                 minWidth =
+                # cat=plugin.tx_properties_object/a/100; type=string; label=Background Image:Min Height
                 minHeight =
+                # cat=plugin.tx_properties_object/a/110; type=string; label=Background Image:Max Width
                 maxWidth =
+                # cat=plugin.tx_properties_object/a/120; type=string; label=Background Image:Max Height
                 maxHeight =
 		    }
 		    orderings {
+                # cat=plugin.tx_properties_object/a/130; type=int; label=Orderings:Default ordering - 1 for ordering ascending, 2 for descending
 		        defaultOrder = 1
+		        # cat=plugin.tx_properties_object/a/140; type=string; label=Orderings:Default order field
 		        defaultOrderField = crdate
+		        # cat=plugin.tx_properties_object/a/150; type=string; label=Orderings:Comma seperated list of allowed order fields
 		        allowedOrderFields = uid, crdate, tstamp, name, price, lot_size, status
 		    }
 		    contact {
+		        # cat=plugin.tx_properties_object_contactform/a/010; type=boolean; label=Use Contact Form:If checked, the contact form will be enabled
 		        useContactForm = 1
+		        # cat=plugin.tx_properties_object_contactform/a/020; type=int; label=Contact Request Storage Page ID
 		        contactRequestStoragePid =
+		        # cat=plugin.tx_properties_object_contactform/a/020; type=string; label=Template File Path
 		        templateFilePath = EXT:properties/Resources/Private/Templates/Email/ContactRequest/Receiver.html
 		        thankYou {
+
 		            pageId =
 		            arguments {
+
 		                useObjectDetails = 0
+
 		                useContactRequestDetails = 1
 		            }
 		            confirmation {
+
 		                enable = 1
+
 		                templateFilePath = EXT:properties/Resources/Private/Templates/Email/ContactRequest/Confirmation.html
 		                from {
+
 		                    useObjectDetails = 1
+
 		                    name = Company name
+
 		                    email = email@company.com
 		                }
+
 		                subject = Confirmation contact request
                     }
 		        }
 		        receiver {
+
 		            enableReceiverEmail = 1
+
 		            useObjectContactDetails = 1
+
 		            name =
+
 		            email =
+
 		            subject = Contact request website
 		            cc {
+
 		                name =
+
 		                email =
 		            }
 		            bcc {
+
 		                name =
+
 		                email =
 		            }
 		        }

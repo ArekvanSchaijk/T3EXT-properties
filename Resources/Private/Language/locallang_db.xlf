@@ -240,6 +240,18 @@
 			<trans-unit id="tx_properties_domain_model_object.rent_price">
 				<source>Rent Price</source>
 			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_period">
+				<source>Period</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_period.monthly">
+				<source>Monthly</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_period.quarter">
+				<source>Quarter</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_period.yearly">
+				<source>Yearly</source>
+			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rent_price_type">
 				<source>Rent Price Type</source>
 			</trans-unit>
@@ -248,6 +260,21 @@
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rent_price_type.1">
 				<source>All inclusive</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_service">
+				<source>Service Costs</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_service_period">
+				<source>Service Costst Period</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_service_period.monthly">
+				<source>Monthly</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_service_period.quarter">
+				<source>Quarter</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_service_period.yearly">
+				<source>Yearly</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rent_availability">
 				<source>Rent Availability</source>
@@ -332,6 +359,36 @@
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.garden_area">
 				<source>Garden Area</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area">
+				<source>Floor Area</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type">
+				<source>Floor Area Type</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.0">
+				<source>-- select --</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.gross">
+				<source>Gross</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.netto">
+				<source>Netto</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.terra">
+				<source>Terra</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.use">
+				<source>Use</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.leasable">
+				<source>Leasable</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.useful">
+				<source>Useful</source>
+			</trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type">
+				<source>Floor Area Type</source>
 			</trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.number_of_rooms">
 				<source>Number Of Rooms</source>

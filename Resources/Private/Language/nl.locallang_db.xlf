@@ -95,6 +95,14 @@
 				<source>Price</source> <target state="translated">Prijs</target></trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rent_price" approved="yes">
 				<source>Rent Price</source> <target state="translated">Huurprijs</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_period" approved="yes">
+				<source>Period</source> <target state="translated">Huurprijs periode</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_period.monthly" approved="yes">
+				<source>Monthly</source> <target state="translated">Per maand</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_period.quarter" approved="yes">
+				<source>Quarter</source> <target state="translated">Per kwartaal</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.rent_price_period.yearly" approved="yes">
+				<source>Yearly</source> <target state="translated">Per jaar</target></trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rent_price_type" approved="yes">
 				<source>Rent Price Type</source> <target state="translated">Huurprijs type</target></trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.rent_price_type.0" approved="yes">
@@ -157,6 +165,24 @@
 				<source>Living Area</source> <target state="translated">Woongedeelte</target></trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.garden_area" approved="yes">
 				<source>Garden Area</source> <target state="translated">Tuin</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area" approved="yes">
+				<source>Floor Area</source> <target state="translated">Vloeroppervlakte</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type" approved="yes">
+				<source>Floor Area Type</source> <target state="translated">Vloeroppervlakte Type</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.0" approved="yes">
+				<source>-- select --</source> <target state="translated">-- selecteer --</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.gross" approved="yes">
+				<source>Gross</source> <target state="translated">Bruto-vloeroppervlakte (BVO)</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.netto" approved="yes">
+				<source>Netto</source> <target state="translated">Netto-vloeroppervlakte (NVO)</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.terra" approved="yes">
+				<source>Terra</source> <target state="translated">Tarraoppervlakte (TO)</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.use" approved="yes">
+				<source>Use</source> <target state="translated">Gebruiksoppervlakte (GO)</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.leasable" approved="yes">
+				<source>Leasable</source> <target state="translated">Verhuurbare vloeroppervlakte (VVO)</target></trans-unit>
+			<trans-unit id="tx_properties_domain_model_object.floor_area_type.useful" approved="yes">
+				<source>Useful</source> <target state="translated">Nuttige oppervlakte (NO)</target></trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.number_of_rooms" approved="yes">
 				<source>Number Of Rooms</source> <target state="translated">Aantal Kamers</target></trans-unit>
 			<trans-unit id="tx_properties_domain_model_object.number_of_bedrooms" approved="yes">

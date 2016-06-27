@@ -76,6 +76,20 @@ class Object extends AbstractModel {
 
 	/**
 	 * @const int
+	 */
+	const	RENT_PRICE_PERIOD_MONTHLY = 0,
+			RENT_PRICE_PERIOD_QUARTER = 1,
+			RENT_PRICE_PERIOD_YEARLY = 2;
+
+	/**
+	 * @const int
+	 */
+	const	RENT_PRICE_SERVICE_PERIOD_MONTHLY = 0,
+			RENT_PRICE_SERVICE_PERIOD_QUARTER = 1,
+			RENT_PRICE_SERVICE_PERIOD_YEARLY = 2;
+
+	/**
+	 * @const int
 	 */		
 	const	RENT_PRICE_TYPE_BASIC = 0,
 			RENT_PRICE_TYPE_ALLINCLUSIVE = 1;
@@ -128,6 +142,14 @@ class Object extends AbstractModel {
 			GARDEN_POSITION_WEST = 2,
 			GARDEN_POSITION_SOUTH = 3,
 			GARDEN_POSITION_EAST = 4;
+
+	const	FLOOR_AREA_TYPE_NONE = 0,
+			FLOOR_AREA_TYPE_GROSS = 1,
+			FLOOR_AREA_TYPE_NETTO = 2,
+			FLOOR_AREA_TYPE_TERRA = 3,
+			FLOOR_AREA_TYPE_USE = 4,
+			FLOOR_AREA_TYPE_LEASABLE = 5,
+			FLOOR_AREA_TYPE_USEFUL = 6;
 
 	/**
 	 * @var string
@@ -295,9 +317,24 @@ class Object extends AbstractModel {
 	protected $rentPrice = 0;
 
 	/**
+	 * @var int
+	 */
+	protected $rentPricePeriod = self::RENT_PRICE_PERIOD_MONTHLY;
+
+	/**
 	 * @var string
 	 */
 	protected $rentPriceType = self::RENT_PRICE_TYPE_BASIC;
+
+	/**
+	 * @var int
+	 */
+	protected $rentPriceService = 0;
+
+	/**
+	 * @var int
+	 */
+	protected $rentPriceServicePeriod = self::RENT_PRICE_SERVICE_PERIOD_MONTHLY;
 
 	/**
 	 * @var integer
@@ -335,19 +372,29 @@ class Object extends AbstractModel {
 	protected $pricePerSquareMetre = 0.0;
 
 	/**
-	 * @var string
+	 * @var int
 	 */
-	protected $lotSize = '';
+	protected $lotSize = 0;
 
 	/** 
-	 * @var string
+	 * @var int
 	 */
-	protected $livingArea = '';
+	protected $livingArea = 0;
 
 	/**
-	 * @var string
+	 * @var int
 	 */
-	protected $gardenArea = '';
+	protected $gardenArea = 0;
+
+	/**
+	 * @var int
+	 */
+	protected $floorArea = 0;
+
+	/**
+	 * @var int
+	 */
+	protected $floorAreaType = self::FLOOR_AREA_TYPE_NONE;
 
 	/**
 	 * @var integer
@@ -1241,6 +1288,92 @@ class Object extends AbstractModel {
 	}
 
 	/**
+	 * Get Rent Price Period
+	 *
+	 * @return int|null
+	 */
+	public function getRentPricePeriod() {
+		if ($this->getIsRent()) {
+			return $this->rentPricePeriod;
+		}
+		return NULL;
+	}
+
+	/**
+	 * Get Rent Price Period Label
+	 *
+	 * @return string|null
+	 */
+	public function getRentPricePeriodLabel() {
+		if ($this->getIsRent()) {
+			switch ($this->getRentPricePeriod()) {
+				case self::RENT_PRICE_PERIOD_QUARTER:
+					return LocalizationUtility::translate('object.price_type_period.label.quarter', self::$extensionName);
+				case self::RENT_PRICE_PERIOD_YEARLY:
+					return LocalizationUtility::translate('object.price_type_period.label.yearly', self::$extensionName);
+				default:
+					return LocalizationUtility::translate('object.price_type_period.label.monthly', self::$extensionName);
+			}
+		}
+		return NULL;
+	}
+
+	/**
+	 * Set Rent Price Period
+	 *
+	 * @param int $rentPricePeriod
+	 * @return void
+	 */
+	public function setRentPricePeriod($rentPricePeriod) {
+		$this->rentPricePeriod = $rentPricePeriod;
+	}
+
+	/**
+	 * Get Is Rent Price Period Monthly
+	 *
+	 * @return bool|null
+	 */
+	public function getIsRentPricePeriodMonthly() {
+		if ($this->getIsRent()) {
+			if ($this->getRentPricePeriod() == self::RENT_PRICE_PERIOD_MONTHLY) {
+				return TRUE;
+			}
+			return FALSE;
+		}
+		return NULL;
+	}
+
+	/**
+	 * Get Is Rent Price Period Quarter
+	 *
+	 * @return bool|null
+	 */
+	public function getIsRentPricePeriodQuarter() {
+		if ($this->getIsRent()) {
+			if ($this->getRentPricePeriod() == self::RENT_PRICE_PERIOD_QUARTER) {
+				return TRUE;
+			}
+			return FALSE;
+		}
+		return NULL;
+	}
+
+	/**
+	 * Get Is Rent Price Yearly
+	 *
+	 * @return bool|null
+	 */
+	public function getIsRentPricePeriodYearly() {
+		if ($this->getIsRent()) {
+			if ($this->getRentPricePeriod() == self::RENT_PRICE_PERIOD_YEARLY) {
+				return TRUE;
+			}
+			return FALSE;
+		}
+		return NULL;
+	}
+
+	/**
 	 * Get Rent Price Type
 	 * 
 	 * @return string
@@ -1260,6 +1393,69 @@ class Object extends AbstractModel {
 	 */
 	public function setRentPriceType($rentPriceType) {
 		$this->rentPriceType = $rentPriceType;
+	}
+
+	/**
+	 * Get Rent Price Service
+	 *
+	 * @return int|null
+	 */
+	public function getRentPriceService() {
+		if ($this->getIsRent()) {
+			return $this->rentPriceService;
+		}
+		return NULL;
+	}
+
+	/**
+	 * Set Rent Price Service
+	 *
+	 * @param int $rentPriceService
+	 * @return void
+	 */
+	public function setRentPriceService($rentPriceService) {
+		$this->rentPriceService = $rentPriceService;
+	}
+
+	/**
+	 * Get Rent Price Service Period
+	 *
+	 * @return int|null
+	 */
+	public function getRentPriceServicePeriod() {
+		if ($this->getIsRent()) {
+			return $this->rentPriceServicePeriod;
+		}
+		return NULL;
+	}
+
+	/**
+	 * Set Rent Price Service Period
+	 *
+	 * @param int $rentPriceServicePeriod]
+	 * @return void
+	 */
+	public function setRentPriceServicePeriod($rentPriceServicePeriod) {
+		$this->rentPriceServicePeriod = $rentPriceServicePeriod;
+	}
+
+	/**
+	 * Get Rent Price Service Period Label
+	 *
+	 * @return string|null
+	 */
+	public function getRentPriceServicePeriodLabel() {
+		if ($this->getIsRent()) {
+			switch ($this->getRentPriceServicePeriod()) {
+				case self::RENT_PRICE_SERVICE_PERIOD_QUARTER:
+					return LocalizationUtility::translate('object.rent_price_service_period.label.quarter', self::$extensionName);
+				case self::RENT_PRICE_SERVICE_PERIOD_YEARLY:
+					return LocalizationUtility::translate('object.rent_price_service_period.label.yearly', self::$extensionName);
+				default:
+					return LocalizationUtility::translate('object.rent_price_service_period.label.monthly', self::$extensionName);
+			}
+		}
+		return NULL;
 	}
 	
 	/**
@@ -1419,7 +1615,7 @@ class Object extends AbstractModel {
 	/**
 	 * Get Lot Size
 	 * 
-	 * @return string
+	 * @return int
 	 */
 	public function getLotSize() {
 		return $this->lotSize;
@@ -1428,7 +1624,7 @@ class Object extends AbstractModel {
 	/**
 	 * Set Lot Size
 	 * 
-	 * @param string $lotSize
+	 * @param int $lotSize
 	 * @return void
 	 */
 	public function setLotSize($lotSize) {
@@ -1438,7 +1634,7 @@ class Object extends AbstractModel {
 	/**
 	 * Get Living Area
 	 * 
-	 * @return string
+	 * @return int
 	 */
 	public function getLivingArea() {
 		if ($this->getIsBuilding()) {
@@ -1450,7 +1646,7 @@ class Object extends AbstractModel {
 	/**
 	 * Set Living Area
 	 * 
-	 * @param string $livingArea
+	 * @param int $livingArea
 	 * @return void
 	 */
 	public function setLivingArea($livingArea) {
@@ -1460,7 +1656,7 @@ class Object extends AbstractModel {
 	/**
 	 * Get Garden Area
 	 * 
-	 * @return string
+	 * @return int
 	 */
 	public function getGardenArea() {
 		if ($this->getIsBuilding()) {
@@ -1472,11 +1668,169 @@ class Object extends AbstractModel {
 	/**
 	 * Set Garden Area
 	 * 
-	 * @param string $gardenArea
+	 * @param int $gardenArea
 	 * @return void
 	 */
 	public function setGardenArea($gardenArea) {
 		$this->gardenArea = $gardenArea;
+	}
+
+	/**
+	 * Get Floor Area
+	 *
+	 * @return int|null
+	 */
+	public function getFloorArea() {
+		if ($this->getIsBuilding()) {
+			return $this->floorArea;
+		}
+		return NULL;
+	}
+
+	/**
+	 * Set Floor Area
+	 *
+	 * @param int $floorArea
+	 */
+	public function setFloorArea($floorArea) {
+		$this->floorArea = $floorArea;
+	}
+
+	/**
+	 * Get Floor Area Type
+	 *
+	 * @return int
+	 */
+	public function getFloorAreaType() {
+		if ($this->getIsBuilding()) {
+			return $this->floorAreaType;
+		}
+		return NULL;
+	}
+
+	/**
+	 * Set Floor Area Type
+	 * @param int $floorAreaType
+	 */
+	public function setFloorAreaType($floorAreaType) {
+		$this->floorAreaType = $floorAreaType;
+	}
+
+	/**
+	 * Get Floor Area Type Label
+	 *
+	 * @return string|null
+	 */
+	public function getFloorAreaTypeLabel() {
+		if ($this->getIsBuilding()) {
+			if ($this->getFloorAreaType() > self::FLOOR_AREA_TYPE_NONE) {
+				switch ($this->getFloorAreaType()) {
+					case self::FLOOR_AREA_TYPE_GROSS:
+						return LocalizationUtility::translate('object.floor_area_type.label.gross', self::$extensionName);
+					case self::FLOOR_AREA_TYPE_NETTO:
+						return LocalizationUtility::translate('object.floor_area_type.label.netto', self::$extensionName);
+					case self::FLOOR_AREA_TYPE_TERRA:
+						return LocalizationUtility::translate('object.floor_area_type.label.terra', self::$extensionName);
+					case self::FLOOR_AREA_TYPE_USE:
+						return LocalizationUtility::translate('object.floor_area_type.label.use', self::$extensionName);
+					case self::FLOOR_AREA_TYPE_LEASABLE:
+						return LocalizationUtility::translate('object.floor_area_type.label.leasable', self::$extensionName);
+					case self::FLOOR_AREA_TYPE_USEFUL:
+						return LocalizationUtility::translate('object.floor_area_type.label.useful', self::$extensionName);
+				}
+			}
+		}
+		return NULL;
+	}
+
+	/**
+	 * Get Is Floor Area Type Gross
+	 *
+	 * @return bool|null
+	 */
+	public function getIsFloorAreaTypeGross() {
+		if ($this->getIsBuilding()) {
+			if ($this->getFloorAreaType() == self::FLOOR_AREA_TYPE_GROSS) {
+				return TRUE;
+			}
+			return FALSE;
+		}
+		return NULL;
+	}
+
+	/**
+	 * Get Is Floor Area Type Netto
+	 *
+	 * @return bool|null
+	 */
+	public function getIsFloorAreaTypeNetto() {
+		if ($this->getIsBuilding()) {
+			if ($this->getFloorAreaType() == self::FLOOR_AREA_TYPE_NETTO) {
+				return TRUE;
+			}
+			return FALSE;
+		}
+		return NULL;
+	}
+
+	/**
+	 * Get Is Floor Area Type Terra
+	 *
+	 * @return bool|null
+	 */
+	public function getIsFloorAreaTypeTerra() {
+		if ($this->getIsBuilding()) {
+			if ($this->getFloorAreaType() == self::FLOOR_AREA_TYPE_TERRA) {
+				return TRUE;
+			}
+			return FALSE;
+		}
+		return NULL;
+	}
+
+	/**
+	 * Get Is Floor Area Type Use
+	 *
+	 * @return bool|null
+	 */
+	public function getIsFloorAreaTypeUse() {
+		if ($this->getIsBuilding()) {
+			if ($this->getFloorAreaType() == self::FLOOR_AREA_TYPE_USE) {
+				return TRUE;
+			}
+			return FALSE;
+		}
+		return NULL;
+	}
+
+	/**
+	 * Get Is Floor Area Type Leasable
+	 *
+	 * @return bool|null
+	 */
+	public function getIsFloorAreaTypeLeasable() {
+		if ($this->getIsBuilding()) {
+			if ($this->getFloorAreaType() == self::FLOOR_AREA_TYPE_LEASABLE) {
+				return TRUE;
+			}
+			return FALSE;
+		}
+		return NULL;
+	}
+
+	/**
+	 * Get Is Floor Area Type Useful
+	 *
+	 * @return bool|null
+	 */
+	public function getIsFloorAreaTypeUseful() {
+		if ($this->getIsBuilding()) {
+			if ($this->getFloorAreaType() == self::FLOOR_AREA_TYPE_USEFUL) {
+				return TRUE;
+			}
+			return FALSE;
+		}
+		return NULL;
 	}
 
 	/**

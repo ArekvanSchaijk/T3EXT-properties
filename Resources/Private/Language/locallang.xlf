@@ -168,6 +168,42 @@
 			<trans-unit id="object.garden_position.label.east">
 				<source>Oost</source>
 			</trans-unit>
+			<trans-unit id="object.price_type_period.label.monthly">
+				<source>per maand</source>
+			</trans-unit>
+			<trans-unit id="object.price_type_period.label.quarter">
+				<source>per kwartaal</source>
+			</trans-unit>
+			<trans-unit id="object.price_type_period.label.yearly">
+				<source>per jaar</source>
+			</trans-unit>
+			<trans-unit id="object.rent_price_service_period.label.monthly">
+				<source>per maand</source>
+			</trans-unit>
+			<trans-unit id="object.rent_price_service_period.label.quarter">
+				<source>per kwartaal</source>
+			</trans-unit>
+			<trans-unit id="object.rent_price_service_period.label.yearly">
+				<source>per jaar</source>
+			</trans-unit>
+			<trans-unit id="object.floor_area_type.label.gross">
+				<source>BVO</source>
+			</trans-unit>
+			<trans-unit id="object.floor_area_type.label.netto">
+				<source>NVO</source>
+			</trans-unit>
+			<trans-unit id="object.floor_area_type.label.terra">
+				<source>TO</source>
+			</trans-unit>
+			<trans-unit id="object.floor_area_type.label.use">
+				<source>GO</source>
+			</trans-unit>
+			<trans-unit id="object.floor_area_type.label.leasable">
+				<source>VVO</source>
+			</trans-unit>
+			<trans-unit id="object.floor_area_type.label.useful">
+				<source>NO</source>
+			</trans-unit>
 			<trans-unit id="object.contact.first_name">
 				<source>Voornaam</source>
 			</trans-unit>

@@ -20,11 +20,11 @@ return array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => 'name,type,sort,offer,images,year,environmental_class,description,alternative_description,possibilities,street,zip_code,contact,contact_name,contact_company,contact_address,contact_phone,contact_secondary_phone,contact_email,contact_website,status,price,price_type,rent_price,rent_price_type,price_per_square_metre,lot_size,living_area,garden_area,number_of_rooms,latitude,longitude,latitude_longitude_md5,category,presences,related_objects,town,district,position,construction_type,',
+		'searchFields' => 'name,type,sort,offer,images,year,environmental_class,description,alternative_description,possibilities,street,zip_code,contact,contact_name,contact_company,contact_address,contact_phone,contact_secondary_phone,contact_email,contact_website,status,price,price_type,rent_price,rent_price_period,rent_price_type,rent_price_service,rent_price_service_period,price_per_square_metre,lot_size,living_area,garden_area,number_of_rooms,latitude,longitude,latitude_longitude_md5,category,presences,related_objects,town,district,position,construction_type,',
 		'iconfile' => 'EXT:properties/Resources/Public/Icons/tx_properties_domain_model_object.gif'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, district, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, price_type, rent_price, rent_price_type, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, related_objects, construction_type, garage, garage_capacity, garage_sort, images, background_image, download, meta_description, meta_keywords',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, name, description, category, town, district, position, garden_position, type_building, offer, sort, year, environmental_class, street, street_number, zip_code, country, contact, price, price_type, rent_price, rent_price_period, rent_price_type, rent_price_service,rent_price_service_period, rent_availability, rent_wait, rent_available_date, rental_agreement, lease_conditions, accessibility, price_per_square_metre, lot_size, living_area, garden_area, number_of_rooms, number_of_bedrooms, latitude, longitude, latitude_longitude_md5, presences, related_objects, construction_type, garage, garage_capacity, garage_sort, images, background_image, download, meta_description, meta_keywords',
 	),
 	'types' => array(
 		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, type, name, category, description;;;richtext:rte_transform[mode=ts_links], alternative_description;;;richtext:rte_transform[mode=ts_links],possibilities;;;richtext:rte_transform[mode=ts_links],
@@ -56,7 +56,7 @@ return array(
 			'canNotCollapse' => TRUE
 		),
 		'surfaces' => array(
-			'showitem' => 'lot_size, living_area, garden_area',
+			'showitem' => 'lot_size, living_area, garden_area, --linebreak--, floor_area, floor_area_type',
 			'canNotCollapse' => TRUE
 		),
 		'property_details' => array(
@@ -72,7 +72,7 @@ return array(
 			'canNotCollapse' => TRUE
 		),
 		'rent_details' => array(
-			'showitem' => 'rent_price, rent_price_type, --linebreak--, rent_availability, --linebreak--, rent_wait, --linebreak--, rent_available_date, --linebreak--, rental_agreement, --linebreak--, lease_conditions',
+			'showitem' => 'rent_price, rent_price_period, rent_price_type, --linebreak--, rent_price_service, rent_price_service_period, --linebreak--, rent_availability, --linebreak--, rent_wait, --linebreak--, rent_available_date, --linebreak--, rental_agreement, --linebreak--, lease_conditions',
 			'canNotCollapse' => TRUE
 		),
 		'contact_details' => array(
@@ -854,6 +854,33 @@ return array(
 				'eval' => 'int'
 			)
 		),
+		'rent_price_period' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_period',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
+					'FIELD:offer:IN:'.\Ucreation\Properties\Domain\Model\Object::OFFER_RENT.','.\Ucreation\Properties\Domain\Model\Object::OFFER_BOTH,
+				),
+			),
+			'config' => array(
+				'type' => 'select',
+				'items' => array(
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_period.monthly',
+						\Ucreation\Properties\Domain\Model\Object::RENT_PRICE_PERIOD_MONTHLY,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_period.quarter',
+						\Ucreation\Properties\Domain\Model\Object::RENT_PRICE_PERIOD_QUARTER,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_period.yearly',
+						\Ucreation\Properties\Domain\Model\Object::RENT_PRICE_PERIOD_YEARLY,
+					),
+				),
+			),
+		),
 		'rent_price_type' => array(
 			'exclude' => FALSE,
 			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_type',
@@ -873,6 +900,48 @@ return array(
 					array(
 						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_type.1',
 						\Ucreation\Properties\Domain\Model\Object::RENT_PRICE_TYPE_ALLINCLUSIVE,
+					),
+				),
+			),
+		),
+		'rent_price_service' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_service',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
+					'FIELD:offer:IN:'.\Ucreation\Properties\Domain\Model\Object::OFFER_RENT.','.\Ucreation\Properties\Domain\Model\Object::OFFER_BOTH,
+				),
+			),
+			'config' => array(
+				'type' => 'input',
+				'size' => 8,
+				'eval' => 'int'
+			)
+		),
+		'rent_price_service_period' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_service_period',
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
+					'FIELD:offer:IN:'.\Ucreation\Properties\Domain\Model\Object::OFFER_RENT.','.\Ucreation\Properties\Domain\Model\Object::OFFER_BOTH,
+				),
+			),
+			'config' => array(
+				'type' => 'select',
+				'items' => array(
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_service_period.monthly',
+						\Ucreation\Properties\Domain\Model\Object::RENT_PRICE_SERVICE_PERIOD_MONTHLY,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_service_period.quarter',
+						\Ucreation\Properties\Domain\Model\Object::RENT_PRICE_SERVICE_PERIOD_QUARTER,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.rent_price_service_period.yearly',
+						\Ucreation\Properties\Domain\Model\Object::RENT_PRICE_SERVICE_PERIOD_YEARLY,
 					),
 				),
 			),
@@ -1065,6 +1134,54 @@ return array(
 				'size' => 5,
 				'eval' => 'trim'
 			),
+		),
+		'floor_area' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.floor_area',
+			'displayCond' => 'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
+			'config' => array(
+				'type' => 'input',
+				'size' => 5,
+				'eval' => 'trim'
+			),
+		),
+		'floor_area_type' => array(
+			'exclude' => FALSE,
+			'label' => 'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.floor_area_type',
+			'displayCond' => 'FIELD:type:=:'.\Ucreation\Properties\Domain\Model\Object::TYPE_BUILDING,
+			'config' => array(
+				'type' => 'select',
+				'items' => array(
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.floor_area_type.0',
+						\Ucreation\Properties\Domain\Model\Object::FLOOR_AREA_TYPE_NONE,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.floor_area_type.gross',
+						\Ucreation\Properties\Domain\Model\Object::FLOOR_AREA_TYPE_GROSS,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.floor_area_type.netto',
+						\Ucreation\Properties\Domain\Model\Object::FLOOR_AREA_TYPE_NETTO,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.floor_area_type.terra',
+						\Ucreation\Properties\Domain\Model\Object::FLOOR_AREA_TYPE_TERRA,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.floor_area_type.use',
+						\Ucreation\Properties\Domain\Model\Object::FLOOR_AREA_TYPE_USE,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.floor_area_type.leasable',
+						\Ucreation\Properties\Domain\Model\Object::FLOOR_AREA_TYPE_LEASABLE,
+					),
+					array(
+						'LLL:EXT:properties/Resources/Private/Language/locallang_db.xlf:tx_properties_domain_model_object.floor_area_type.useful',
+						\Ucreation\Properties\Domain\Model\Object::FLOOR_AREA_TYPE_USEFUL,
+					),
+				)
+			)
 		),
 		'number_of_rooms' => array(
 			'exclude' => FALSE,

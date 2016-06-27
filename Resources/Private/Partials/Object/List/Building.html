@@ -16,9 +16,37 @@
         <h2><f:link.action pageUid="{settings.object.singlePid}" arguments="{object: object}">{object.name}</f:link.action></h2>
         <p class="address">{object.zipCode} {object.town.name}</p>
         <div class="subDetails">
-            <p><f:if condition="{object.isSale}"><span class="price">&euro; <f:format.number decimals="0" thousandsSeparator=".">{object.price}</f:format.number> <f:switch expression="{object.priceType}"><f:case value="0">k.k.</f:case><f:case value="1">v.o.n.</f:case></f:switch></span><br /></f:if>
+            <p><f:render section="price" arguments="{object: object}" />
                 {ppt:surface(lotSize: object.lotSize, livingArea: object.livingArea)}<f:if condition="{object.numberOfRooms}"> &bull; {object.numberOfRooms} {f:translate(key: 'object.rooms')}</f:if> </p>
         </div>
     </div>
     <div class="clearboth"> </div>
 </div>
+
+
+<f:section name="price">
+    <f:if condition="{object.isSaleAndRent}">
+        <f:then>
+            <f:render section="sellingPrice" arguments="{object: object}" />
+            <f:render section="rentPrice" arguments="{object: object}" />
+        </f:then>
+        <f:else>
+            <f:if condition="{object.isSale}">
+                <f:then>
+                    <f:render section="sellingPrice" arguments="{object: object}" />
+                </f:then>
+                <f:else>
+                    <f:render section="rentPrice" arguments="{object: object}" />
+                </f:else>
+            </f:if>
+        </f:else>
+    </f:if>
+</f:section>
+
+<f:section name="sellingPrice">
+    <span class="price">&euro; <f:format.number decimals="0" thousandsSeparator=".">{object.price}</f:format.number> <f:switch expression="{object.priceType}"><f:case value="0">k.k.</f:case><f:case value="1">v.o.n.</f:case></f:switch></span><br />
+</f:section>
+
+<f:section name="rentPrice">
+    <span class="price">&euro; <f:format.number decimals="0" thousandsSeparator=".">{object.rentPrice}</f:format.number> {object.rentPricePeriodLabel}</span><br />
+</f:section>
