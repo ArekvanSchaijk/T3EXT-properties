@@ -1,0 +1,285 @@
+{namespace ppt=Ucreation\Properties\ViewHelpers}
+<div class="tx_properties">
+    <div class="tx_properties_detail">
+        <div class="headerbar">
+            <h1>{object.name}</h1>
+            <p class="address">
+                <f:if condition="{object.street}">{object.street}</f:if>
+                <f:if condition="{object.streetNumber}">{object.streetNumber}</f:if>
+                <f:if condition="{object.town.name}">{object.town.name}</f:if>
+                <f:if condition="{object.district.name}">({object.district.name})</f:if>
+            </p>
+            <p><f:render section="price" arguments="{object: object}"></f:render></p>
+            <f:if condition="{object.cover}">
+                <f:if condition="{0:object.imagesCount} == {0:1}">
+                    <f:then>
+                        <a href="{f:uri.image(src: object.cover.uid, treatIdAsReference: 1, maxWidth: '1500', maxHeight: '1500')}" rel="lightbox"><f:image src="{object.cover.uid}" treatIdAsReference="1" width="972" alt="Afbeelding {object.name}" /></a>
+                    </f:then>
+                    <f:else>
+                        <div class="imagePlaceHolder">
+                            <div class="example">
+                                <f:for each="{object.images}" as="image" iteration="iterator">
+                                    <f:if condition="{iterator.isFirst}">
+                                        <f:then>
+                                            <a href="{f:uri.image(src: image.uid, treatIdAsReference: 1, maxWidth: '1500', maxHeight: '1500')}" rel="lightbox"><f:image src="{image.uid}" treatIdAsReference="1" width="752" height="500c" alt="Afbeelding {object.name}" /></a>
+                                        </f:then>
+                                        <f:else>
+                                            <a href="{f:uri.image(src: image.uid, treatIdAsReference: 1, maxWidth: '1500', maxHeight: '1500')}" rel="lightbox"><f:image src="{image.uid}" treatIdAsReference="1" width="752" height="500c" alt="Afbeelding {object.name}" class="hidden" /></a>
+                                        </f:else>
+                                    </f:if>
+                                </f:for>
+                            </div>
+                            <div class="thumbnails">
+                                <f:for each="{object.images}" as="image" iteration="iterator">
+                                    <f:switch expression="{iterator.index}">
+                                        <f:case value="0"></f:case>
+                                        <f:case value="1"><a href="{f:uri.image(src: image.uid, treatIdAsReference: 1, maxWidth: '1500', maxHeight: '1500')}" rel="lightbox"><f:image src="{image.uid}" treatIdAsReference="1" width="200" height="200c" alt="Afbeelding {object.name}" /></a></f:case>
+                                        <f:case default="TRUE"><a href="{f:uri.image(src: image.uid, treatIdAsReference: 1, maxWidth: '1500', maxHeight: '1500')}" rel="lightbox"><f:image src="{image.uid}" treatIdAsReference="1" width="95" height="95c" alt="Afbeelding {object.name}" /></a></f:case>
+                                    </f:switch>
+                                </f:for>
+                            </div>
+                            <div class="clearboth"> </div>
+                        </div>
+                    </f:else>
+                </f:if>
+            </f:if>
+        </div>
+        <div class="propertybody">
+            <f:if condition="{object.description}">
+                <h2>Omschrijving</h2>
+                <f:format.html>{object.description}</f:format.html>
+            </f:if>
+            <f:if condition="{object.alternativeDescription}">
+                <h2>Extra informatie</h2>
+                <f:format.html>{object.alternativeDescription}</f:format.html>
+            </f:if>
+            <table summary="Kenmerken van {object.name}">
+                <caption>Kenmerken</caption>
+                <tbody>
+                <f:if condition="{object.isSale}">
+                    <tr>
+                        <th scope="row">Vraagprijs</th>
+                        <td>&euro; <f:format.number decimals="0" thousandsSeparator=".">{object.price}</f:format.number> <f:switch expression="{object.priceType}"><f:case value="0">k.k.</f:case><f:case value="1">v.o.n.</f:case></f:switch></span> <f:if condition="{object.pricePerSquareMetre}">/ &euro; <f:format.number decimals="0" thousandsSeparator=".">{object.pricePerSquareMetre}</f:format.number> m&sup2;</f:if> </td>
+                    </tr>
+                </f:if>
+                <f:if condition="{object.isRent}">
+                    <tr>
+                        <th scope="row">Huurprijs</th>
+                        <td>&euro; <f:format.number decimals="0" thousandsSeparator=".">{object.rentPrice}</f:format.number> {object.rentPricePeriodLabel}</span> <f:if condition="{object.rentPriceService}">en &euro; <f:format.number decimals="0" thousandsSeparator=".">{object.rentPriceService}</f:format.number> servicekosten {object.rentPriceServicePeriodLabel}</f:if> </td>
+                    </tr>
+                </f:if>
+                <tr>
+                    <th scope="row">Status</th>
+                    <td>{object.statusLabel}</td>
+                </tr>
+                <f:if condition="{object.isRent}">
+                    <f:if condition="{object.isAvailable}">
+
+                        <f:switch expression="{object.rentAvailability}">
+                            <f:case value="0">
+                                <tr>
+                                    <th scope="row">Beschikbaarheid</th>
+                                    <td>Direct beschikbaar</td>
+                                </tr>
+                            </f:case>
+                            <f:case value="1">
+                                <tr>
+                                    <th scope="row">Beschikbaarheid</th>
+                                    <td>Wachttijd<f:if condition="{object.rentWait}"> (tot {object.rentWait} <f:if condition="{0:object.rentWait} == {0:1}"><f:then>maand</f:then><f:else>maanden</f:else></f:if>)</f:if></td>
+                                </tr>
+                            </f:case>
+                            <f:case value="2">
+                                <f:if condition="{object.rentAvailableDate}">
+                                    <f:then>
+                                        <tr>
+                                            <th scope="row">Beschikbaarheid</th>
+                                            <td>Vanaf <f:format.date format="d-m-Y">@{object.rentAvailableDate}</f:format.date></td>
+                                        </tr>
+                                    </f:then>
+                                    <f:else>
+                                        <tr>
+                                            <th scope="row">Beschikbaarheid</th>
+                                            <td>Onbekend</td>
+                                        </tr>
+                                    </f:else>
+                                </f:if>
+                            </f:case>
+                            <f:case value="3">
+
+                            </f:case>
+                        </f:switch>
+                    </f:if>
+                </f:if>
+                </tbody>
+            </table>
+            <table summary="Oppervlakten {object.name}">
+                <caption>Oppervlakten</caption>
+                <tbody>
+                <f:if condition="{object.lotSize}">
+                    <tr>
+                        <th>Perceeloppervlakte</th>
+                        <td>{ppt:surface(lotSize: object.lotSize)}</td>
+                    </tr>
+                </f:if>
+                <f:if condition="{object.livingArea}">
+                    <tr>
+                        <th>Woongedeelte</th>
+                        <td>{ppt:surface(lotSize: object.livingArea)}</td>
+                    </tr>
+                </f:if>
+                <f:if condition="{object.gardenArea}">
+                    <tr>
+                        <th>Tuin</th>
+                        <td>{ppt:surface(lotSize: object.gardenArea)}</td>
+                    </tr>
+                </f:if>
+                <f:if condition="{object.floorArea}">
+                    <tr>
+                        <th>Vloeroppervlakte</th>
+                        <td>{ppt:surface(lotSize: object.floorArea)} <f:if condition="{object.floorAreaType}">({object.floorAreaTypeLabel})</f:if> </td>
+                    </tr>
+                </f:if>
+                </tbody>
+            </table>
+            <f:if condition="{object.isBuilding}">
+                <table summary="Details pand{object.name}">
+                    <caption>Details pand</caption>
+                    <tbody>
+                    <f:if condition="{object.typeBuilding}">
+                        <tr>
+                            <th>Staat</th>
+                            <td>
+                                <f:switch expression="{object.typeBuilding}">
+                                    <f:case value="1">
+                                        Nieuwbouw
+                                    </f:case>
+                                    <f:case value="2">
+                                        Bestaand
+                                    </f:case>
+                                </f:switch>
+                            </td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{object.constructionType}">
+                        <tr>
+                            <th>Soort bouw</th>
+                            <td>{object.constructionType.name}</td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{object.year}">
+                        <tr>
+                            <th>Bouwjaar</th>
+                            <td>{object.year}</td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{object.position}">
+                        <tr>
+                            <th>Ligging</th>
+                            <td>{object.position.name}</td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{object.gardenPosition}">
+                        <tr>
+                            <th>Ligging tuin</th>
+                            <td>{object.gardenPositionLabel}</td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{object.gardenPosition}">
+                        <tr>
+                            <th>Ligging tuin</th>
+                            <td>{object.gardenPositionLabel}</td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{object.environmentalClass}">
+                        <tr>
+                            <th>Energielabel</th>
+                            <td><f:switch expression="{object.environmentalClass}">
+                                <f:case value="10">
+                                    A-Label
+                                </f:case>
+                                <f:case value="20">
+                                    B-Label
+                                </f:case>
+                                <f:case value="30">
+                                    C-Label
+                                </f:case>
+                                <f:case value="40">
+                                    D-Label
+                                </f:case>
+                                <f:case value="50">
+                                    E-Label
+                                </f:case>
+                                <f:case value="60">
+                                    F-Label
+                                </f:case>
+                                <f:case value="70">
+                                    G-Label
+                                </f:case>
+                            </f:switch> </td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{object.numberOfRooms}">
+                        <tr>
+                            <th>Kamers</th>
+                            <td>{object.numberOfRooms}</td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{object.numberOfBedrooms}">
+                        <tr>
+                            <th>Slaapkamers</th>
+                            <td>{object.numberOfBedrooms}</td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{object.presences}">
+                        <tr>
+                            <th>Aanwezigheden</th>
+                            <td><f:for each="{object.presences}" as="presence" iteration="iterator">{presence.name}<f:if condition="{0:iterator.isLast} == {0:0}"><f:then>, </f:then><f:else>.</f:else></f:if> </f:for></td>
+                        </tr>
+                    </f:if>
+                    </tbody>
+                </table>
+            </f:if>
+            <f:if condition="{object.garage}">
+                <table summary="Garage details {object.name}">
+                    <caption>Garage</caption>
+                    <tbody>
+                    <f:if condition="{object.garageSort}">
+                        <tr>
+                            <th>Soort</th>
+                            <td>{object.garageSort.name}</td>
+                        </tr>
+                    </f:if>
+                    <tr>
+                        <th>Capaciteit</th>
+                        <td><f:if condition="{object.garageCapacity}"><f:then>{object.garageCapacity}</f:then><f:else>Onbekend</f:else></f:if></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </f:if>
+        </div>
+
+    </div>
+</div>
+
+<f:section name="price">
+    <f:if condition="{object.isSaleAndRent}">
+        <f:then>
+            <f:render section="sellingPrice" arguments="{object: object}" /> of <f:render section="rentPrice" arguments="{object: object}" />
+        </f:then>
+        <f:else>
+            <f:if condition="{object.isSale}">
+                <f:then>
+                    <f:render section="sellingPrice" arguments="{object: object}" />
+                </f:then>
+                <f:else>
+                    <f:render section="rentPrice" arguments="{object: object}" />
+                </f:else>
+            </f:if>
+        </f:else>
+    </f:if>
+</f:section>
+
+<f:section name="sellingPrice"><span class="price">&euro; <f:format.number decimals="0" thousandsSeparator=".">{object.price}</f:format.number> <f:switch expression="{object.priceType}"><f:case value="0">k.k.</f:case><f:case value="1">v.o.n.</f:case></f:switch></span></f:section>
+
+<f:section name="rentPrice"><span class="price">&euro; <f:format.number decimals="0" thousandsSeparator=".">{object.rentPrice}</f:format.number> {object.rentPricePeriodLabel}</span></f:section>

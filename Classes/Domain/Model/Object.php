@@ -705,6 +705,15 @@ class Object extends AbstractModel {
 	}
 
 	/**
+	 * Get Images Count
+	 *
+	 * @return int
+	 */
+	public function getImagesCount() {
+		return $this->getImages()->count();
+	}
+
+	/**
 	 * Get Cover
 	 *
 	 * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
